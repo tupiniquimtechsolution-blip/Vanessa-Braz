@@ -3,6 +3,7 @@ import { Calendar, Clock, Filter } from 'lucide-react';
 import { useState } from 'react';
 import { services, categories } from '../lib/data';
 import { formatCurrency } from '../lib/store';
+import { images } from '../lib/media';
 
 export default function Services() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -59,10 +60,19 @@ export default function Services() {
               key={service.id}
               className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all border border-brand-surface/50 group"
             >
-              <div className="h-48 bg-gradient-to-br from-brand-secondary/20 to-brand-accent/10 flex items-center justify-center">
-                <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Clock size={28} className="text-brand-primary" />
-                </div>
+              <div className="h-48 overflow-hidden">
+                <img
+                  src={
+                    service.category === 'Sobrancelhas' ? images.sobrancelhas :
+                    service.category === 'Cílios' ? images.cilios :
+                    service.category === 'Facial' ? images.facial :
+                    service.category === 'Corporal' ? images.massagem :
+                    images.hero
+                  }
+                  alt={service.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
               </div>
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-3">

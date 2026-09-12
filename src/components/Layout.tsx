@@ -19,6 +19,7 @@ export default function Layout({ children }: LayoutProps) {
   const navLinks = [
     { to: '/', label: 'Início' },
     { to: '/servicos', label: 'Serviços' },
+    { to: '/galeria', label: 'Galeria' },
     { to: '/agendar', label: 'Agendar' },
     { to: '/contato', label: 'Contato' },
   ];
@@ -138,6 +139,7 @@ export default function Layout({ children }: LayoutProps) {
               <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-brand-accent">Links Rápidos</h3>
               <ul className="space-y-2">
                 <li><Link to="/servicos" className="text-white/70 hover:text-white text-sm transition-colors">Serviços</Link></li>
+                <li><Link to="/galeria" className="text-white/70 hover:text-white text-sm transition-colors">Galeria</Link></li>
                 <li><Link to="/agendar" className="text-white/70 hover:text-white text-sm transition-colors">Agendar</Link></li>
                 <li><Link to="/contato" className="text-white/70 hover:text-white text-sm transition-colors">Contato</Link></li>
                 <li><Link to="/politica-de-privacidade" className="text-white/70 hover:text-white text-sm transition-colors">Privacidade</Link></li>

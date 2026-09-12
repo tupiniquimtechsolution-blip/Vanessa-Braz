@@ -9,6 +9,7 @@ import Admin from './pages/Admin';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import GalleryPage from './pages/Gallery';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/servicos" element={<Layout><Services /></Layout>} />
         <Route path="/servicos/:slug" element={<Layout><Services /></Layout>} />
+        <Route path="/galeria" element={<Layout><GalleryPage /></Layout>} />
         <Route path="/agendar" element={<Layout><Booking /></Layout>} />
         <Route path="/login" element={<Layout><Login /></Layout>} />
         <Route path="/cadastro" element={<Layout><Login /></Layout>} />

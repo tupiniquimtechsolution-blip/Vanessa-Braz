@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { Calendar, Star, Sparkles, Heart, Shield, Award, ChevronDown, ChevronUp, MapPin, Clock, Phone, Instagram } from 'lucide-react';
 import { useState } from 'react';
 import { services, faqItems, testimonials, businessInfo } from '../lib/data';
+import { images, galleryImages } from '../lib/media';
+import Gallery from '../components/Gallery';
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -47,16 +49,12 @@ export default function Home() {
             </div>
             <div className="hidden lg:block animate-fade-in stagger-2">
               <div className="relative">
-                <div className="w-full aspect-[4/5] bg-gradient-to-br from-brand-secondary/30 to-brand-accent/20 rounded-3xl overflow-hidden flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <div className="w-32 h-32 mx-auto bg-brand-primary/10 rounded-full flex items-center justify-center mb-6">
-                      <Heart size={48} className="text-brand-primary" />
-                    </div>
-                    <p className="font-display text-2xl text-brand-primary font-semibold">
-                      Sua beleza, nossa arte
-                    </p>
-                    <p className="text-brand-muted mt-2">+500 clientes satisfeitas</p>
-                  </div>
+                <div className="w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+                  <img
+                    src={images.hero}
+                    alt="Espaço de beleza Vanessa Braz"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl p-4 shadow-lg">
                   <div className="flex items-center gap-2">
@@ -202,18 +200,12 @@ export default function Home() {
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-brand-secondary/20 to-brand-accent/10 rounded-3xl flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="w-24 h-24 mx-auto bg-brand-primary/10 rounded-full flex items-center justify-center mb-4">
-                    <Sparkles size={36} className="text-brand-primary" />
-                  </div>
-                  <p className="font-display text-xl text-brand-primary font-semibold">
-                    DADOS_DEMONSTRATIVOS
-                  </p>
-                  <p className="text-sm text-brand-muted mt-2">
-                    Foto profissional pendente de confirmação
-                  </p>
-                </div>
+              <div className="aspect-square rounded-3xl overflow-hidden shadow-lg">
+                <img
+                  src={images.retrato}
+                  alt="Vanessa Braz — Profissional de beleza"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
@@ -250,8 +242,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* Galeria de Resultados */}
       <section className="py-16 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-primary mb-4">
+              Nossos Resultados
+            </h2>
+            <p className="text-brand-muted max-w-2xl mx-auto">
+              Confira alguns dos nossos trabalhos. Cada procedimento é personalizado para realçar sua beleza natural.
+            </p>
+          </div>
+          <Gallery images={galleryImages} columns={3} />
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-16 md:py-20 bg-brand-surface/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-primary mb-4">
