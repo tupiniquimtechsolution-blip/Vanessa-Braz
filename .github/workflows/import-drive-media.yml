@@ -1,0 +1,251 @@
+name: Import Google Drive media
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/import-drive-media.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-vanessa-drive-media
+  cancel-in-progress: true
+
+jobs:
+  import-media:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      DRIVE_FOLDER_URL: https://drive.google.com/drive/folders/16dGWA3s7DInFaQQ1y76Sij8SWNpfEbMI?usp=sharing
+      MEDIA_ROOT: apps/web/public/media/source
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install pinned downloader
+        run: python -m pip install --disable-pip-version-check gdown==6.2.0
+
+      - name: Resolve Google Drive inventory
+        run: |
+          set -euo pipefail
+          python -m gdown "$DRIVE_FOLDER_URL" --folder --json --quiet > _drive_listing.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          items = json.loads(Path('_drive_listing.json').read_text(encoding='utf-8'))
+          if not items:
+              raise SystemExit('Google Drive folder inventory is empty.')
+          print(f'Google Drive inventory: {len(items)} files')
+          PY
+
+      - name: Download Drive files in parallel
+        run: |
+          python <<'PY'
+          from __future__ import annotations
+
+          import json
+          import subprocess
+          import time
+          from concurrent.futures import ThreadPoolExecutor, as_completed
+          from pathlib import Path, PurePosixPath
+
+          listing = json.loads(Path('_drive_listing.json').read_text(encoding='utf-8'))
+          output = Path('_drive_import')
+          output.mkdir(parents=True, exist_ok=True)
+
+          def safe_path(raw: str) -> Path:
+              value = PurePosixPath(raw)
+              if value.is_absolute() or '..' in value.parts:
+                  raise ValueError(f'Unsafe Drive path: {raw}')
+              return Path(*value.parts)
+
+          def valid(path: Path) -> bool:
+              return path.is_file() and path.stat().st_size > 0
+
+          def download(index: int, entry: dict[str, str]):
+              relative = safe_path(entry['path'])
+              target = output / relative
+              target.parent.mkdir(parents=True, exist_ok=True)
+              last_error = ''
+
+              for attempt in range(1, 3):
+                  target.unlink(missing_ok=True)
+                  try:
+                      proc = subprocess.run(
+                          ['python', '-m', 'gdown', entry['url'], '-O', str(target), '--quiet'],
+                          text=True,
+                          stdout=subprocess.PIPE,
+                          stderr=subprocess.STDOUT,
+                          timeout=120,
+                      )
+                      if proc.returncode == 0 and valid(target):
+                          print(f'OK [{index}/{len(listing)}] {relative}')
+                          return None
+                      last_error = (proc.stdout or '').strip()[-1200:]
+                  except subprocess.TimeoutExpired:
+                      last_error = 'gdown timed out after 120 seconds'
+                  target.unlink(missing_ok=True)
+                  time.sleep(3 * attempt)
+
+              print(f'FAIL [{index}/{len(listing)}] {relative}')
+              return {
+                  'path': relative.as_posix(),
+                  'url': entry['url'],
+                  'error': last_error or 'download failed',
+              }
+
+          failures = []
+          with ThreadPoolExecutor(max_workers=6) as executor:
+              futures = [
+                  executor.submit(download, index, entry)
+                  for index, entry in enumerate(listing, start=1)
+              ]
+              for future in as_completed(futures):
+                  result = future.result()
+                  if result:
+                      failures.append(result)
+
+          failures.sort(key=lambda item: item['path'])
+          Path('_drive_failures.json').write_text(
+              json.dumps(failures, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(f'Downloaded {len(listing) - len(failures)}/{len(listing)} files; failures: {len(failures)}')
+          PY
+
+      - name: Organize media and generate manifest
+        run: |
+          python <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import json
+          import mimetypes
+          import shutil
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          source = Path('_drive_import')
+          root = Path('apps/web/public/media/source')
+          listing = json.loads(Path('_drive_listing.json').read_text(encoding='utf-8'))
+          failures = json.loads(Path('_drive_failures.json').read_text(encoding='utf-8'))
+
+          if root.exists():
+              shutil.rmtree(root)
+          images = root / 'images'
+          videos = root / 'videos'
+          other = root / 'other'
+          for directory in (images, videos, other):
+              directory.mkdir(parents=True, exist_ok=True)
+
+          def unique(directory: Path, name: str) -> Path:
+              target = directory / name
+              if not target.exists():
+                  return target
+              i = 2
+              while True:
+                  candidate = directory / f'{target.stem}-{i}{target.suffix}'
+                  if not candidate.exists():
+                      return candidate
+                  i += 1
+
+          files = []
+          for path in sorted(p for p in source.rglob('*') if p.is_file()):
+              mime, _ = mimetypes.guess_type(path.name)
+              mime = mime or 'application/octet-stream'
+              if mime.startswith('image/'):
+                  category, directory = 'image', images
+              elif mime.startswith('video/'):
+                  category, directory = 'video', videos
+              else:
+                  category, directory = 'other', other
+              destination = unique(directory, path.name)
+              shutil.copy2(path, destination)
+              files.append({
+                  'original_name': path.name,
+                  'repository_path': destination.as_posix(),
+                  'category': category,
+                  'mime_type': mime,
+                  'size_bytes': destination.stat().st_size,
+                  'sha256': hashlib.sha256(destination.read_bytes()).hexdigest(),
+              })
+
+          if not files:
+              raise SystemExit('No media files were downloaded.')
+
+          manifest = {
+              'source': 'Google Drive public folder',
+              'source_url': 'https://drive.google.com/drive/folders/16dGWA3s7DInFaQQ1y76Sij8SWNpfEbMI?usp=sharing',
+              'imported_at_utc': datetime.now(timezone.utc).isoformat(),
+              'expected_files': len(listing),
+              'downloaded_files': len(files),
+              'failed_files': len(failures),
+              'images': sum(item['category'] == 'image' for item in files),
+              'videos': sum(item['category'] == 'video' for item in files),
+              'other': sum(item['category'] == 'other' for item in files),
+              'failures': failures,
+              'files': files,
+          }
+          (root / 'media-manifest.json').write_text(
+              json.dumps(manifest, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          (root / 'README.md').write_text(
+              '# Vanessa Braz — Source Media\n\n'
+              'Mídias importadas da pasta pública do Google Drive fornecida para este projeto.\n\n'
+              '- `images/`: imagens originais.\n'
+              '- `videos/`: vídeos originais.\n'
+              '- `other/`: outros formatos.\n'
+              '- `media-manifest.json`: inventário com MIME, tamanho, SHA-256 e eventuais falhas.\n\n'
+              'Os nomes de origem são preservados para rastreabilidade.\n',
+              encoding='utf-8',
+          )
+          print(json.dumps({
+              'expected': manifest['expected_files'],
+              'downloaded': manifest['downloaded_files'],
+              'failed': manifest['failed_files'],
+              'images': manifest['images'],
+              'videos': manifest['videos'],
+              'other': manifest['other'],
+          }, indent=2))
+          PY
+
+      - name: Commit imported media
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$MEDIA_ROOT"
+          if git diff --cached --quiet; then
+            echo "No media changes to commit."
+          else
+            git commit -m "assets(media): import Vanessa Braz media from Google Drive"
+            git push origin HEAD:main
+          fi
+
+      - name: Verify complete transfer
+        run: |
+          python <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path('apps/web/public/media/source/media-manifest.json').read_text(encoding='utf-8'))
+          if manifest['failed_files']:
+              print('Files that still need a retry:')
+              for item in manifest['failures']:
+                  print(f"- {item['path']}")
+              raise SystemExit(2)
+          if manifest['downloaded_files'] != manifest['expected_files']:
+              raise SystemExit('Drive inventory and imported file counts differ.')
+          print(f"Complete transfer verified: {manifest['downloaded_files']} files.")
+          PY
