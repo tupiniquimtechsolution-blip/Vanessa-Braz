@@ -1,32 +1,97 @@
-// URLs das imagens geradas para o projeto
-// Quando as fotos reais do Google Drive forem adicionadas, substituir estas URLs
+// Catálogo de mídias reais — Vanessa Braz
+// Fonte: repositório GitHub (apps/web/public/media/source/)
+// Manifesto: 185 arquivos (157 imagens + 28 vídeos)
 
-export const images = {
-  // Hero / Banner
-  hero: 'https://image.qwenlm.ai/generated-images/8967a56a-c607-4f5c-a8ae-543ca3d527b6/_result.png',
-  
-  // Serviços
-  sobrancelhas: 'https://image.qwenlm.ai/generated-images/1439688a-4d9f-4a28-8b2a-f1a60b93ac2d/_result.png',
-  cilios: 'https://image.qwenlm.ai/generated-images/0be79705-d5fd-4e49-86e2-47e8a3e26403/_result.png',
-  facial: 'https://image.qwenlm.ai/generated-images/60763c58-56bc-4b00-8b50-649c3161d7f0/_result.png',
-  massagem: 'https://image.qwenlm.ai/generated-images/1f25482d-e58b-4ae9-ba4d-1e02be6a7865/_result.png',
-  
-  // Galeria / Resultados
-  antesDepois: 'https://image.qwenlm.ai/generated-images/5dbef033-a7b0-4f36-aba3-95c4a38941b1/_result.png',
-  retrato: 'https://image.qwenlm.ai/generated-images/08921b9a-bab7-41ad-a313-866072110638/_result.png',
+const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/tupiniquimtechsolution-blip/Vanessa-Braz/main/apps/web/public/media/source';
+
+// URLs das imagens reais (selecionadas estrategicamente do acervo)
+export const media = {
+  // Hero / Identidade
+  hero: [
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.23.51.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.24.30.jpeg`,
+  ],
+
+  // Galeria principal (variedade de resultados)
+  gallery: [
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.30.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.31.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.32.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.34.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.35.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.38.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.39%20(1).jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.42.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.45.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.47%20(1).jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.50.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.52.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.04.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.07.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.29.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.34.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.38.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.44.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.45.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.48.jpeg`,
+  ],
+
+  // Detalhes / Close-ups
+  details: [
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.30%20(1).jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.32%20(1).jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.33.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.36.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.40.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.43.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.46.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.49.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.51.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.54.jpeg`,
+  ],
+
+  // Ambiente / Bastidores
+  environment: [
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.05.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.06.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.08.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.09.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.30.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.31.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.32.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.33.jpeg`,
+  ],
+
+  // Vídeos (posters)
+  videos: [
+    `${GITHUB_RAW_BASE}/videos/WhatsApp%20Video%202026-09-12%20at%2010.24.25.mp4`,
+    `${GITHUB_RAW_BASE}/videos/WhatsApp%20Video%202026-09-12%20at%2010.26.29.mp4`,
+    `${GITHUB_RAW_BASE}/videos/WhatsApp%20Video%202026-09-12%20at%2010.26.34.mp4`,
+    `${GITHUB_RAW_BASE}/videos/WhatsApp%20Video%202026-09-12%20at%2010.53.29.mp4`,
+  ],
 };
 
-// Imagens para a galeria de resultados
-// NOTA: As fotos reais do Google Drive serão adicionadas aqui
-// Link: https://drive.google.com/drive/folders/16dGWA3s7DInFaQQ1y76Sij8SWNpfEbMI
-export const galleryImages = [
-  { src: images.sobrancelhas, alt: 'Design de sobrancelhas - resultado natural', category: 'Sobrancelhas' },
-  { src: images.cilios, alt: 'Extensão de cílios - fio a fio', category: 'Cílios' },
-  { src: images.facial, alt: 'Tratamento facial - pele renovada', category: 'Facial' },
-  { src: images.antesDepois, alt: 'Antes e depois - design de sobrancelhas', category: 'Sobrancelhas' },
-  { src: images.massagem, alt: 'Ambiente de massagem relaxante', category: 'Corporal' },
-  { src: images.retrato, alt: 'Cliente satisfeita - resultado final', category: 'Resultados' },
-  { src: images.sobrancelhas, alt: 'Micropigmentação - técnica fio a fio', category: 'Sobrancelhas' },
-  { src: images.cilios, alt: 'Lash lifting - curvatura natural', category: 'Cílios' },
-  { src: images.facial, alt: 'Limpeza de pele profunda', category: 'Facial' },
-];
+// Imagem principal do hero (primeira do acervo)
+export const heroImage = media.hero[0];
+
+// Imagens para galeria editorial
+export const galleryImages = media.gallery.map((src, index) => ({
+  src,
+  alt: `Trabalho real Vanessa Braz — ${index + 1}`,
+  category: 'Resultado',
+}));
+
+// Imagens para seção de detalhes
+export const detailImages = media.details;
+
+// Imagens de ambiente
+export const environmentImages = media.environment;
+
+// Total do acervo
+export const mediaStats = {
+  total: 185,
+  images: 157,
+  videos: 28,
+  source: 'Google Drive → GitHub',
+  importedAt: '2026-09-12T15:24:22.405828+00:00',
+};

@@ -1,68 +1,72 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-primary: #532B36;
-  --color-brand-secondary: #D7A6A0;
-  --color-brand-accent: #C6A66B;
-  --color-brand-background: #FFF9F7;
-  --color-brand-surface: #F7ECE9;
-  --color-brand-text: #241C1E;
-  --color-brand-muted: #6F6265;
-  --color-brand-success: #4A7C59;
-  --color-brand-warning: #D4A843;
-  --color-brand-danger: #C44536;
-  --color-brand-rose: #D7A6A0;
-  --color-brand-wine: #532B36;
-  --color-brand-gold: #C6A66B;
+  /* Paleta inspirada na identidade real — preto profundo, rosé sofisticado, dourado quente */
+  --color-brand-primary: #1a1a1a;
+  --color-brand-secondary: #c4a882;
+  --color-brand-accent: #b08d6a;
+  --color-brand-background: #faf8f5;
+  --color-brand-surface: #f0ebe4;
+  --color-brand-text: #1a1a1a;
+  --color-brand-muted: #6b6560;
+  --color-brand-success: #4a7c59;
+  --color-brand-warning: #c49a43;
+  --color-brand-danger: #b44536;
+  --color-brand-rose: #d4a8a0;
+  --color-brand-wine: #532b36;
+  --color-brand-gold: #c6a66b;
 
   --font-display: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
 }
 
-/* Base Styles */
+/* Base */
 * {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   font-family: var(--font-body);
   color: var(--color-brand-text);
   background-color: var(--color-brand-background);
-  line-height: 1.6;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  line-height: 1.2;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
-/* Custom scrollbar */
+/* Scrollbar sutil */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-brand-surface);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-brand-secondary);
-  border-radius: 4px;
+  background: var(--color-brand-surface);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brand-primary);
+  background: var(--color-brand-muted);
 }
 
-/* Focus styles for accessibility */
+/* Focus — acessibilidade */
 *:focus-visible {
-  outline: 2px solid var(--color-brand-accent);
+  outline: 2px solid var(--color-brand-text);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
 /* Reduced motion */
@@ -75,11 +79,16 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Animations */
+/* Animações discretas */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -87,46 +96,30 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse-soft {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
+  animation: fadeInUp 0.5s ease-out forwards;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
+/* Selection */
+::selection {
+  background-color: var(--color-brand-secondary);
+  color: white;
 }
 
-.animate-slide-in-right {
-  animation: slideInRight 0.5s ease-out forwards;
+/* Images — performance */
+img {
+  image-rendering: -webkit-optimize-contrast;
 }
 
-.animate-pulse-soft {
-  animation: pulse-soft 2s ease-in-out infinite;
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-
-/* Stagger animations */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
