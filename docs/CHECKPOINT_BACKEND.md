@@ -9,13 +9,14 @@ Sessão Arena está fixa nesta branch. A branch pedida `arena/vanessa-backend-pr
 `eff2fa85b88c829115fc68b19cf0d4c3e5f87a4e`
 
 ## HEAD_SHA
-ver `git rev-parse HEAD` após os commits deste checkpoint
+`327aab6f323ba917299447cd641bcd8e2095470d`
 
 ## COMMITS
-1. `chore(frontend): restore premium baseline from checkpoint 1`
-2. `feat(db): add versioned supabase schema, booking RPC and RLS`
-3. `feat(auth,booking,payments): replace demo persistence with supabase adapters`
-4. `test: add unit, integration, security and e2e coverage`
+1. `8cd2c9d` chore(frontend): restore premium baseline from checkpoint 1
+2. `0253053` feat(db): add versioned supabase schema, booking RPC and RLS
+3. `3e0cda7` feat(auth,booking,payments): replace demo persistence with supabase
+4. `b397f15` test: cover auth rules, RLS negatives, double booking and webhooks
+5. `01cbf5a` docs: record backend checkpoint for audit before merge
 
 ## MIGRATIONS
 - `supabase/migrations/20260915000001_init_schema.sql`
