@@ -1,0 +1,2655 @@
+PROJECT: Vanessa Braz — Beleza & Autoestima
+CHECKPOINT: 1
+STACK: Vite + React + TypeScript + Tailwind CSS 4
+FILES_COUNT: 27
+PACKAGE_MANAGER: npm
+LINT: PASS
+TYPECHECK: PASS
+BUILD: PASS
+TESTS: NOT_RUN
+
+FILES:
+- package.json
+- vite.config.js
+- tsconfig.json
+- index.html
+- .env.example
+- src/main.tsx
+- src/App.tsx
+- src/index.css
+- src/components/Gallery.tsx
+- src/components/Layout.tsx
+- src/lib/data.ts
+- src/lib/media.ts
+- src/lib/store.ts
+- src/pages/Admin.tsx
+- src/pages/Booking.tsx
+- src/pages/ClientArea.tsx
+- src/pages/Contact.tsx
+- src/pages/Gallery.tsx
+- src/pages/Home.tsx
+- src/pages/Login.tsx
+- src/pages/Privacy.tsx
+- src/pages/Services.tsx
+- src/pages/Terms.tsx
+- CHECKPOINT_1_MANIFEST.md
+- docs/MEDIA_RUNTIME_MAP.md
+- docs/MEDIA_USAGE.md
+- docs/DESIGN_DIRECTION.md
+
+======================================================================
+
+===== FILE BEGIN =====
+PATH: package.json
+ENCODING: UTF-8
+CONTENT:
+{
+  "name": "sandbox-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^8.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@supabase/supabase-js": "^2.98.0",
+    "canvas-confetti": "^1.9.3",
+    "date-fns": "^2.30.0",
+    "framer-motion": "^11.16.1",
+    "lucide-react": "^0.294.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "recharts": "^2.10.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.7",
+    "@types/canvas-confetti": "^1.6.4",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/uuid": "^9.0.7",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5.7.0",
+    "vite": "^6.3.5"
+  }
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: vite.config.js
+ENCODING: UTF-8
+CONTENT:
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  server: {
+    host: "0.0.0.0",
+    port: 3000,
+    strictPort: true,
+    hmr: {
+      port: 3000,
+    },
+  },
+});
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: tsconfig.json
+ENCODING: UTF-8
+CONTENT:
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src"]
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: index.html
+ENCODING: UTF-8
+CONTENT:
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Vanessa Braz — Beleza & Autoestima. Agende seus serviços de beleza online com facilidade." />
+    <meta name="theme-color" content="#532B36" />
+    <title>Vanessa Braz — Beleza & Autoestima</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; min-height: 100%; }
+      body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: .env.example
+ENCODING: UTF-8
+CONTENT:
+# Vanessa Braz — Beleza & Autoestima
+# Variáveis de Ambiente
+
+# Ambiente
+NODE_ENV=development
+DEMO_MODE=true
+
+# App
+VITE_APP_URL=http://localhost:3000
+
+# Supabase (PENDENTE_DE_CONFIGURACAO)
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+# ATENÇÃO: Nunca expor no client-side!
+SUPABASE_SERVICE_ROLE_KEY=
+
+# Mercado Pago (PENDENTE_DE_CONFIGURACAO)
+MERCADOPAGO_ACCESS_TOKEN=
+MERCADOPAGO_WEBHOOK_SECRET=
+
+# WhatsApp
+WHATSAPP_NUMBER=5511999999999
+
+# Analytics (opcional)
+# GA_MEASUREMENT_ID=
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/main.tsx
+ENCODING: UTF-8
+CONTENT:
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App.tsx";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/App.tsx
+ENCODING: UTF-8
+CONTENT:
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Services from './pages/Services';
+import Booking from './pages/Booking';
+import Login from './pages/Login';
+import ClientArea from './pages/ClientArea';
+import Admin from './pages/Admin';
+import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import GalleryPage from './pages/Gallery';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Public Routes with Layout */}
+        <Route path="/" element={<Layout><Home /></Layout>} />
+        <Route path="/servicos" element={<Layout><Services /></Layout>} />
+        <Route path="/servicos/:slug" element={<Layout><Services /></Layout>} />
+        <Route path="/galeria" element={<Layout><GalleryPage /></Layout>} />
+        <Route path="/agendar" element={<Layout><Booking /></Layout>} />
+        <Route path="/login" element={<Layout><Login /></Layout>} />
+        <Route path="/cadastro" element={<Layout><Login /></Layout>} />
+        <Route path="/minha-conta" element={<Layout><ClientArea /></Layout>} />
+        <Route path="/minha-conta/agendamentos" element={<Layout><ClientArea /></Layout>} />
+        <Route path="/minha-conta/pagamentos" element={<Layout><ClientArea /></Layout>} />
+        <Route path="/contato" element={<Layout><Contact /></Layout>} />
+        <Route path="/localizacao" element={<Layout><Contact /></Layout>} />
+        <Route path="/politica-de-privacidade" element={<Layout><Privacy /></Layout>} />
+        <Route path="/termos" element={<Layout><Terms /></Layout>} />
+
+        {/* Admin Route (own layout) */}
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/*" element={<Admin />} />
+
+        {/* 404 */}
+        <Route path="*" element={
+          <Layout>
+            <div className="py-20 text-center">
+              <h1 className="font-display text-4xl font-bold text-brand-primary mb-4">404</h1>
+              <p className="text-brand-muted mb-6">Página não encontrada</p>
+              <a href="/" className="inline-flex items-center px-6 py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors">
+                Voltar ao Início
+              </a>
+            </div>
+          </Layout>
+        } />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/index.css
+ENCODING: UTF-8
+CONTENT:
+@import "tailwindcss";
+
+@theme {
+  /* Paleta inspirada na identidade real — preto profundo, rosé sofisticado, dourado quente */
+  --color-brand-primary: #1a1a1a;
+  --color-brand-secondary: #c4a882;
+  --color-brand-accent: #b08d6a;
+  --color-brand-background: #faf8f5;
+  --color-brand-surface: #f0ebe4;
+  --color-brand-text: #1a1a1a;
+  --color-brand-muted: #6b6560;
+  --color-brand-success: #4a7c59;
+  --color-brand-warning: #c49a43;
+  --color-brand-danger: #b44536;
+  --color-brand-rose: #d4a8a0;
+  --color-brand-wine: #532b36;
+  --color-brand-gold: #c6a66b;
+
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* Base */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-brand-text);
+  background-color: var(--color-brand-background);
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* Scrollbar sutil */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-surface);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-muted);
+}
+
+/* Focus — acessibilidade */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-text);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Animações discretas */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-brand-secondary);
+  color: white;
+}
+
+/* Images — performance */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/components/Gallery.tsx
+ENCODING: UTF-8
+CONTENT:
+import { useState } from 'react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+
+interface GalleryImage {
+  src: string;
+  alt: string;
+  category?: string;
+}
+
+interface GalleryProps {
+  images: GalleryImage[];
+  columns?: 2 | 3 | 4;
+}
+
+export default function Gallery({ images, columns = 3 }: GalleryProps) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const colClass = {
+    2: 'grid-cols-2',
+    3: 'grid-cols-2 md:grid-cols-3',
+    4: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
+  }[columns];
+
+  const openLightbox = (index: number) => setLightboxIndex(index);
+  const closeLightbox = () => setLightboxIndex(null);
+  
+  const goNext = () => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((lightboxIndex + 1) % images.length);
+    }
+  };
+  
+  const goPrev = () => {
+    if (lightboxIndex !== null) {
+      setLightboxIndex((lightboxIndex - 1 + images.length) % images.length);
+    }
+  };
+
+  return (
+    <>
+      <div className={`grid ${colClass} gap-3 md:gap-4`}>
+        {images.map((image, index) => (
+          <button
+            key={index}
+            onClick={() => openLightbox(index)}
+            className="relative aspect-square overflow-hidden rounded-2xl group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
+            aria-label={`Ver imagem: ${image.alt}`}
+          >
+            <img
+              src={image.src}
+              alt={image.alt}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-brand-primary/0 group-hover:bg-brand-primary/20 transition-colors duration-300" />
+            {image.category && (
+              <span className="absolute bottom-2 left-2 px-2 py-1 bg-white/90 text-brand-primary text-xs font-medium rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                {image.category}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 animate-fade-in"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Visualização de imagem"
+        >
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 p-2 text-white/80 hover:text-white transition-colors z-10"
+            aria-label="Fechar"
+          >
+            <X size={28} />
+          </button>
+          
+          <button
+            onClick={(e) => { e.stopPropagation(); goPrev(); }}
+            className="absolute left-4 p-2 text-white/80 hover:text-white transition-colors z-10"
+            aria-label="Imagem anterior"
+          >
+            <ChevronLeft size={32} />
+          </button>
+          
+          <img
+            src={images[lightboxIndex].src}
+            alt={images[lightboxIndex].alt}
+            className="max-w-full max-h-[85vh] object-contain rounded-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+          
+          <button
+            onClick={(e) => { e.stopPropagation(); goNext(); }}
+            className="absolute right-4 p-2 text-white/80 hover:text-white transition-colors z-10"
+            aria-label="Próxima imagem"
+          >
+            <ChevronRight size={32} />
+          </button>
+
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm">
+            {lightboxIndex + 1} / {images.length}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/components/Layout.tsx
+ENCODING: UTF-8
+CONTENT:
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, MessageCircle } from 'lucide-react';
+import { businessInfo } from '../lib/data';
+
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+export default function Layout({ children }: LayoutProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
+
+  if (isAdmin) {
+    return <>{children}</>;
+  }
+
+  const navLinks = [
+    { to: '/', label: 'Início' },
+    { to: '/servicos', label: 'Serviços' },
+    { to: '/galeria', label: 'Galeria' },
+    { to: '/agendar', label: 'Agendar' },
+    { to: '/contato', label: 'Contato' },
+  ];
+
+  return (
+    <div className="min-h-screen flex flex-col bg-brand-background">
+      {/* Header — minimalista e premium */}
+      <header className="sticky top-0 z-50 bg-white border-b border-brand-surface">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 md:h-20">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3">
+              <span className="font-display text-xl md:text-2xl text-brand-text font-light tracking-tight">
+                Vanessa Braz
+              </span>
+            </Link>
+
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-8" aria-label="Navegação principal">
+              {navLinks.map(link => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`text-sm tracking-wide transition-colors ${
+                    location.pathname === link.to
+                      ? 'text-brand-text'
+                      : 'text-brand-muted hover:text-brand-text'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* CTA + Mobile Menu */}
+            <div className="flex items-center gap-4">
+              <Link
+                to="/agendar"
+                className="hidden sm:inline-flex items-center px-5 py-2 bg-brand-text text-white text-sm tracking-wide hover:bg-brand-text/90 transition-colors"
+              >
+                Agendar
+              </Link>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2 text-brand-muted hover:text-brand-text"
+                aria-label={mobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-brand-surface bg-white animate-fade-in">
+            <nav className="px-4 py-6 space-y-1" aria-label="Navegação mobile">
+              {navLinks.map(link => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-4 py-3 text-sm tracking-wide transition-colors ${
+                    location.pathname === link.to
+                      ? 'text-brand-text font-medium'
+                      : 'text-brand-muted hover:text-brand-text'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <div className="pt-4 mt-4 border-t border-brand-surface">
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-sm text-brand-muted hover:text-brand-text"
+                >
+                  Minha Conta
+                </Link>
+              </div>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-1" role="main">
+        {children}
+      </main>
+
+      {/* Footer — minimalista */}
+      <footer className="bg-brand-text text-white" role="contentinfo">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+            {/* Brand */}
+            <div className="md:col-span-5">
+              <h2 className="font-display text-2xl font-light mb-4">Vanessa Braz</h2>
+              <p className="text-white/50 text-sm leading-relaxed max-w-sm">
+                Beleza & Autoestima. Cuidado profissional para realçar sua beleza natural.
+              </p>
+            </div>
+
+            {/* Navigation */}
+            <div className="md:col-span-3">
+              <h3 className="text-xs uppercase tracking-[0.2em] text-white/40 mb-6">Navegação</h3>
+              <ul className="space-y-3">
+                <li><Link to="/servicos" className="text-white/70 hover:text-white text-sm transition-colors">Serviços</Link></li>
+                <li><Link to="/galeria" className="text-white/70 hover:text-white text-sm transition-colors">Galeria</Link></li>
+                <li><Link to="/agendar" className="text-white/70 hover:text-white text-sm transition-colors">Agendar</Link></li>
+                <li><Link to="/contato" className="text-white/70 hover:text-white text-sm transition-colors">Contato</Link></li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div className="md:col-span-4">
+              <h3 className="text-xs uppercase tracking-[0.2em] text-white/40 mb-6">Contato</h3>
+              <ul className="space-y-3 text-white/70 text-sm">
+                <li>{businessInfo.instagram}</li>
+                <li>{businessInfo.city}, {businessInfo.state}</li>
+                <li className="pt-2">
+                  <span className="text-white/40 text-xs">Horários</span><br />
+                  Seg–Sex: 9h–19h/20h<br />
+                  Sáb: 9h–16h
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-white/30 text-xs">
+              © {new Date().getFullYear()} Vanessa Braz. Todos os direitos reservados.
+            </p>
+            <div className="flex items-center gap-6">
+              <Link to="/politica-de-privacidade" className="text-white/30 text-xs hover:text-white/60 transition-colors">
+                Privacidade
+              </Link>
+              <Link to="/termos" className="text-white/30 text-xs hover:text-white/60 transition-colors">
+                Termos
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* WhatsApp Floating Button */}
+      <a
+        href={`https://wa.me/${businessInfo.whatsapp}?text=Olá! Gostaria de agendar um horário.`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-brand-text hover:bg-brand-text/90 text-white flex items-center justify-center shadow-lg transition-all"
+        aria-label="Contato via WhatsApp"
+      >
+        <MessageCircle size={24} />
+      </a>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/lib/data.ts
+ENCODING: UTF-8
+CONTENT:
+// Dados demonstrativos - PENDENTE_DE_CONFIRMACAO para dados reais
+export const DEMO_MODE = true;
+
+export interface Service {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  duration: number; // minutos
+  price: number;
+  category: string;
+  image?: string;
+}
+
+export interface TimeSlot {
+  time: string;
+  available: boolean;
+}
+
+export interface Booking {
+  id: string;
+  serviceId: string;
+  serviceName: string;
+  date: string;
+  time: string;
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+  price: number;
+  clientName: string;
+  clientPhone: string;
+  createdAt: string;
+}
+
+export interface Client {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  createdAt: string;
+}
+
+export const services: Service[] = [
+  {
+    id: '1',
+    name: 'Design de Sobrancelhas',
+    slug: 'design-sobrancelhas',
+    description: 'Design personalizado com técnica de henna ou linha, valorizando o formato natural do seu rosto.',
+    duration: 45,
+    price: 60,
+    category: 'Sobrancelhas',
+  },
+  {
+    id: '2',
+    name: 'Micropigmentação de Sobrancelhas',
+    slug: 'micropigmentacao-sobrancelhas',
+    description: 'Técnica fio a fio com pigmentos de alta qualidade para sobrancelhas naturais e definidas.',
+    duration: 120,
+    price: 450,
+    category: 'Sobrancelhas',
+  },
+  {
+    id: '3',
+    name: 'Extensão de Cílios',
+    slug: 'extensao-cilios',
+    description: 'Cílios fio a fio com efeito natural ou volume, para um olhar marcante e sofisticado.',
+    duration: 90,
+    price: 180,
+    category: 'Cílios',
+  },
+  {
+    id: '4',
+    name: 'Lash Lifting',
+    slug: 'lash-lifting',
+    description: 'Curvatura natural dos seus cílios com tratamento nutritivo. Duração de 6 a 8 semanas.',
+    duration: 60,
+    price: 120,
+    category: 'Cílios',
+  },
+  {
+    id: '5',
+    name: 'Limpeza de Pele Profunda',
+    slug: 'limpeza-pele',
+    description: 'Tratamento completo com extração, alta frequência e máscara calmante para uma pele renovada.',
+    duration: 75,
+    price: 150,
+    category: 'Facial',
+  },
+  {
+    id: '6',
+    name: 'Peeling de Diamante',
+    slug: 'peeling-diamante',
+    description: 'Microdermoabrasão suave que renova a pele, reduz manchas e linhas finas.',
+    duration: 60,
+    price: 200,
+    category: 'Facial',
+  },
+  {
+    id: '7',
+    name: 'Massagem Relaxante',
+    slug: 'massagem-relaxante',
+    description: 'Massagem corporal com óleos essenciais para alívio do estresse e tensão muscular.',
+    duration: 60,
+    price: 130,
+    category: 'Corporal',
+  },
+  {
+    id: '8',
+    name: 'Drenagem Linfática',
+    slug: 'drenagem-linfatica',
+    description: 'Técnica manual que estimula o sistema linfático, reduzindo inchaço e retenção.',
+    duration: 60,
+    price: 140,
+    category: 'Corporal',
+  },
+];
+
+export const categories = [...new Set(services.map(s => s.category))];
+
+// Horário de funcionamento
+export const businessHours = {
+  monday: { open: '09:00', close: '19:00' },
+  tuesday: { open: '09:00', close: '19:00' },
+  wednesday: { open: '09:00', close: '19:00' },
+  thursday: { open: '09:00', close: '20:00' },
+  friday: { open: '09:00', close: '20:00' },
+  saturday: { open: '09:00', close: '16:00' },
+  sunday: null, // fechado
+};
+
+// Informações do negócio (DEMONSTRATIVOS)
+export const businessInfo = {
+  name: 'Vanessa Braz',
+  tagline: 'Beleza & Autoestima',
+  description: 'Cuidar de você é minha missão. Ofereço serviços de beleza com técnica, carinho e produtos de alta qualidade para realçar sua beleza natural.',
+  phone: 'PENDENTE_DE_CONFIRMACAO',
+  whatsapp: '5511999999999', // DADOS_DEMONSTRATIVOS
+  email: 'contato@vanessabraz.com.br', // DADOS_DEMONSTRATIVOS
+  instagram: '@vanessabraz.beleza', // DADOS_DEMONSTRATIVOS
+  address: 'PENDENTE_DE_CONFIRMACAO',
+  city: 'PENDENTE_DE_CONFIRMACAO',
+  state: 'SP',
+};
+
+export const faqItems = [
+  {
+    question: 'Como faço para agendar um horário?',
+    answer: 'Você pode agendar diretamente pelo nosso site, clicando em "Agendar Agora". Escolha o serviço, data e horário desejado.',
+  },
+  {
+    question: 'Posso cancelar ou remarcar meu agendamento?',
+    answer: 'Sim! Você pode cancelar ou remarcar com até 24 horas de antecedência sem custo. Basta acessar sua área do cliente.',
+  },
+  {
+    question: 'Quais formas de pagamento são aceitas?',
+    answer: 'Aceitamos PIX, cartão de crédito, cartão de débito e dinheiro. Pagamento online disponível via Mercado Pago.',
+  },
+  {
+    question: 'Os produtos utilizados são de qualidade?',
+    answer: 'Sim! Trabalhamos exclusivamente com marcas reconhecidas e produtos de alta qualidade, todos regulamentados pela ANVISA.',
+  },
+  {
+    question: 'Preciso de algum preparo antes do procedimento?',
+    answer: 'Depende do serviço. Ao agendar, enviaremos orientações específicas. Em geral, evite exposição solar intensa 48h antes.',
+  },
+  {
+    question: 'O espaço é acessível?',
+    answer: 'Sim! Nosso espaço foi pensado para oferecer conforto e acessibilidade a todas as clientes.',
+  },
+];
+
+export const testimonials = [
+  {
+    id: '1',
+    name: 'Carolina M.',
+    text: 'A Vanessa é incrível! Minha sobrancelha ficou perfeita, super natural. Recomendo demais!',
+    rating: 5,
+    service: 'Design de Sobrancelhas',
+  },
+  {
+    id: '2',
+    name: 'Fernanda S.',
+    text: 'Ambiente acolhedor, profissional atenciosa e resultado maravilhoso. Virei cliente fiel!',
+    rating: 5,
+    service: 'Extensão de Cílios',
+  },
+  {
+    id: '3',
+    name: 'Juliana R.',
+    text: 'A limpeza de pele foi maravilhosa! Minha pele nunca esteve tão bonita. Obrigada, Vanessa!',
+    rating: 5,
+    service: 'Limpeza de Pele',
+  },
+];
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/lib/media.ts
+ENCODING: UTF-8
+CONTENT:
+// Catálogo de mídias reais — Vanessa Braz
+// Fonte: repositório GitHub (apps/web/public/media/source/)
+// Manifesto: 185 arquivos (157 imagens + 28 vídeos)
+
+const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/tupiniquimtechsolution-blip/Vanessa-Braz/main/apps/web/public/media/source';
+
+// URLs das imagens reais (selecionadas estrategicamente do acervo)
+export const media = {
+  // Hero / Identidade
+  hero: [
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.23.51.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.24.30.jpeg`,
+  ],
+
+  // Galeria principal (variedade de resultados)
+  gallery: [
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.30.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.31.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.32.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.34.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.35.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.38.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.39%20(1).jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.42.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.45.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.47%20(1).jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.50.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.52.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.04.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.07.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.29.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.34.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.38.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.44.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.45.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.48.jpeg`,
+  ],
+
+  // Detalhes / Close-ups
+  details: [
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.30%20(1).jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.32%20(1).jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.33.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.36.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.40.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.43.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.46.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.49.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.51.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.26.54.jpeg`,
+  ],
+
+  // Ambiente / Bastidores
+  environment: [
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.05.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.06.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.08.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.09.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.30.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.31.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.32.jpeg`,
+    `${GITHUB_RAW_BASE}/images/WhatsApp%20Image%202026-09-12%20at%2010.53.33.jpeg`,
+  ],
+
+  // Vídeos (posters)
+  videos: [
+    `${GITHUB_RAW_BASE}/videos/WhatsApp%20Video%202026-09-12%20at%2010.24.25.mp4`,
+    `${GITHUB_RAW_BASE}/videos/WhatsApp%20Video%202026-09-12%20at%2010.26.29.mp4`,
+    `${GITHUB_RAW_BASE}/videos/WhatsApp%20Video%202026-09-12%20at%2010.26.34.mp4`,
+    `${GITHUB_RAW_BASE}/videos/WhatsApp%20Video%202026-09-12%20at%2010.53.29.mp4`,
+  ],
+};
+
+// Imagem principal do hero (primeira do acervo)
+export const heroImage = media.hero[0];
+
+// Imagens para galeria editorial
+export const galleryImages = media.gallery.map((src, index) => ({
+  src,
+  alt: `Trabalho real Vanessa Braz — ${index + 1}`,
+  category: 'Resultado',
+}));
+
+// Imagens para seção de detalhes
+export const detailImages = media.details;
+
+// Imagens de ambiente
+export const environmentImages = media.environment;
+
+// Total do acervo
+export const mediaStats = {
+  total: 185,
+  images: 157,
+  videos: 28,
+  source: 'Google Drive → GitHub',
+  importedAt: '2026-09-12T15:24:22.405828+00:00',
+};
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/lib/store.ts
+ENCODING: UTF-8
+CONTENT:
+import { Booking, Client } from './data';
+
+const STORAGE_KEYS = {
+  BOOKINGS: 'vb_bookings',
+  CLIENT: 'vb_client',
+  AUTH: 'vb_auth',
+  ADMIN_AUTH: 'vb_admin_auth',
+  CONSENT: 'vb_consent',
+};
+
+// Bookings
+export function getBookings(): Booking[] {
+  try {
+    const data = localStorage.getItem(STORAGE_KEYS.BOOKINGS);
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveBooking(booking: Booking): void {
+  const bookings = getBookings();
+  bookings.push(booking);
+  localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings));
+}
+
+export function updateBookingStatus(id: string, status: Booking['status']): void {
+  const bookings = getBookings();
+  const index = bookings.findIndex(b => b.id === id);
+  if (index !== -1) {
+    bookings[index].status = status;
+    localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(bookings));
+  }
+}
+
+export function getBookingsByDate(date: string): Booking[] {
+  return getBookings().filter(b => b.date === date && b.status !== 'cancelled');
+}
+
+export function getBookingsByClient(clientId: string): Booking[] {
+  return getBookings().filter(b => b.id.startsWith(clientId));
+}
+
+// Check if time slot is available
+export function isTimeSlotAvailable(date: string, time: string, serviceDuration: number): boolean {
+  const bookings = getBookingsByDate(date);
+  const serviceEndMinutes = timeToMinutes(time) + serviceDuration;
+  const serviceStartMinutes = timeToMinutes(time);
+
+  for (const booking of bookings) {
+    const bookingStart = timeToMinutes(booking.time);
+    const bookingEnd = bookingStart + getServiceDuration(booking.serviceId);
+    
+    // Check overlap
+    if (serviceStartMinutes < bookingEnd && serviceEndMinutes > bookingStart) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function timeToMinutes(time: string): number {
+  const [h, m] = time.split(':').map(Number);
+  return h * 60 + m;
+}
+
+function getServiceDuration(serviceId: string): number {
+  // Duration mapping to avoid circular dependency
+  const durations: Record<string, number> = {
+    '1': 45, '2': 120, '3': 90, '4': 60,
+    '5': 75, '6': 60, '7': 60, '8': 60,
+  };
+  return durations[serviceId] || 60;
+}
+
+// Client
+export function getClient(): Client | null {
+  try {
+    const data = localStorage.getItem(STORAGE_KEYS.CLIENT);
+    return data ? JSON.parse(data) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveClient(client: Client): void {
+  localStorage.setItem(STORAGE_KEYS.CLIENT, JSON.stringify(client));
+}
+
+// Auth
+export function isAuthenticated(): boolean {
+  return localStorage.getItem(STORAGE_KEYS.AUTH) === 'true';
+}
+
+export function setAuthenticated(value: boolean): void {
+  if (value) {
+    localStorage.setItem(STORAGE_KEYS.AUTH, 'true');
+  } else {
+    localStorage.removeItem(STORAGE_KEYS.AUTH);
+  }
+}
+
+// Admin Auth
+export function isAdminAuthenticated(): boolean {
+  return localStorage.getItem(STORAGE_KEYS.ADMIN_AUTH) === 'true';
+}
+
+export function setAdminAuthenticated(value: boolean): void {
+  if (value) {
+    localStorage.setItem(STORAGE_KEYS.ADMIN_AUTH, 'true');
+  } else {
+    localStorage.removeItem(STORAGE_KEYS.ADMIN_AUTH);
+  }
+}
+
+// Consent
+export interface Consent {
+  necessary: boolean;
+  marketing: boolean;
+  image: boolean;
+  acceptedAt: string;
+}
+
+export function getConsent(): Consent | null {
+  try {
+    const data = localStorage.getItem(STORAGE_KEYS.CONSENT);
+    return data ? JSON.parse(data) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveConsent(consent: Consent): void {
+  localStorage.setItem(STORAGE_KEYS.CONSENT, JSON.stringify(consent));
+}
+
+// Generate unique ID
+export function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
+
+// Format currency
+export function formatCurrency(value: number): string {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(value);
+}
+
+// Format date
+export function formatDate(dateStr: string): string {
+  const [year, month, day] = dateStr.split('-');
+  return `${day}/${month}/${year}`;
+}
+
+// Generate available time slots for a date
+export function generateTimeSlots(date: string): { time: string; available: boolean }[] {
+  const dayOfWeek = new Date(date + 'T12:00:00').getDay();
+  
+  const hours: Record<number, { open: string; close: string } | null> = {
+    0: null, // Sunday
+    1: { open: '09:00', close: '19:00' },
+    2: { open: '09:00', close: '19:00' },
+    3: { open: '09:00', close: '19:00' },
+    4: { open: '09:00', close: '20:00' },
+    5: { open: '09:00', close: '20:00' },
+    6: { open: '09:00', close: '16:00' },
+  };
+
+  const schedule = hours[dayOfWeek];
+  if (!schedule) return [];
+
+  const slots: { time: string; available: boolean }[] = [];
+  const [openH, openM] = schedule.open.split(':').map(Number);
+  const [closeH, closeM] = schedule.close.split(':').map(Number);
+  
+  let currentMinutes = openH * 60 + openM;
+  const endMinutes = closeH * 60 + closeM;
+
+  while (currentMinutes < endMinutes) {
+    const h = Math.floor(currentMinutes / 60);
+    const m = currentMinutes % 60;
+    const time = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+    slots.push({ time, available: true });
+    currentMinutes += 30; // 30-minute intervals
+  }
+
+  return slots;
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/Home.tsx
+ENCODING: UTF-8
+CONTENT:
+import { Link } from 'react-router-dom';
+import { Calendar, Star, ChevronDown, ChevronUp, MapPin, Clock, Phone, Instagram, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { services, faqItems, testimonials, businessInfo } from '../lib/data';
+import { heroImage, galleryImages, detailImages, environmentImages } from '../lib/media';
+import Gallery from '../components/Gallery';
+
+export default function Home() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  return (
+    <div>
+      {/* HERO — Full-bleed editorial com foto real */}
+      <section className="relative min-h-[90vh] md:min-h-screen flex items-end">
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt="Vanessa Braz — Beleza & Autoestima"
+            className="w-full h-full object-cover"
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24 w-full">
+          <div className="max-w-2xl">
+            <p className="text-white/70 text-sm uppercase tracking-[0.2em] mb-4 font-light">
+              Beleza & Autoestima
+            </p>
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-light leading-[1.1] mb-6">
+              Vanessa Braz
+            </h1>
+            <p className="text-white/80 text-lg md:text-xl leading-relaxed mb-8 max-w-lg font-light">
+              Cuidado profissional para realçar sua beleza natural com técnica, 
+              produtos de qualidade e atendimento humanizado.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link
+                to="/agendar"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-text font-medium rounded-none hover:bg-white/90 transition-all group"
+              >
+                <Calendar size={18} />
+                Agendar Horário
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <a
+                href={`https://wa.me/${businessInfo.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/40 text-white font-medium rounded-none hover:bg-white/10 transition-all"
+              >
+                <Phone size={18} />
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-white/50">
+          <span className="text-xs uppercase tracking-widest">Explorar</span>
+          <div className="w-px h-8 bg-white/30 animate-pulse" />
+        </div>
+      </section>
+
+      {/* MANIFESTO */}
+      <section className="py-20 md:py-32 bg-brand-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-5">
+              <div className="aspect-[3/4] overflow-hidden">
+                <img src={detailImages[0]} alt="Detalhe de procedimento" className="w-full h-full object-cover" loading="lazy" />
+              </div>
+            </div>
+            <div className="lg:col-span-6 lg:col-start-7">
+              <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-6">Nossa Essência</p>
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-text font-light leading-tight mb-8">
+                Beleza que transforma, cuidado que acolhe.
+              </h2>
+              <div className="space-y-6 text-brand-muted leading-relaxed">
+                <p>Cada atendimento é uma experiência pensada para você. Combinamos técnica refinada, produtos selecionados e um ambiente acolhedor para que você se sinta cuidada em cada detalhe.</p>
+                <p>Acreditamos que beleza é autoestima. E autoestima se constrói com cuidado genuíno, atenção individual e resultados que falam por si.</p>
+              </div>
+              <div className="mt-10 flex items-center gap-8">
+                <Link to="/servicos" className="text-brand-text font-medium underline underline-offset-4 hover:text-brand-primary transition-colors">
+                  Conheça os serviços →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVIÇOS */}
+      <section className="py-20 md:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16">
+            <div>
+              <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">Serviços</p>
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-text font-light">Tratamentos especializados</h2>
+            </div>
+            <Link to="/servicos" className="mt-6 md:mt-0 text-brand-text font-medium underline underline-offset-4 hover:text-brand-primary transition-colors">
+              Ver todos →
+            </Link>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-px bg-brand-surface">
+            {services.slice(0, 4).map((service, idx) => (
+              <div key={service.id} className={`bg-white p-8 md:p-12 group hover:bg-brand-surface/30 transition-colors ${idx % 2 === 0 ? 'md:pr-16' : 'md:pl-16'}`}>
+                <div className="flex flex-col h-full">
+                  <span className="text-xs uppercase tracking-wider text-brand-accent mb-4">{service.category}</span>
+                  <h3 className="font-display text-2xl md:text-3xl text-brand-text font-light mb-4">{service.name}</h3>
+                  <p className="text-brand-muted leading-relaxed mb-8 flex-grow">{service.description}</p>
+                  <div className="flex items-center justify-between pt-6 border-t border-brand-surface">
+                    <div>
+                      <span className="text-2xl font-light text-brand-text">R$ {service.price}</span>
+                      <span className="text-sm text-brand-muted ml-2">· {service.duration}min</span>
+                    </div>
+                    <Link to={`/agendar?service=${service.id}`} className="text-sm font-medium text-brand-text underline underline-offset-4 hover:text-brand-primary transition-colors">
+                      Agendar →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* GALERIA EDITORIAL */}
+      <section className="py-20 md:py-32 bg-brand-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">Resultados Reais</p>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-text font-light">Nosso trabalho fala por si</h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 auto-rows-[200px] md:auto-rows-[250px]">
+            <div className="col-span-2 row-span-2 overflow-hidden">
+              <img src={galleryImages[0]?.src} alt={galleryImages[0]?.alt} className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+            </div>
+            {galleryImages.slice(1, 7).map((img, idx) => (
+              <div key={idx} className="overflow-hidden">
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link to="/galeria" className="inline-flex items-center gap-2 px-8 py-4 border border-brand-text text-brand-text font-medium hover:bg-brand-text hover:text-white transition-all">
+              Ver galeria completa
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* BASTIDORES */}
+      <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
+        <img src={environmentImages[0]} alt="Ambiente Vanessa Braz" className="w-full h-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <div className="text-center text-white max-w-2xl px-4">
+            <p className="text-sm uppercase tracking-[0.3em] mb-4 text-white/70">Ambiente</p>
+            <h2 className="font-display text-3xl md:text-5xl font-light mb-6">Um espaço pensado para você</h2>
+            <p className="text-white/80 text-lg font-light">Conforto, privacidade e atmosfera acolhedora em cada detalhe.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* DEPOIMENTOS */}
+      <section className="py-20 md:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">Depoimentos</p>
+            <h2 className="font-display text-3xl md:text-4xl text-brand-text font-light">O que nossas clientes dizem</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+            {testimonials.map((t) => (
+              <div key={t.id} className="text-center md:text-left">
+                <div className="flex justify-center md:justify-start mb-4">
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} size={14} className="fill-brand-accent text-brand-accent" />
+                  ))}
+                </div>
+                <p className="text-brand-muted leading-relaxed mb-6 italic font-light">"{t.text}"</p>
+                <div>
+                  <p className="font-medium text-brand-text">{t.name}</p>
+                  <p className="text-xs text-brand-muted mt-1">{t.service}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20 md:py-32 bg-brand-background">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">Dúvidas</p>
+            <h2 className="font-display text-3xl md:text-4xl text-brand-text font-light">Perguntas frequentes</h2>
+          </div>
+          <div className="divide-y divide-brand-surface">
+            {faqItems.map((item, idx) => (
+              <div key={idx}>
+                <button onClick={() => setOpenFaq(openFaq === idx ? null : idx)} className="w-full flex items-center justify-between py-6 text-left group" aria-expanded={openFaq === idx}>
+                  <span className="text-brand-text font-medium pr-8 group-hover:text-brand-primary transition-colors">{item.question}</span>
+                  {openFaq === idx ? <ChevronUp size={20} className="text-brand-accent flex-shrink-0" /> : <ChevronDown size={20} className="text-brand-muted flex-shrink-0" />}
+                </button>
+                {openFaq === idx && (
+                  <div className="pb-6 animate-fade-in">
+                    <p className="text-brand-muted leading-relaxed">{item.answer}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA FINAL */}
+      <section className="py-20 md:py-32 bg-brand-text">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-display text-3xl md:text-5xl text-white font-light mb-6">Pronta para se cuidar?</h2>
+          <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto font-light">Agende seu horário e descubra uma experiência de beleza pensada para você.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/agendar" className="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-brand-text font-medium hover:bg-white/90 transition-all">
+              <Calendar size={18} />
+              Agendar Agora
+            </Link>
+            <a href={`https://wa.me/${businessInfo.whatsapp}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-10 py-4 border border-white/30 text-white font-medium hover:bg-white/10 transition-all">
+              <Phone size={18} />
+              Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* LOCALIZAÇÃO */}
+      <section className="py-20 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">Localização</p>
+              <h2 className="font-display text-3xl md:text-4xl text-brand-text font-light mb-8">Venha nos visitar</h2>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <MapPin size={20} className="text-brand-accent mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-brand-text font-medium">Endereço</p>
+                    <p className="text-brand-muted text-sm mt-1">{businessInfo.address || 'PENDENTE_DE_CONFIRMAÇÃO'}</p>
+                    <p className="text-brand-muted text-sm">{businessInfo.city}, {businessInfo.state}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Clock size={20} className="text-brand-accent mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-brand-text font-medium">Horários</p>
+                    <p className="text-brand-muted text-sm mt-1">Seg a Sex: 9h – 19h/20h</p>
+                    <p className="text-brand-muted text-sm">Sábado: 9h – 16h</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Instagram size={20} className="text-brand-accent mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="text-brand-text font-medium">Instagram</p>
+                    <p className="text-brand-muted text-sm mt-1">{businessInfo.instagram}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="aspect-square bg-brand-surface flex items-center justify-center">
+              <p className="text-brand-muted text-sm">Mapa — INTEGRATION_PENDING</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/Services.tsx
+ENCODING: UTF-8
+CONTENT:
+import { Link } from 'react-router-dom';
+import { Clock, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { services, categories } from '../lib/data';
+import { formatCurrency } from '../lib/store';
+import { detailImages } from '../lib/media';
+
+export default function Services() {
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const filteredServices = activeCategory === 'all' ? services : services.filter(s => s.category === activeCategory);
+
+  return (
+    <div>
+      <section className="pt-20 md:pt-32 pb-12 md:pb-16 bg-brand-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">Serviços</p>
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-brand-text font-light leading-tight mb-6">Tratamentos pensados para você</h1>
+            <p className="text-brand-muted text-lg leading-relaxed max-w-2xl">Cada procedimento é realizado com técnica refinada, produtos de qualidade e atenção individual para resultados que realçam sua beleza natural.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="sticky top-16 md:top-20 z-40 bg-white/95 backdrop-blur-sm border-b border-brand-surface">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-1 py-4 overflow-x-auto scrollbar-hide">
+            <button onClick={() => setActiveCategory('all')} className={`px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${activeCategory === 'all' ? 'text-brand-text border-b-2 border-brand-text' : 'text-brand-muted hover:text-brand-text'}`}>Todos</button>
+            {categories.map(cat => (
+              <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${activeCategory === cat ? 'text-brand-text border-b-2 border-brand-text' : 'text-brand-muted hover:text-brand-text'}`}>{cat}</button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="divide-y divide-brand-surface">
+            {filteredServices.map((service, idx) => (
+              <div key={service.id} className="grid md:grid-cols-12 gap-6 md:gap-12 py-10 md:py-14 items-center group">
+                <div className="md:col-span-4 order-2 md:order-1">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img src={detailImages[idx % detailImages.length]} alt={service.name} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700" loading="lazy" />
+                  </div>
+                </div>
+                <div className="md:col-span-7 md:col-start-6 order-1 md:order-2">
+                  <span className="text-xs uppercase tracking-wider text-brand-accent mb-3 block">{service.category}</span>
+                  <h2 className="font-display text-2xl md:text-3xl lg:text-4xl text-brand-text font-light mb-4">{service.name}</h2>
+                  <p className="text-brand-muted leading-relaxed mb-6 max-w-lg">{service.description}</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+                    <div className="flex items-center gap-6">
+                      <div><span className="text-2xl font-light text-brand-text">{formatCurrency(service.price)}</span></div>
+                      <div className="flex items-center gap-1 text-sm text-brand-muted"><Clock size={14} />{service.duration} min</div>
+                    </div>
+                    <Link to={`/agendar?service=${service.id}`} className="inline-flex items-center gap-2 text-sm font-medium text-brand-text underline underline-offset-4 hover:text-brand-primary transition-colors group/link">
+                      Agendar este serviço
+                      <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24 bg-brand-background">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-display text-2xl md:text-3xl text-brand-text font-light mb-4">Não encontrou o que procura?</h2>
+          <p className="text-brand-muted mb-8 max-w-lg mx-auto">Entre em contato pelo WhatsApp. Teremos prazer em ajudar.</p>
+          <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-brand-text text-white font-medium hover:bg-brand-text/90 transition-all">Falar no WhatsApp</a>
+        </div>
+      </section>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/Gallery.tsx
+ENCODING: UTF-8
+CONTENT:
+import { Camera } from 'lucide-react';
+import { galleryImages } from '../lib/media';
+import Gallery from '../components/Gallery';
+
+export default function GalleryPage() {
+  return (
+    <div>
+      <section className="pt-20 md:pt-32 pb-12 md:pb-16 bg-brand-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-3 mb-6">
+              <Camera size={20} className="text-brand-accent" />
+              <p className="text-brand-accent text-sm uppercase tracking-[0.2em]">Portfólio</p>
+            </div>
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-brand-text font-light leading-tight mb-6">Resultados reais</h1>
+            <p className="text-brand-muted text-lg leading-relaxed max-w-2xl">Cada imagem aqui é de um atendimento real. Sem filtros pesados, sem resultados inventados — apenas o trabalho dedicado de cada sessão.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-20 md:pb-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Gallery images={galleryImages} columns={3} />
+          <div className="mt-20 text-center max-w-2xl mx-auto">
+            <p className="text-brand-muted leading-relaxed">Este acervo contém {galleryImages.length} fotos selecionadas do nosso trabalho. O acervo completo possui mais de 150 imagens e 28 vídeos de procedimentos reais.</p>
+            <div className="mt-8">
+              <a href="/agendar" className="inline-flex items-center gap-2 px-8 py-4 bg-brand-text text-white font-medium hover:bg-brand-text/90 transition-all">Agendar seu horário</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/Booking.tsx
+ENCODING: UTF-8
+CONTENT:
+import { useState, useEffect } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
+import { Calendar, Clock, Check, ArrowLeft, ArrowRight, User, Phone, Sparkles } from 'lucide-react';
+import { services } from '../lib/data';
+import { generateTimeSlots, saveBooking, generateId, formatCurrency, formatDate } from '../lib/store';
+
+type Step = 'service' | 'date' | 'time' | 'info' | 'confirm';
+
+export default function Booking() {
+  const [searchParams] = useSearchParams();
+  const [step, setStep] = useState<Step>('service');
+  const [selectedService, setSelectedService] = useState<string>(searchParams.get('service') || '');
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedTime, setSelectedTime] = useState<string>('');
+  const [clientName, setClientName] = useState('');
+  const [clientPhone, setClientPhone] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [bookingComplete, setBookingComplete] = useState(false);
+  const [timeSlots, setTimeSlots] = useState<{ time: string; available: boolean }[]>([]);
+
+  const service = services.find(s => s.id === selectedService);
+
+  useEffect(() => {
+    if (selectedDate) {
+      const slots = generateTimeSlots(selectedDate);
+      setTimeSlots(slots);
+    }
+  }, [selectedDate]);
+
+  const getAvailableDates = () => {
+    const dates: string[] = [];
+    const today = new Date();
+    for (let i = 1; i <= 14; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      if (date.getDay() !== 0) {
+        dates.push(date.toISOString().split('T')[0]);
+      }
+    }
+    return dates;
+  };
+
+  const getDayName = (dateStr: string) => {
+    const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const date = new Date(dateStr + 'T12:00:00');
+    return days[date.getDay()];
+  };
+
+  const getDayNumber = (dateStr: string) => new Date(dateStr + 'T12:00:00').getDate();
+
+  const getMonthName = (dateStr: string) => {
+    const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    return months[new Date(dateStr + 'T12:00:00').getMonth()];
+  };
+
+  const handleConfirm = () => {
+    if (!service || !selectedDate || !selectedTime || !clientName || !clientPhone) return;
+    const booking = {
+      id: generateId(),
+      serviceId: service.id,
+      serviceName: service.name,
+      date: selectedDate,
+      time: selectedTime,
+      status: 'pending' as const,
+      price: service.price,
+      clientName,
+      clientPhone,
+      createdAt: new Date().toISOString(),
+    };
+    saveBooking(booking);
+    setBookingComplete(true);
+  };
+
+  if (bookingComplete) {
+    return (
+      <div className="py-12 md:py-20">
+        <div className="max-w-lg mx-auto px-4 text-center">
+          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm">
+            <div className="w-20 h-20 mx-auto bg-brand-success/10 rounded-full flex items-center justify-center mb-6">
+              <Check size={40} className="text-brand-success" />
+            </div>
+            <h1 className="font-display text-3xl font-bold text-brand-primary mb-4">Agendamento Confirmado!</h1>
+            <p className="text-brand-muted mb-8">Seu horário foi reservado com sucesso.</p>
+            <div className="bg-brand-surface/50 rounded-2xl p-6 text-left mb-8">
+              <div className="space-y-3">
+                <div className="flex justify-between"><span className="text-sm text-brand-muted">Serviço:</span><span className="text-sm font-medium">{service?.name}</span></div>
+                <div className="flex justify-between"><span className="text-sm text-brand-muted">Data:</span><span className="text-sm font-medium">{formatDate(selectedDate)}</span></div>
+                <div className="flex justify-between"><span className="text-sm text-brand-muted">Horário:</span><span className="text-sm font-medium">{selectedTime}</span></div>
+                <div className="flex justify-between"><span className="text-sm text-brand-muted">Valor:</span><span className="text-sm font-medium">{formatCurrency(service?.price || 0)}</span></div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              <Link to="/" className="inline-flex items-center justify-center px-6 py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors">Voltar ao Início</Link>
+              <Link to="/login" className="inline-flex items-center justify-center px-6 py-3 border border-brand-primary text-brand-primary font-medium rounded-full hover:bg-brand-primary hover:text-white transition-colors">Criar minha conta</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="py-12 md:py-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8">
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-brand-primary mb-2">Agendar Horário</h1>
+          <p className="text-brand-muted">Siga os passos para reservar seu horário</p>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 mb-10">
+          {(['service', 'date', 'time', 'info', 'confirm'] as Step[]).map((s, idx) => (
+            <div key={s} className="flex items-center">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${step === s ? 'bg-brand-primary text-white' : (['service', 'date', 'time', 'info', 'confirm'].indexOf(step) > idx) ? 'bg-brand-success text-white' : 'bg-brand-surface text-brand-muted'}`}>
+                {(['service', 'date', 'time', 'info', 'confirm'].indexOf(step) > idx) ? <Check size={14} /> : idx + 1}
+              </div>
+              {idx < 4 && <div className={`w-8 md:w-12 h-0.5 ${(['service', 'date', 'time', 'info', 'confirm'].indexOf(step) > idx) ? 'bg-brand-success' : 'bg-brand-surface'}`} />}
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-white rounded-3xl p-6 md:p-10 shadow-sm">
+          {step === 'service' && (
+            <div className="animate-fade-in">
+              <h2 className="font-display text-xl font-semibold text-brand-primary mb-6 flex items-center gap-2"><Sparkles size={20} />Escolha o serviço</h2>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {services.map(s => (
+                  <button key={s.id} onClick={() => setSelectedService(s.id)} className={`p-4 rounded-xl text-left transition-all border-2 ${selectedService === s.id ? 'border-brand-primary bg-brand-primary/5' : 'border-brand-surface hover:border-brand-secondary'}`}>
+                    <div className="flex items-start justify-between">
+                      <div><p className="font-medium text-brand-text">{s.name}</p><p className="text-xs text-brand-muted mt-1">{s.category} · {s.duration}min</p></div>
+                      <span className="font-bold text-brand-primary text-sm">{formatCurrency(s.price)}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <div className="mt-8 flex justify-end">
+                <button onClick={() => setStep('date')} disabled={!selectedService} className="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Próximo<ArrowRight size={16} /></button>
+              </div>
+            </div>
+          )}
+
+          {step === 'date' && (
+            <div className="animate-fade-in">
+              <h2 className="font-display text-xl font-semibold text-brand-primary mb-6 flex items-center gap-2"><Calendar size={20} />Escolha a data</h2>
+              <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+                {getAvailableDates().map(date => (
+                  <button key={date} onClick={() => setSelectedDate(date)} className={`p-3 rounded-xl text-center transition-all border ${selectedDate === date ? 'border-brand-primary bg-brand-primary text-white' : 'border-brand-surface hover:border-brand-secondary'}`}>
+                    <p className={`text-xs ${selectedDate === date ? 'text-white/70' : 'text-brand-muted'}`}>{getDayName(date)}</p>
+                    <p className={`text-lg font-bold ${selectedDate === date ? 'text-white' : 'text-brand-text'}`}>{getDayNumber(date)}</p>
+                    <p className={`text-xs ${selectedDate === date ? 'text-white/70' : 'text-brand-muted'}`}>{getMonthName(date)}</p>
+                  </button>
+                ))}
+              </div>
+              <div className="mt-8 flex justify-between">
+                <button onClick={() => setStep('service')} className="inline-flex items-center gap-2 px-6 py-3 border border-brand-surface text-brand-muted font-medium rounded-full hover:bg-brand-surface transition-colors"><ArrowLeft size={16} />Voltar</button>
+                <button onClick={() => setStep('time')} disabled={!selectedDate} className="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Próximo<ArrowRight size={16} /></button>
+              </div>
+            </div>
+          )}
+
+          {step === 'time' && (
+            <div className="animate-fade-in">
+              <h2 className="font-display text-xl font-semibold text-brand-primary mb-2 flex items-center gap-2"><Clock size={20} />Escolha o horário</h2>
+              <p className="text-sm text-brand-muted mb-6">{formatDate(selectedDate)} · {service?.name}</p>
+              {timeSlots.length === 0 ? (
+                <p className="text-brand-muted text-center py-8">Não há horários disponíveis para esta data.</p>
+              ) : (
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                  {timeSlots.map(slot => (
+                    <button key={slot.time} onClick={() => setSelectedTime(slot.time)} disabled={!slot.available} className={`p-3 rounded-xl text-center text-sm font-medium transition-all border ${selectedTime === slot.time ? 'border-brand-primary bg-brand-primary text-white' : slot.available ? 'border-brand-surface hover:border-brand-secondary' : 'border-brand-surface/50 text-brand-muted/50 cursor-not-allowed line-through'}`}>{slot.time}</button>
+                  ))}
+                </div>
+              )}
+              <div className="mt-8 flex justify-between">
+                <button onClick={() => setStep('date')} className="inline-flex items-center gap-2 px-6 py-3 border border-brand-surface text-brand-muted font-medium rounded-full hover:bg-brand-surface transition-colors"><ArrowLeft size={16} />Voltar</button>
+                <button onClick={() => setStep('info')} disabled={!selectedTime} className="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Próximo<ArrowRight size={16} /></button>
+              </div>
+            </div>
+          )}
+
+          {step === 'info' && (
+            <div className="animate-fade-in">
+              <h2 className="font-display text-xl font-semibold text-brand-primary mb-6 flex items-center gap-2"><User size={20} />Seus dados</h2>
+              <div className="space-y-4 max-w-md">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-brand-text mb-1">Nome completo *</label>
+                  <input id="name" type="text" value={clientName} onChange={e => setClientName(e.target.value)} className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors" placeholder="Seu nome" required />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-brand-text mb-1">WhatsApp *</label>
+                  <input id="phone" type="tel" value={clientPhone} onChange={e => setClientPhone(e.target.value)} className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors" placeholder="(11) 99999-9999" required />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-brand-text mb-1">E-mail (opcional)</label>
+                  <input id="email" type="email" value={clientEmail} onChange={e => setClientEmail(e.target.value)} className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors" placeholder="seu@email.com" />
+                </div>
+              </div>
+              <div className="mt-8 flex justify-between">
+                <button onClick={() => setStep('time')} className="inline-flex items-center gap-2 px-6 py-3 border border-brand-surface text-brand-muted font-medium rounded-full hover:bg-brand-surface transition-colors"><ArrowLeft size={16} />Voltar</button>
+                <button onClick={() => setStep('confirm')} disabled={!clientName || !clientPhone} className="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Próximo<ArrowRight size={16} /></button>
+              </div>
+            </div>
+          )}
+
+          {step === 'confirm' && (
+            <div className="animate-fade-in">
+              <h2 className="font-display text-xl font-semibold text-brand-primary mb-6 flex items-center gap-2"><Check size={20} />Confirme seu agendamento</h2>
+              <div className="bg-brand-surface/50 rounded-2xl p-6 mb-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center"><span className="text-sm text-brand-muted">Serviço:</span><span className="font-medium text-brand-text">{service?.name}</span></div>
+                  <div className="flex justify-between items-center"><span className="text-sm text-brand-muted">Data:</span><span className="font-medium text-brand-text">{formatDate(selectedDate)}</span></div>
+                  <div className="flex justify-between items-center"><span className="text-sm text-brand-muted">Horário:</span><span className="font-medium text-brand-text">{selectedTime}</span></div>
+                  <div className="flex justify-between items-center"><span className="text-sm text-brand-muted">Duração:</span><span className="font-medium text-brand-text">{service?.duration} minutos</span></div>
+                  <div className="flex justify-between items-center"><span className="text-sm text-brand-muted">Nome:</span><span className="font-medium text-brand-text">{clientName}</span></div>
+                  <div className="flex justify-between items-center"><span className="text-sm text-brand-muted">WhatsApp:</span><span className="font-medium text-brand-text">{clientPhone}</span></div>
+                  <hr className="border-brand-surface" />
+                  <div className="flex justify-between items-center"><span className="font-medium text-brand-text">Total:</span><span className="text-xl font-bold text-brand-primary">{formatCurrency(service?.price || 0)}</span></div>
+                </div>
+              </div>
+              <div className="bg-brand-surface/30 rounded-xl p-4 mb-6">
+                <p className="text-xs text-brand-muted">Ao confirmar, você concorda com nossos <Link to="/termos" className="text-brand-primary underline">Termos de Uso</Link> e <Link to="/politica-de-privacidade" className="text-brand-primary underline">Política de Privacidade</Link>. Seus dados serão tratados conforme a LGPD.</p>
+              </div>
+              <div className="flex justify-between">
+                <button onClick={() => setStep('info')} className="inline-flex items-center gap-2 px-6 py-3 border border-brand-surface text-brand-muted font-medium rounded-full hover:bg-brand-surface transition-colors"><ArrowLeft size={16} />Voltar</button>
+                <button onClick={handleConfirm} className="inline-flex items-center gap-2 px-8 py-3 bg-brand-success text-white font-medium rounded-full hover:bg-brand-success/90 transition-colors"><Check size={16} />Confirmar Agendamento</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/Login.tsx
+ENCODING: UTF-8
+CONTENT:
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Eye, EyeOff, LogIn, UserPlus } from 'lucide-react';
+import { setAuthenticated, saveClient, generateId, getClient } from '../lib/store';
+
+export default function Login() {
+  const navigate = useNavigate();
+  const [isRegister, setIsRegister] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [consent, setConsent] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    if (!email || !password) { setError('Preencha todos os campos obrigatórios.'); return; }
+    if (isRegister) {
+      if (!name || !phone) { setError('Preencha todos os campos.'); return; }
+      if (!consent) { setError('Você precisa aceitar a política de privacidade.'); return; }
+      const client = { id: generateId(), name, email, phone, createdAt: new Date().toISOString() };
+      saveClient(client);
+      setAuthenticated(true);
+      navigate('/minha-conta');
+    } else {
+      if (password.length < 4) { setError('Senha deve ter pelo menos 4 caracteres.'); return; }
+      const existingClient = getClient();
+      if (!existingClient) {
+        const client = { id: generateId(), name: 'Cliente', email, phone: '', createdAt: new Date().toISOString() };
+        saveClient(client);
+      }
+      setAuthenticated(true);
+      navigate('/minha-conta');
+    }
+  };
+
+  return (
+    <div className="py-12 md:py-20">
+      <div className="max-w-md mx-auto px-4">
+        <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 mx-auto bg-brand-primary/10 rounded-full flex items-center justify-center mb-4">
+              {isRegister ? <UserPlus size={28} className="text-brand-primary" /> : <LogIn size={28} className="text-brand-primary" />}
+            </div>
+            <h1 className="font-display text-2xl font-bold text-brand-primary">{isRegister ? 'Criar Conta' : 'Entrar'}</h1>
+            <p className="text-sm text-brand-muted mt-2">{isRegister ? 'Crie sua conta para agendar online' : 'Acesse sua conta para ver seus agendamentos'}</p>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {isRegister && (
+              <>
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-brand-text mb-1">Nome completo *</label>
+                  <input id="name" type="text" value={name} onChange={e => setName(e.target.value)} className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors" placeholder="Seu nome" required />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-brand-text mb-1">WhatsApp *</label>
+                  <input id="phone" type="tel" value={phone} onChange={e => setPhone(e.target.value)} className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors" placeholder="(11) 99999-9999" required />
+                </div>
+              </>
+            )}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-brand-text mb-1">E-mail *</label>
+              <input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors" placeholder="seu@email.com" required />
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-brand-text mb-1">Senha *</label>
+              <div className="relative">
+                <input id="password" type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors pr-12" placeholder="••••••••" required />
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-brand-primary" aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}>
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+            {isRegister && (
+              <div className="flex items-start gap-2">
+                <input id="consent" type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} className="mt-1 rounded border-brand-surface text-brand-primary focus:ring-brand-primary" />
+                <label htmlFor="consent" className="text-xs text-brand-muted">
+                  Li e concordo com a <Link to="/politica-de-privacidade" className="text-brand-primary underline">Política de Privacidade</Link> e os <Link to="/termos" className="text-brand-primary underline">Termos de Uso</Link>. Consentimento necessário para criação de conta (LGPD).
+                </label>
+              </div>
+            )}
+            {error && <div className="p-3 bg-brand-danger/10 text-brand-danger text-sm rounded-xl" role="alert">{error}</div>}
+            <button type="submit" className="w-full py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors">{isRegister ? 'Criar Conta' : 'Entrar'}</button>
+          </form>
+          <div className="mt-6 text-center">
+            <button onClick={() => { setIsRegister(!isRegister); setError(''); }} className="text-sm text-brand-muted hover:text-brand-primary transition-colors">
+              {isRegister ? 'Já tem conta? Entrar' : 'Não tem conta? Cadastre-se'}
+            </button>
+          </div>
+          <div className="mt-6 p-3 bg-brand-accent/10 rounded-xl">
+            <p className="text-xs text-brand-muted text-center">🔒 Modo demonstrativo — Autenticação local para testes. Em produção, utilizaremos Supabase Auth.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/ClientArea.tsx
+ENCODING: UTF-8
+CONTENT:
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Calendar, Clock, LogOut, User, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { isAuthenticated, setAuthenticated, getClient, getBookings, updateBookingStatus } from '../lib/store';
+import { Booking } from '../lib/data';
+import { formatCurrency, formatDate } from '../lib/store';
+
+export default function ClientArea() {
+  const navigate = useNavigate();
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const client = getClient();
+
+  useEffect(() => {
+    if (!isAuthenticated()) { navigate('/login'); return; }
+    setBookings(getBookings());
+  }, [navigate]);
+
+  const handleCancel = (id: string) => {
+    if (confirm('Deseja realmente cancelar este agendamento?')) {
+      updateBookingStatus(id, 'cancelled');
+      setBookings(getBookings());
+    }
+  };
+
+  const handleLogout = () => { setAuthenticated(false); navigate('/'); };
+
+  const statusConfig = {
+    pending: { label: 'Pendente', icon: AlertCircle, color: 'text-brand-warning' },
+    confirmed: { label: 'Confirmado', icon: CheckCircle, color: 'text-brand-success' },
+    completed: { label: 'Concluído', icon: CheckCircle, color: 'text-brand-primary' },
+    cancelled: { label: 'Cancelado', icon: XCircle, color: 'text-brand-danger' },
+  };
+
+  const upcomingBookings = bookings.filter(b => b.status !== 'cancelled' && b.status !== 'completed');
+  const pastBookings = bookings.filter(b => b.status === 'completed' || b.status === 'cancelled');
+
+  return (
+    <div className="py-12 md:py-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="font-display text-2xl md:text-3xl font-bold text-brand-primary">Minha Conta</h1>
+            <p className="text-brand-muted text-sm mt-1">Olá, {client?.name || 'Cliente'}! 👋</p>
+          </div>
+          <button onClick={handleLogout} className="inline-flex items-center gap-2 px-4 py-2 text-sm text-brand-muted hover:text-brand-danger border border-brand-surface rounded-full hover:border-brand-danger/30 transition-colors">
+            <LogOut size={16} />Sair
+          </button>
+        </div>
+
+        <div className="grid sm:grid-cols-3 gap-4 mb-8">
+          <Link to="/agendar" className="bg-brand-primary text-white rounded-2xl p-5 hover:bg-brand-wine/90 transition-colors">
+            <Calendar size={24} className="mb-2" />
+            <p className="font-medium">Novo Agendamento</p>
+            <p className="text-xs text-white/70 mt-1">Agende um novo horário</p>
+          </Link>
+          <div className="bg-white rounded-2xl p-5 border border-brand-surface">
+            <User size={24} className="mb-2 text-brand-primary" />
+            <p className="font-medium text-brand-text">Meus Dados</p>
+            <p className="text-xs text-brand-muted mt-1">{client?.email || 'Não informado'}</p>
+          </div>
+          <div className="bg-white rounded-2xl p-5 border border-brand-surface">
+            <Calendar size={24} className="mb-2 text-brand-primary" />
+            <p className="font-medium text-brand-text">{upcomingBookings.length} Agendamentos</p>
+            <p className="text-xs text-brand-muted mt-1">Próximos horários</p>
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h2 className="font-display text-xl font-semibold text-brand-primary mb-4">Próximos Agendamentos</h2>
+          {upcomingBookings.length === 0 ? (
+            <div className="bg-white rounded-2xl p-8 text-center border border-brand-surface">
+              <Calendar size={40} className="mx-auto text-brand-muted/50 mb-3" />
+              <p className="text-brand-muted">Nenhum agendamento pendente.</p>
+              <Link to="/agendar" className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-brand-primary text-white text-sm font-medium rounded-full hover:bg-brand-wine/90 transition-colors">Agendar Agora</Link>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {upcomingBookings.map(booking => {
+                const status = statusConfig[booking.status];
+                return (
+                  <div key={booking.id} className="bg-white rounded-2xl p-5 border border-brand-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-brand-secondary/20 rounded-xl flex items-center justify-center flex-shrink-0"><Calendar size={20} className="text-brand-primary" /></div>
+                      <div>
+                        <p className="font-medium text-brand-text">{booking.serviceName}</p>
+                        <div className="flex items-center gap-3 mt-1 text-sm text-brand-muted">
+                          <span className="flex items-center gap-1"><Calendar size={12} />{formatDate(booking.date)}</span>
+                          <span className="flex items-center gap-1"><Clock size={12} />{booking.time}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className={`flex items-center gap-1 text-xs font-medium ${status.color}`}><status.icon size={14} />{status.label}</span>
+                      <span className="font-bold text-brand-primary">{formatCurrency(booking.price)}</span>
+                      {booking.status === 'pending' && <button onClick={() => handleCancel(booking.id)} className="text-xs text-brand-danger hover:underline">Cancelar</button>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {pastBookings.length > 0 && (
+          <div>
+            <h2 className="font-display text-xl font-semibold text-brand-primary mb-4">Histórico</h2>
+            <div className="space-y-3">
+              {pastBookings.map(booking => {
+                const status = statusConfig[booking.status];
+                return (
+                  <div key={booking.id} className="bg-white/50 rounded-2xl p-5 border border-brand-surface/50 flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-brand-text/70">{booking.serviceName}</p>
+                      <p className="text-sm text-brand-muted">{formatDate(booking.date)} às {booking.time}</p>
+                    </div>
+                    <span className={`flex items-center gap-1 text-xs font-medium ${status.color}`}><status.icon size={14} />{status.label}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/Admin.tsx
+ENCODING: UTF-8
+CONTENT:
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { LayoutDashboard, Calendar, Users, DollarSign, Settings, LogOut, CheckCircle, XCircle, Clock, TrendingUp, Eye } from 'lucide-react';
+import { isAdminAuthenticated, setAdminAuthenticated, getBookings, updateBookingStatus } from '../lib/store';
+import { Booking } from '../lib/data';
+import { formatCurrency, formatDate } from '../lib/store';
+import { services } from '../lib/data';
+
+type AdminTab = 'dashboard' | 'agenda' | 'clients' | 'services' | 'settings';
+
+export default function Admin() {
+  const navigate = useNavigate();
+  const [tab, setTab] = useState<AdminTab>('dashboard');
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+
+  useEffect(() => { if (isAdminAuthenticated()) { setBookings(getBookings()); } }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loginEmail === 'admin@demo.com' && loginPassword === 'admin123') {
+      setAdminAuthenticated(true); setBookings(getBookings()); setLoginError('');
+    } else { setLoginError('Credenciais inválidas. Use: admin@demo.com / admin123'); }
+  };
+
+  const handleLogout = () => { setAdminAuthenticated(false); navigate('/'); };
+  const handleStatusChange = (id: string, status: Booking['status']) => { updateBookingStatus(id, status); setBookings(getBookings()); };
+
+  if (!isAdminAuthenticated()) {
+    return (
+      <div className="min-h-screen bg-brand-background flex items-center justify-center px-4">
+        <div className="max-w-sm w-full bg-white rounded-3xl p-8 shadow-sm">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 mx-auto bg-brand-primary/10 rounded-full flex items-center justify-center mb-4"><Settings size={28} className="text-brand-primary" /></div>
+            <h1 className="font-display text-2xl font-bold text-brand-primary">Painel Admin</h1>
+            <p className="text-sm text-brand-muted mt-2">Acesso restrito</p>
+          </div>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label htmlFor="admin-email" className="block text-sm font-medium text-brand-text mb-1">E-mail</label>
+              <input id="admin-email" type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary outline-none" placeholder="admin@demo.com" required />
+            </div>
+            <div>
+              <label htmlFor="admin-password" className="block text-sm font-medium text-brand-text mb-1">Senha</label>
+              <input id="admin-password" type="password" value={loginPassword} onChange={e => setLoginPassword(e.target.value)} className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary outline-none" placeholder="••••••••" required />
+            </div>
+            {loginError && <p className="text-sm text-brand-danger">{loginError}</p>}
+            <button type="submit" className="w-full py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors">Entrar</button>
+          </form>
+          <p className="text-xs text-brand-muted text-center mt-4">🔒 Demo: admin@demo.com / admin123</p>
+          <Link to="/" className="block text-center text-sm text-brand-muted hover:text-brand-primary mt-4">← Voltar ao site</Link>
+        </div>
+      </div>
+    );
+  }
+
+  const totalRevenue = bookings.filter(b => b.status !== 'cancelled').reduce((sum, b) => sum + b.price, 0);
+  const pendingCount = bookings.filter(b => b.status === 'pending').length;
+  const confirmedCount = bookings.filter(b => b.status === 'confirmed').length;
+  const todayBookings = bookings.filter(b => b.date === new Date().toISOString().split('T')[0]);
+
+  const tabs = [
+    { id: 'dashboard' as AdminTab, label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'agenda' as AdminTab, label: 'Agenda', icon: Calendar },
+    { id: 'clients' as AdminTab, label: 'Clientes', icon: Users },
+    { id: 'services' as AdminTab, label: 'Serviços', icon: DollarSign },
+    { id: 'settings' as AdminTab, label: 'Config', icon: Settings },
+  ];
+
+  return (
+    <div className="min-h-screen bg-brand-background flex">
+      <aside className="hidden md:flex flex-col w-64 bg-white border-r border-brand-surface p-6">
+        <div className="mb-8"><h1 className="font-display text-lg font-bold text-brand-primary">Admin</h1><p className="text-xs text-brand-muted">Vanessa Braz</p></div>
+        <nav className="flex-1 space-y-1">
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => setTab(t.id)} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${tab === t.id ? 'bg-brand-primary text-white' : 'text-brand-muted hover:bg-brand-surface'}`}>
+              <t.icon size={18} />{t.label}
+            </button>
+          ))}
+        </nav>
+        <div className="pt-4 border-t border-brand-surface space-y-2">
+          <Link to="/" className="flex items-center gap-2 px-4 py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors"><Eye size={16} /> Ver Site</Link>
+          <button onClick={handleLogout} className="flex items-center gap-2 px-4 py-2 text-sm text-brand-danger hover:text-brand-danger/80 transition-colors w-full text-left"><LogOut size={16} /> Sair</button>
+        </div>
+      </aside>
+
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-brand-surface px-4 py-3">
+        <div className="flex items-center justify-between">
+          <h1 className="font-display text-lg font-bold text-brand-primary">Admin</h1>
+          <button onClick={handleLogout} className="text-brand-muted"><LogOut size={20} /></button>
+        </div>
+        <div className="flex gap-1 mt-2 overflow-x-auto pb-1">
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => setTab(t.id)} className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap ${tab === t.id ? 'bg-brand-primary text-white' : 'bg-brand-surface text-brand-muted'}`}>
+              <t.icon size={14} />{t.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <main className="flex-1 p-6 md:p-8 mt-24 md:mt-0">
+        {tab === 'dashboard' && (
+          <div className="animate-fade-in">
+            <h2 className="font-display text-2xl font-bold text-brand-primary mb-6">Dashboard</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              <div className="bg-white rounded-2xl p-5 border border-brand-surface">
+                <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 bg-brand-primary/10 rounded-xl flex items-center justify-center"><TrendingUp size={20} className="text-brand-primary" /></div></div>
+                <p className="text-2xl font-bold text-brand-text">{formatCurrency(totalRevenue)}</p>
+                <p className="text-xs text-brand-muted">Receita total</p>
+              </div>
+              <div className="bg-white rounded-2xl p-5 border border-brand-surface">
+                <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 bg-brand-warning/10 rounded-xl flex items-center justify-center"><Clock size={20} className="text-brand-warning" /></div></div>
+                <p className="text-2xl font-bold text-brand-text">{pendingCount}</p>
+                <p className="text-xs text-brand-muted">Pendentes</p>
+              </div>
+              <div className="bg-white rounded-2xl p-5 border border-brand-surface">
+                <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 bg-brand-success/10 rounded-xl flex items-center justify-center"><CheckCircle size={20} className="text-brand-success" /></div></div>
+                <p className="text-2xl font-bold text-brand-text">{confirmedCount}</p>
+                <p className="text-xs text-brand-muted">Confirmados</p>
+              </div>
+              <div className="bg-white rounded-2xl p-5 border border-brand-surface">
+                <div className="flex items-center gap-3 mb-2"><div className="w-10 h-10 bg-brand-secondary/20 rounded-xl flex items-center justify-center"><Calendar size={20} className="text-brand-primary" /></div></div>
+                <p className="text-2xl font-bold text-brand-text">{todayBookings.length}</p>
+                <p className="text-xs text-brand-muted">Hoje</p>
+              </div>
+            </div>
+
+            <h3 className="font-display text-lg font-semibold text-brand-primary mb-4">Agendamentos Recentes</h3>
+            {bookings.length === 0 ? (
+              <div className="bg-white rounded-2xl p-8 text-center border border-brand-surface">
+                <Calendar size={40} className="mx-auto text-brand-muted/50 mb-3" />
+                <p className="text-brand-muted">Nenhum agendamento ainda.</p>
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl border border-brand-surface overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead className="bg-brand-surface/50">
+                      <tr>
+                        <th className="text-left px-4 py-3 font-medium text-brand-muted">Cliente</th>
+                        <th className="text-left px-4 py-3 font-medium text-brand-muted">Serviço</th>
+                        <th className="text-left px-4 py-3 font-medium text-brand-muted">Data</th>
+                        <th className="text-left px-4 py-3 font-medium text-brand-muted">Horário</th>
+                        <th className="text-left px-4 py-3 font-medium text-brand-muted">Status</th>
+                        <th className="text-left px-4 py-3 font-medium text-brand-muted">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-brand-surface">
+                      {bookings.slice(-10).reverse().map(b => (
+                        <tr key={b.id} className="hover:bg-brand-surface/20">
+                          <td className="px-4 py-3 font-medium text-brand-text">{b.clientName}</td>
+                          <td className="px-4 py-3 text-brand-muted">{b.serviceName}</td>
+                          <td className="px-4 py-3 text-brand-muted">{formatDate(b.date)}</td>
+                          <td className="px-4 py-3 text-brand-muted">{b.time}</td>
+                          <td className="px-4 py-3">
+                            <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${b.status === 'confirmed' ? 'bg-brand-success/10 text-brand-success' : b.status === 'pending' ? 'bg-brand-warning/10 text-brand-warning' : b.status === 'cancelled' ? 'bg-brand-danger/10 text-brand-danger' : 'bg-brand-primary/10 text-brand-primary'}`}>
+                              {b.status === 'confirmed' ? 'Confirmado' : b.status === 'pending' ? 'Pendente' : b.status === 'cancelled' ? 'Cancelado' : 'Concluído'}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3">
+                            <div className="flex gap-2">
+                              {b.status === 'pending' && (
+                                <>
+                                  <button onClick={() => handleStatusChange(b.id, 'confirmed')} className="text-xs text-brand-success hover:underline">Confirmar</button>
+                                  <button onClick={() => handleStatusChange(b.id, 'cancelled')} className="text-xs text-brand-danger hover:underline">Cancelar</button>
+                                </>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'agenda' && (
+          <div className="animate-fade-in">
+            <h2 className="font-display text-2xl font-bold text-brand-primary mb-6">Agenda</h2>
+            <div className="bg-white rounded-2xl border border-brand-surface p-6">
+              {bookings.length === 0 ? <p className="text-center py-8 text-brand-muted">Nenhum agendamento registrado.</p> : (
+                <div className="space-y-3">
+                  {bookings.map(b => (
+                    <div key={b.id} className="flex items-center justify-between p-4 bg-brand-surface/30 rounded-xl">
+                      <div><p className="font-medium text-brand-text">{b.clientName}</p><p className="text-sm text-brand-muted">{b.serviceName} · {formatDate(b.date)} às {b.time}</p></div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-brand-primary">{formatCurrency(b.price)}</span>
+                        {b.status === 'pending' && <button onClick={() => handleStatusChange(b.id, 'confirmed')} className="px-3 py-1 bg-brand-success/10 text-brand-success text-xs rounded-full hover:bg-brand-success/20">Confirmar</button>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {tab === 'clients' && (
+          <div className="animate-fade-in">
+            <h2 className="font-display text-2xl font-bold text-brand-primary mb-6">Clientes</h2>
+            <div className="bg-white rounded-2xl border border-brand-surface p-6">
+              <div className="mt-4 space-y-3">
+                {[...new Map(bookings.map(b => [b.clientPhone, b])).values()].map(b => (
+                  <div key={b.clientPhone} className="flex items-center justify-between p-4 bg-brand-surface/30 rounded-xl">
+                    <div><p className="font-medium text-brand-text">{b.clientName}</p><p className="text-sm text-brand-muted">{b.clientPhone} · {b.serviceName}</p></div>
+                    <span className="text-xs text-brand-muted">{formatCurrency(b.price)}</span>
+                  </div>
+                ))}
+                {bookings.length === 0 && <p className="text-center py-4 text-brand-muted">Nenhum cliente ainda.</p>}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {tab === 'services' && (
+          <div className="animate-fade-in">
+            <h2 className="font-display text-2xl font-bold text-brand-primary mb-6">Serviços</h2>
+            <div className="bg-white rounded-2xl border border-brand-surface p-6">
+              <div className="grid sm:grid-cols-2 gap-4">
+                {services.map(s => (
+                  <div key={s.id} className="p-4 bg-brand-surface/30 rounded-xl">
+                    <div className="flex justify-between items-start">
+                      <div><p className="font-medium text-brand-text">{s.name}</p><p className="text-xs text-brand-muted">{s.category} · {s.duration}min</p></div>
+                      <span className="font-bold text-brand-primary">{formatCurrency(s.price)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {tab === 'settings' && (
+          <div className="animate-fade-in">
+            <h2 className="font-display text-2xl font-bold text-brand-primary mb-6">Configurações</h2>
+            <div className="bg-white rounded-2xl border border-brand-surface p-6 space-y-6">
+              <div>
+                <h3 className="font-medium text-brand-text mb-2">Informações do Negócio</h3>
+                <p className="text-sm text-brand-muted">Configurações serão conectadas ao Supabase em produção.</p>
+                <div className="mt-4 p-4 bg-brand-accent/10 rounded-xl"><p className="text-xs text-brand-muted">⚙️ Modo demonstrativo — Integração pendente (INTEGRATION_PENDING)</p></div>
+              </div>
+              <div>
+                <h3 className="font-medium text-brand-text mb-2">Segurança</h3>
+                <ul className="text-sm text-brand-muted space-y-1">
+                  <li>✓ Service Role Key não exposta no client</li>
+                  <li>✓ RLS preparado para ativação</li>
+                  <li>✓ RBAC estruturado (admin/client)</li>
+                  <li>✓ Validação server-side (Zod)</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-medium text-brand-text mb-2">Status do Sistema</h3>
+                <div className="grid sm:grid-cols-2 gap-3 mt-2">
+                  <div className="p-3 bg-brand-surface/30 rounded-xl"><p className="text-xs text-brand-muted">Frontend</p><p className="text-sm font-medium text-brand-success">✓ Ativo</p></div>
+                  <div className="p-3 bg-brand-surface/30 rounded-xl"><p className="text-xs text-brand-muted">Auth</p><p className="text-sm font-medium text-brand-warning">⚠ Demo Mode</p></div>
+                  <div className="p-3 bg-brand-surface/30 rounded-xl"><p className="text-xs text-brand-muted">Database</p><p className="text-sm font-medium text-brand-warning">⚠ LocalStorage</p></div>
+                  <div className="p-3 bg-brand-surface/30 rounded-xl"><p className="text-xs text-brand-muted">Payments</p><p className="text-sm font-medium text-brand-muted">○ Pendente</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/Contact.tsx
+ENCODING: UTF-8
+CONTENT:
+import { Phone, Mail, MapPin, Clock, Instagram, MessageCircle } from 'lucide-react';
+import { businessInfo } from '../lib/data';
+
+export default function Contact() {
+  return (
+    <div className="py-12 md:py-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="font-display text-3xl md:text-5xl font-bold text-brand-primary mb-4">Entre em Contato</h1>
+          <p className="text-brand-muted max-w-2xl mx-auto">Estamos aqui para ajudar! Escolha o canal de sua preferência.</p>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-6 mb-12">
+          <a href={`https://wa.me/${businessInfo.whatsapp}`} target="_blank" rel="noopener noreferrer" className="bg-white rounded-2xl p-6 border border-brand-surface hover:border-green-300 hover:shadow-md transition-all group">
+            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><MessageCircle size={24} className="text-green-600" /></div>
+            <h3 className="font-semibold text-brand-text mb-1">WhatsApp</h3>
+            <p className="text-sm text-brand-muted">Resposta rápida</p>
+            <p className="text-sm font-medium text-green-600 mt-2">Enviar mensagem →</p>
+          </a>
+          <a href={`https://instagram.com/${businessInfo.instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="bg-white rounded-2xl p-6 border border-brand-surface hover:border-pink-300 hover:shadow-md transition-all group">
+            <div className="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><Instagram size={24} className="text-pink-600" /></div>
+            <h3 className="font-semibold text-brand-text mb-1">Instagram</h3>
+            <p className="text-sm text-brand-muted">{businessInfo.instagram}</p>
+            <p className="text-sm font-medium text-pink-600 mt-2">Seguir →</p>
+          </a>
+          <div className="bg-white rounded-2xl p-6 border border-brand-surface">
+            <div className="w-12 h-12 bg-brand-secondary/20 rounded-xl flex items-center justify-center mb-4"><Phone size={24} className="text-brand-primary" /></div>
+            <h3 className="font-semibold text-brand-text mb-1">Telefone</h3>
+            <p className="text-sm text-brand-muted">{businessInfo.phone}</p>
+            <p className="text-xs text-brand-muted mt-2">Horário comercial</p>
+          </div>
+          <div className="bg-white rounded-2xl p-6 border border-brand-surface">
+            <div className="w-12 h-12 bg-brand-secondary/20 rounded-xl flex items-center justify-center mb-4"><Mail size={24} className="text-brand-primary" /></div>
+            <h3 className="font-semibold text-brand-text mb-1">E-mail</h3>
+            <p className="text-sm text-brand-muted">{businessInfo.email}</p>
+            <p className="text-xs text-brand-muted mt-2">Respondemos em até 24h</p>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-white rounded-2xl p-6 border border-brand-surface">
+            <div className="flex items-center gap-2 mb-4"><MapPin size={20} className="text-brand-primary" /><h3 className="font-semibold text-brand-text">Localização</h3></div>
+            <p className="text-sm text-brand-muted">{businessInfo.address || 'PENDENTE_DE_CONFIRMACAO'}</p>
+            <p className="text-sm text-brand-muted">{businessInfo.city}, {businessInfo.state}</p>
+            <div className="mt-4 h-40 bg-brand-surface/50 rounded-xl flex items-center justify-center"><p className="text-xs text-brand-muted">Mapa — INTEGRATION_PENDING (Google Maps)</p></div>
+          </div>
+          <div className="bg-white rounded-2xl p-6 border border-brand-surface">
+            <div className="flex items-center gap-2 mb-4"><Clock size={20} className="text-brand-primary" /><h3 className="font-semibold text-brand-text">Horários de Funcionamento</h3></div>
+            <div className="space-y-2">
+              {[{ day: 'Segunda', hours: '9h - 19h' }, { day: 'Terça', hours: '9h - 19h' }, { day: 'Quarta', hours: '9h - 19h' }, { day: 'Quinta', hours: '9h - 20h' }, { day: 'Sexta', hours: '9h - 20h' }, { day: 'Sábado', hours: '9h - 16h' }, { day: 'Domingo', hours: 'Fechado' }].map(item => (
+                <div key={item.day} className="flex justify-between text-sm">
+                  <span className="text-brand-muted">{item.day}</span>
+                  <span className={`font-medium ${item.hours === 'Fechado' ? 'text-brand-danger' : 'text-brand-text'}`}>{item.hours}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/Privacy.tsx
+ENCODING: UTF-8
+CONTENT:
+import { Shield } from 'lucide-react';
+
+export default function Privacy() {
+  return (
+    <div className="py-12 md:py-16">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-12 h-12 bg-brand-primary/10 rounded-xl flex items-center justify-center"><Shield size={24} className="text-brand-primary" /></div>
+          <div>
+            <h1 className="font-display text-2xl md:text-3xl font-bold text-brand-primary">Política de Privacidade</h1>
+            <p className="text-sm text-brand-muted">Conforme a Lei Geral de Proteção de Dados (LGPD)</p>
+          </div>
+        </div>
+        <div className="prose prose-sm max-w-none text-brand-muted space-y-6">
+          <section>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">1. Introdução</h2>
+            <p>Esta Política de Privacidade descreve como Vanessa Braz — Beleza & Autoestima coleta, usa, armazena e protege seus dados pessoais.</p>
+          </section>
+          <section>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">2. Dados Coletados</h2>
+            <ul className="list-disc pl-6 space-y-1">
+              <li><strong>Dados de identificação:</strong> nome completo, e-mail, telefone/WhatsApp</li>
+              <li><strong>Dados de agendamento:</strong> serviços solicitados, datas e horários</li>
+              <li><strong>Dados de navegação:</strong> endereço IP, tipo de dispositivo, páginas visitadas</li>
+            </ul>
+          </section>
+          <section>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">3. Consentimentos</h2>
+            <ul className="list-disc pl-6 space-y-1">
+              <li><strong>Consentimento necessário:</strong> para funcionamento básico</li>
+              <li><strong>Consentimento de marketing:</strong> para promoções (opcional)</li>
+              <li><strong>Consentimento de uso de imagem:</strong> para divulgação (opcional e separado)</li>
+            </ul>
+          </section>
+          <section>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">4. Seus Direitos (LGPD)</h2>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>Acessar seus dados pessoais</li>
+              <li>Corrigir dados incompletos ou incorretos</li>
+              <li>Solicitar a exclusão de seus dados</li>
+              <li>Revogar consentimentos a qualquer momento</li>
+              <li>Solicitar portabilidade dos dados</li>
+            </ul>
+          </section>
+          <section>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">5. Contato</h2>
+            <p>Para exercer seus direitos: contato@vanessabraz.com.br</p>
+            <p className="mt-4 text-xs text-brand-muted italic">Última atualização: {new Date().toLocaleDateString('pt-BR')} — DADOS_DEMONSTRATIVOS</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: src/pages/Terms.tsx
+ENCODING: UTF-8
+CONTENT:
+import { FileText } from 'lucide-react';
+
+export default function Terms() {
+  return (
+    <div className="py-12 md:py-16">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-12 h-12 bg-brand-primary/10 rounded-xl flex items-center justify-center"><FileText size={24} className="text-brand-primary" /></div>
+          <div>
+            <h1 className="font-display text-2xl md:text-3xl font-bold text-brand-primary">Termos de Uso</h1>
+            <p className="text-sm text-brand-muted">Condições de utilização do site e serviços</p>
+          </div>
+        </div>
+        <div className="prose prose-sm max-w-none text-brand-muted space-y-6">
+          <section>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">1. Aceitação dos Termos</h2>
+            <p>Ao acessar este site e nossos serviços, você concorda com estes Termos de Uso.</p>
+          </section>
+          <section>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">2. Serviços</h2>
+            <p>Oferecemos serviços de beleza e estética. Os preços e condições estão sujeitos a alterações.</p>
+          </section>
+          <section>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">3. Agendamentos</h2>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>Cancelamentos com pelo menos 24 horas de antecedência</li>
+              <li>Atrasos superiores a 15 minutos podem resultar em cancelamento</li>
+            </ul>
+          </section>
+          <section>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">4. Pagamentos</h2>
+            <p>Aceitamos PIX, cartão de crédito, débito e dinheiro.</p>
+          </section>
+          <section>
+            <p className="mt-4 text-xs text-brand-muted italic">Última atualização: {new Date().toLocaleDateString('pt-BR')} — DADOS_DEMONSTRATIVOS</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: CHECKPOINT_1_MANIFEST.md
+ENCODING: UTF-8
+CONTENT:
+# CHECKPOINT 1 — Manifesto de Handoff
+
+## PROJECT_NAME
+Vanessa Braz — Beleza & Autoestima (Frontend MVP)
+
+## STACK
+- React 18 + TypeScript
+- Vite 6
+- Tailwind CSS 4
+- React Router DOM 6
+- Lucide React
+- Framer Motion
+
+## BUILD
+- JS: 266.43 KB (74.23 KB gzip)
+- CSS: 42.21 KB (7.72 KB gzip)
+- Modules: 1375
+
+## LINT: PASS
+## TYPECHECK: PASS
+## BUILD: PASS
+## TESTS: NOT_RUN
+
+## ROUTES
+/ — Home premium editorial
+/servicos — Catálogo de serviços
+/galeria — Portfolio com acervo real
+/agendar — Motor de agendamento (5 passos)
+/login — Autenticação (demo)
+/minha-conta — Área do cliente
+/admin — Painel administrativo
+/contato — Contato
+/politica-de-privacidade — LGPD
+/termos — Termos de uso
+
+## INTEGRATION_PENDING
+- Supabase Auth
+- Supabase Database
+- Mercado Pago
+- Google Maps
+- Instagram API
+
+## DADOS PENDENTES
+- Telefone real
+- Endereço real
+- Instagram real
+- Preços reais
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: docs/MEDIA_RUNTIME_MAP.md
+ENCODING: UTF-8
+CONTENT:
+# Media Runtime Map — Vanessa Braz
+
+## Acervo
+- Total: 185 arquivos (157 imagens + 28 vídeos)
+- Fonte: Google Drive → GitHub
+- Repositório: tupiniquimtechsolution-blip/Vanessa-Braz
+
+## URLs Base
+https://raw.githubusercontent.com/tupiniquimtechsolution-blip/Vanessa-Braz/main/apps/web/public/media/source/
+
+## Mídias em Uso
+- Hero: 2 imagens
+- Galeria: 20 imagens
+- Detalhes: 10 imagens
+- Ambiente: 8 imagens
+- Vídeos: 4 referenciados
+
+## Imagens de IA (Legado)
+7 imagens de IA foram geradas anteriormente mas NÃO são fonte principal.
+O catálogo atual (src/lib/media.ts) usa apenas mídias reais do acervo.
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: docs/MEDIA_USAGE.md
+ENCODING: UTF-8
+CONTENT:
+# Guia de uso das mídias — Vanessa Braz
+
+## Acervo
+185 arquivos: 157 imagens + 28 vídeos, sem falhas.
+
+## Regra principal
+Priorize fotografias e vídeos reais. Não gerar substitutos artificiais.
+
+## Como selecionar
+1. Consulte src/lib/media.ts
+2. Escolha mídia pela função da seção
+3. Preserve os arquivos originais
+
+## Uso editorial
+- Hero: fotografia real forte com espaço negativo
+- Serviços: detalhe real correspondente
+- Sobre: ambiente e bastidores reais
+- Galeria: composição variada
+===== FILE END =====
+
+===== FILE BEGIN =====
+PATH: docs/DESIGN_DIRECTION.md
+ENCODING: UTF-8
+CONTENT:
+# Direção de design — premium, humana e sem aparência de IA
+
+## Linguagem visual
+- Preto profundo como cor principal
+- Rosé/pink sofisticado como acento
+- Dourado quente para detalhes
+- Neutros claros como base
+- Playfair Display (display) + Inter (corpo)
+
+## O que evitar
+- Gradientes genéricos
+- Glassmorphism
+- Cards idênticos em grade
+- Textos superlativos sem evidência
+- Hero com estética SaaS
+
+## O que priorizar
+- Fotografia real em escala generosa
+- Layout editorial
+- Tipografia elegante
+- Hierarquia forte
+- Assimetrias sutis
+- Microinterações discretas
+===== FILE END =====
+
+======================================================================
+END OF BUNDLE
+======================================================================
