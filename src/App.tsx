@@ -23,6 +23,7 @@ function App() {
         <Route path="/agendar" element={<Layout><Booking /></Layout>} />
         <Route path="/login" element={<Layout><Login /></Layout>} />
         <Route path="/cadastro" element={<Layout><Login /></Layout>} />
+        <Route path="/recuperar-senha" element={<Layout><Login /></Layout>} />
         <Route path="/minha-conta" element={<Layout><ClientArea /></Layout>} />
         <Route path="/minha-conta/agendamentos" element={<Layout><ClientArea /></Layout>} />
         <Route path="/minha-conta/pagamentos" element={<Layout><ClientArea /></Layout>} />

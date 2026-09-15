@@ -2,56 +2,58 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Calendar, Users, DollarSign, Settings, LogOut,
-  CheckCircle, XCircle, Clock, TrendingUp, Eye
+  CheckCircle, Clock, TrendingUp, Eye
 } from 'lucide-react';
-import {
-  isAdminAuthenticated, setAdminAuthenticated,
-  getBookings, updateBookingStatus
-} from '../lib/store';
-import { Booking } from '../lib/data';
 import { formatCurrency, formatDate } from '../lib/store';
 import { services } from '../lib/data';
+import { useAuth } from '../lib/auth/AuthProvider';
+import { authErrorMessage } from '../lib/auth/errors';
+import { adminSetAppointmentStatus, listAdminAppointments, type AppointmentView } from '../lib/booking/api';
+import type { AppointmentStatus } from '../lib/supabase/types';
 
 type AdminTab = 'dashboard' | 'agenda' | 'clients' | 'services' | 'settings';
 
 export default function Admin() {
   const navigate = useNavigate();
+  const auth = useAuth();
   const [tab, setTab] = useState<AdminTab>('dashboard');
-  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [bookings, setBookings] = useState<AppointmentView[]>([]);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState('');
 
   useEffect(() => {
-    if (isAdminAuthenticated()) {
-      setBookings(getBookings());
+    if (auth.ready && auth.isAdmin) {
+      void listAdminAppointments().then(setBookings).catch(() => setBookings([]));
     }
-  }, []);
+  }, [auth.ready, auth.isAdmin]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Demo mode: admin/admin
-    if (loginEmail === 'admin@demo.com' && loginPassword === 'admin123') {
-      setAdminAuthenticated(true);
-      setBookings(getBookings());
-      setLoginError('');
-    } else {
-      setLoginError('Credenciais inválidas. Use: admin@demo.com / admin123');
+    setLoginError('');
+    try {
+      await auth.signIn(loginEmail, loginPassword);
+      await auth.refreshProfile();
+    } catch (err) {
+      setLoginError(authErrorMessage(err));
     }
   };
 
-  const handleLogout = () => {
-    setAdminAuthenticated(false);
+  const handleLogout = async () => {
+    await auth.signOut();
     navigate('/');
   };
 
-  const handleStatusChange = (id: string, status: Booking['status']) => {
-    updateBookingStatus(id, status);
-    setBookings(getBookings());
+  const handleStatusChange = async (id: string, status: AppointmentStatus) => {
+    await adminSetAppointmentStatus(id, status);
+    setBookings(await listAdminAppointments());
   };
 
-  // Login Screen
-  if (!isAdminAuthenticated()) {
+  if (!auth.ready) {
+    return <div className="min-h-screen flex items-center justify-center text-brand-muted">Carregando…</div>;
+  }
+
+  if (!auth.isAdmin) {
     return (
       <div className="min-h-screen bg-brand-background flex items-center justify-center px-4">
         <div className="max-w-sm w-full bg-white rounded-3xl p-8 shadow-sm">
@@ -62,7 +64,10 @@ export default function Admin() {
             <h1 className="font-display text-2xl font-bold text-brand-primary">Painel Admin</h1>
             <p className="text-sm text-brand-muted mt-2">Acesso restrito</p>
           </div>
-          <form onSubmit={handleLogin} className="space-y-4">
+          {auth.user && !auth.isAdmin && (
+            <p className="text-sm text-brand-danger mb-4">Esta conta não tem autorização administrativa.</p>
+          )}
+          <form onSubmit={(e) => void handleLogin(e)} className="space-y-4">
             <div>
               <label htmlFor="admin-email" className="block text-sm font-medium text-brand-text mb-1">E-mail</label>
               <input
@@ -71,7 +76,7 @@ export default function Admin() {
                 value={loginEmail}
                 onChange={e => setLoginEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary outline-none"
-                placeholder="admin@demo.com"
+                placeholder="e-mail administrativo"
                 required
               />
             </div>
@@ -95,7 +100,7 @@ export default function Admin() {
             </button>
           </form>
           <p className="text-xs text-brand-muted text-center mt-4">
-            🔒 Demo: admin@demo.com / admin123
+            Acesso somente com perfil admin autorizado no banco.
           </p>
           <Link to="/" className="block text-center text-sm text-brand-muted hover:text-brand-primary mt-4">
             ← Voltar ao site
@@ -147,7 +152,7 @@ export default function Admin() {
           <Link to="/" className="flex items-center gap-2 px-4 py-2 text-sm text-brand-muted hover:text-brand-primary transition-colors">
             <Eye size={16} /> Ver Site
           </Link>
-          <button onClick={handleLogout} className="flex items-center gap-2 px-4 py-2 text-sm text-brand-danger hover:text-brand-danger/80 transition-colors w-full text-left">
+          <button onClick={() => void handleLogout()} className="flex items-center gap-2 px-4 py-2 text-sm text-brand-danger hover:text-brand-danger/80 transition-colors w-full text-left">
             <LogOut size={16} /> Sair
           </button>
         </div>
@@ -157,7 +162,7 @@ export default function Admin() {
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-brand-surface px-4 py-3">
         <div className="flex items-center justify-between">
           <h1 className="font-display text-lg font-bold text-brand-primary">Admin</h1>
-          <button onClick={handleLogout} className="text-brand-muted">
+          <button onClick={() => void handleLogout()} className="text-brand-muted">
             <LogOut size={20} />
           </button>
         </div>
@@ -246,7 +251,7 @@ export default function Admin() {
                     <tbody className="divide-y divide-brand-surface">
                       {bookings.slice(-10).reverse().map(b => (
                         <tr key={b.id} className="hover:bg-brand-surface/20">
-                          <td className="px-4 py-3 font-medium text-brand-text">{b.clientName}</td>
+                          <td className="px-4 py-3 font-medium text-brand-text">{b.clientName || 'Cliente'}</td>
                           <td className="px-4 py-3 text-brand-muted">{b.serviceName}</td>
                           <td className="px-4 py-3 text-brand-muted">{formatDate(b.date)}</td>
                           <td className="px-4 py-3 text-brand-muted">{b.time}</td>
@@ -267,7 +272,7 @@ export default function Admin() {
                               {b.status === 'pending' && (
                                 <>
                                   <button
-                                    onClick={() => handleStatusChange(b.id, 'confirmed')}
+                                    onClick={() => void handleStatusChange(b.id, 'confirmed')}
                                     className="text-xs text-brand-success hover:underline"
                                   >
                                     Confirmar
@@ -305,14 +310,14 @@ export default function Admin() {
                   {bookings.map(b => (
                     <div key={b.id} className="flex items-center justify-between p-4 bg-brand-surface/30 rounded-xl">
                       <div>
-                        <p className="font-medium text-brand-text">{b.clientName}</p>
+                        <p className="font-medium text-brand-text">{b.clientName || 'Cliente'}</p>
                         <p className="text-sm text-brand-muted">{b.serviceName} • {formatDate(b.date)} às {b.time}</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-brand-primary">{formatCurrency(b.price)}</span>
                         {b.status === 'pending' && (
                           <button
-                            onClick={() => handleStatusChange(b.id, 'confirmed')}
+                            onClick={() => void handleStatusChange(b.id, 'confirmed')}
                             className="px-3 py-1 bg-brand-success/10 text-brand-success text-xs rounded-full hover:bg-brand-success/20"
                           >
                             Confirmar
@@ -334,11 +339,11 @@ export default function Admin() {
             <div className="bg-white rounded-2xl border border-brand-surface p-6">
               <p className="text-brand-muted">Lista de clientes cadastrados.</p>
               <div className="mt-4 space-y-3">
-                {[...new Map(bookings.map(b => [b.clientPhone, b])).values()].map(b => (
-                  <div key={b.clientPhone} className="flex items-center justify-between p-4 bg-brand-surface/30 rounded-xl">
+                {[...new Map(bookings.map(b => [b.customerId, b])).values()].map(b => (
+                  <div key={b.customerId} className="flex items-center justify-between p-4 bg-brand-surface/30 rounded-xl">
                     <div>
-                      <p className="font-medium text-brand-text">{b.clientName}</p>
-                      <p className="text-sm text-brand-muted">{b.clientPhone} • {b.serviceName}</p>
+                      <p className="font-medium text-brand-text">{b.clientName || 'Cliente'}</p>
+                      <p className="text-sm text-brand-muted">{b.clientPhone || b.customerId} • {b.serviceName}</p>
                     </div>
                     <span className="text-xs text-brand-muted">{formatCurrency(b.price)}</span>
                   </div>
@@ -378,16 +383,13 @@ export default function Admin() {
             <div className="bg-white rounded-2xl border border-brand-surface p-6 space-y-6">
               <div>
                 <h3 className="font-medium text-brand-text mb-2">Informações do Negócio</h3>
-                <p className="text-sm text-brand-muted">Configurações serão conectadas ao Supabase em produção.</p>
-                <div className="mt-4 p-4 bg-brand-accent/10 rounded-xl">
-                  <p className="text-xs text-brand-muted">⚙️ Modo demonstrativo — Integração pendente (INTEGRATION_PENDING)</p>
-                </div>
+                <p className="text-sm text-brand-muted">Catálogo, horários e política LGPD vêm de `business_settings` no Supabase.</p>
               </div>
               <div>
                 <h3 className="font-medium text-brand-text mb-2">Segurança</h3>
                 <ul className="text-sm text-brand-muted space-y-1">
                   <li>✓ Service Role Key não exposta no client</li>
-                  <li>✓ RLS preparado para ativação</li>
+                  <li>✓ RLS default-deny ativo nas migrations</li>
                   <li>✓ RBAC estruturado (admin/client)</li>
                   <li>✓ Validação server-side (Zod)</li>
                 </ul>

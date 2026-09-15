@@ -1,40 +1,82 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Calendar, Clock, Check, ArrowLeft, ArrowRight, User, Phone, Sparkles } from 'lucide-react';
-import { services } from '../lib/data';
-import { generateTimeSlots, saveBooking, generateId, formatCurrency, formatDate } from '../lib/store';
+import { Calendar, Clock, Check, ArrowLeft, ArrowRight, User, Sparkles } from 'lucide-react';
+import { formatCurrency, formatDate } from '../lib/store';
+import { loadCatalog, type CatalogProfessional, type CatalogService } from '../lib/catalog';
+import { createAppointment, listSlots } from '../lib/booking/api';
+import { useAuth } from '../lib/auth/AuthProvider';
+import { authErrorMessage } from '../lib/auth/errors';
+import type { GeneratedSlot } from '../lib/booking/overlap';
 
-type Step = 'service' | 'date' | 'time' | 'info' | 'confirm';
+type Step = 'service' | 'professional' | 'date' | 'time' | 'info' | 'confirm';
+const STEPS: Step[] = ['service', 'professional', 'date', 'time', 'info', 'confirm'];
 
 export default function Booking() {
   const [searchParams] = useSearchParams();
+  const auth = useAuth();
   const [step, setStep] = useState<Step>('service');
+  const [catalogServices, setCatalogServices] = useState<CatalogService[]>([]);
+  const [professionals, setProfessionals] = useState<CatalogProfessional[]>([]);
   const [selectedService, setSelectedService] = useState<string>(searchParams.get('service') || '');
+  const [selectedProfessional, setSelectedProfessional] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedTime, setSelectedTime] = useState<string>('');
+  const [selectedStart, setSelectedStart] = useState<string>('');
   const [clientName, setClientName] = useState('');
   const [clientPhone, setClientPhone] = useState('');
   const [clientEmail, setClientEmail] = useState('');
   const [bookingComplete, setBookingComplete] = useState(false);
-  const [timeSlots, setTimeSlots] = useState<{ time: string; available: boolean }[]>([]);
+  const [timeSlots, setTimeSlots] = useState<GeneratedSlot[]>([]);
+  const [operational, setOperational] = useState(false);
+  const [marketing, setMarketing] = useState(false);
+  const [imageUse, setImageUse] = useState(false);
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  const service = services.find(s => s.id === selectedService);
+  const service = catalogServices.find((item) => item.id === selectedService || item.slug === selectedService);
+  const professional = professionals.find((item) => item.id === selectedProfessional);
 
   useEffect(() => {
-    if (selectedDate) {
-      const slots = generateTimeSlots(selectedDate);
-      setTimeSlots(slots);
-    }
-  }, [selectedDate]);
+    void loadCatalog().then((catalog) => {
+      setCatalogServices(catalog.services);
+      setProfessionals(catalog.professionals);
+      if (catalog.professionals.length === 1) {
+        setSelectedProfessional(catalog.professionals[0].id);
+      }
+      const requested = searchParams.get('service');
+      if (requested) {
+        const match = catalog.services.find((item) => item.id === requested || item.slug === requested);
+        if (match) setSelectedService(match.id);
+      }
+    });
+  }, [searchParams]);
 
-  // Generate next 14 days
+  useEffect(() => {
+    if (auth.user) {
+      setClientName((current) => current || auth.user?.name || '');
+      setClientPhone((current) => current || auth.user?.phone || '');
+      setClientEmail((current) => current || auth.user?.email || '');
+    }
+  }, [auth.user]);
+
+  useEffect(() => {
+    if (selectedDate && service && selectedProfessional) {
+      void listSlots({
+        professionalId: selectedProfessional,
+        serviceId: service.id,
+        date: selectedDate,
+        durationMinutes: service.duration,
+      }).then(setTimeSlots).catch(() => setTimeSlots([]));
+    }
+  }, [selectedDate, service, selectedProfessional]);
+
   const getAvailableDates = () => {
     const dates: string[] = [];
     const today = new Date();
     for (let i = 1; i <= 14; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
-      if (date.getDay() !== 0) { // Skip Sunday
+      if (date.getDay() !== 0) {
         dates.push(date.toISOString().split('T')[0]);
       }
     }
@@ -43,38 +85,48 @@ export default function Booking() {
 
   const getDayName = (dateStr: string) => {
     const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-    const date = new Date(dateStr + 'T12:00:00');
-    return days[date.getDay()];
+    return days[new Date(dateStr + 'T12:00:00').getDay()];
   };
 
-  const getDayNumber = (dateStr: string) => {
-    return new Date(dateStr + 'T12:00:00').getDate();
-  };
+  const getDayNumber = (dateStr: string) => new Date(dateStr + 'T12:00:00').getDate();
 
   const getMonthName = (dateStr: string) => {
     const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-    const date = new Date(dateStr + 'T12:00:00');
-    return months[date.getMonth()];
+    return months[new Date(dateStr + 'T12:00:00').getMonth()];
   };
 
-  const handleConfirm = () => {
-    if (!service || !selectedDate || !selectedTime || !clientName || !clientPhone) return;
-
-    const booking = {
-      id: generateId(),
-      serviceId: service.id,
-      serviceName: service.name,
-      date: selectedDate,
-      time: selectedTime,
-      status: 'pending' as const,
-      price: service.price,
-      clientName,
-      clientPhone,
-      createdAt: new Date().toISOString(),
-    };
-
-    saveBooking(booking);
-    setBookingComplete(true);
+  const handleConfirm = async () => {
+    if (!service || !selectedProfessional || !selectedStart || !clientName || !clientPhone) return;
+    if (!operational) {
+      setError('O consentimento operacional é obrigatório para confirmar o agendamento.');
+      return;
+    }
+    if (!auth.user) {
+      setError('Entre na sua conta para confirmar. O agendamento não é mais salvo no navegador.');
+      return;
+    }
+    setBusy(true);
+    setError('');
+    try {
+      await createAppointment({
+        serviceId: service.id,
+        professionalId: selectedProfessional,
+        startsAt: selectedStart,
+        operationalConsent: true,
+        marketingConsent: marketing,
+        imageConsent: imageUse,
+      });
+      setBookingComplete(true);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      if (message.includes('double_booking') || message.includes('23P01')) {
+        setError('Este horário acabou de ser reservado. Escolha outro.');
+      } else {
+        setError(authErrorMessage(err));
+      }
+    } finally {
+      setBusy(false);
+    }
   };
 
   if (bookingComplete) {
@@ -89,13 +141,17 @@ export default function Booking() {
               Agendamento Confirmado!
             </h1>
             <p className="text-brand-muted mb-8">
-              Seu horário foi reservado com sucesso. Em breve entraremos em contato para confirmar os detalhes.
+              Seu horário foi reservado. Você pode acompanhar o status em Minha Conta.
             </p>
             <div className="bg-brand-surface/50 rounded-2xl p-6 text-left mb-8">
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-sm text-brand-muted">Serviço:</span>
                   <span className="text-sm font-medium">{service?.name}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-brand-muted">Profissional:</span>
+                  <span className="text-sm font-medium">{professional?.name}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-sm text-brand-muted">Data:</span>
@@ -113,16 +169,16 @@ export default function Booking() {
             </div>
             <div className="flex flex-col gap-3">
               <Link
-                to="/"
+                to="/minha-conta"
                 className="inline-flex items-center justify-center px-6 py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors"
               >
-                Voltar ao Início
+                Ver minha conta
               </Link>
               <Link
-                to="/login"
+                to="/"
                 className="inline-flex items-center justify-center px-6 py-3 border border-brand-primary text-brand-primary font-medium rounded-full hover:bg-brand-primary hover:text-white transition-colors"
               >
-                Criar minha conta
+                Voltar ao Início
               </Link>
             </div>
           </div>
@@ -134,37 +190,33 @@ export default function Booking() {
   return (
     <div className="py-12 md:py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="font-display text-3xl md:text-4xl font-bold text-brand-primary mb-2">
             Agendar Horário
           </h1>
           <p className="text-brand-muted">
-            Siga os passos para reservar seu horário
+            Serviço, profissional, data, horário, seus dados e confirmação
           </p>
         </div>
 
-        {/* Progress Steps */}
         <div className="flex items-center justify-center gap-2 mb-10">
-          {(['service', 'date', 'time', 'info', 'confirm'] as Step[]).map((s, idx) => (
-            <div key={s} className="flex items-center">
+          {STEPS.map((item, idx) => (
+            <div key={item} className="flex items-center">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${
-                step === s ? 'bg-brand-primary text-white' :
-                (['service', 'date', 'time', 'info', 'confirm'].indexOf(step) > idx) ? 'bg-brand-success text-white' :
+                step === item ? 'bg-brand-primary text-white' :
+                STEPS.indexOf(step) > idx ? 'bg-brand-success text-white' :
                 'bg-brand-surface text-brand-muted'
               }`}>
-                {(['service', 'date', 'time', 'info', 'confirm'].indexOf(step) > idx) ? <Check size={14} /> : idx + 1}
+                {STEPS.indexOf(step) > idx ? <Check size={14} /> : idx + 1}
               </div>
-              {idx < 4 && <div className={`w-8 md:w-12 h-0.5 ${
-                (['service', 'date', 'time', 'info', 'confirm'].indexOf(step) > idx) ? 'bg-brand-success' : 'bg-brand-surface'
-              }`} />}
+              {idx < STEPS.length - 1 && (
+                <div className={`w-6 md:w-10 h-0.5 ${STEPS.indexOf(step) > idx ? 'bg-brand-success' : 'bg-brand-surface'}`} />
+              )}
             </div>
           ))}
         </div>
 
-        {/* Step Content */}
         <div className="bg-white rounded-3xl p-6 md:p-10 shadow-sm">
-          {/* Step 1: Service */}
           {step === 'service' && (
             <div className="animate-fade-in">
               <h2 className="font-display text-xl font-semibold text-brand-primary mb-6 flex items-center gap-2">
@@ -172,29 +224,29 @@ export default function Booking() {
                 Escolha o serviço
               </h2>
               <div className="grid sm:grid-cols-2 gap-3">
-                {services.map(s => (
+                {catalogServices.map((item) => (
                   <button
-                    key={s.id}
-                    onClick={() => setSelectedService(s.id)}
+                    key={item.id}
+                    onClick={() => setSelectedService(item.id)}
                     className={`p-4 rounded-xl text-left transition-all border-2 ${
-                      selectedService === s.id
+                      selectedService === item.id
                         ? 'border-brand-primary bg-brand-primary/5'
                         : 'border-brand-surface hover:border-brand-secondary'
                     }`}
                   >
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="font-medium text-brand-text">{s.name}</p>
-                        <p className="text-xs text-brand-muted mt-1">{s.category} • {s.duration}min</p>
+                        <p className="font-medium text-brand-text">{item.name}</p>
+                        <p className="text-xs text-brand-muted mt-1">{item.category} • {item.duration}min</p>
                       </div>
-                      <span className="font-bold text-brand-primary text-sm">{formatCurrency(s.price)}</span>
+                      <span className="font-bold text-brand-primary text-sm">{formatCurrency(item.price)}</span>
                     </div>
                   </button>
                 ))}
               </div>
               <div className="mt-8 flex justify-end">
                 <button
-                  onClick={() => setStep('date')}
+                  onClick={() => setStep('professional')}
                   disabled={!selectedService}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -205,7 +257,48 @@ export default function Booking() {
             </div>
           )}
 
-          {/* Step 2: Date */}
+          {step === 'professional' && (
+            <div className="animate-fade-in">
+              <h2 className="font-display text-xl font-semibold text-brand-primary mb-6 flex items-center gap-2">
+                <User size={20} />
+                Escolha o profissional
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {professionals.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setSelectedProfessional(item.id)}
+                    className={`p-4 rounded-xl text-left transition-all border-2 ${
+                      selectedProfessional === item.id
+                        ? 'border-brand-primary bg-brand-primary/5'
+                        : 'border-brand-surface hover:border-brand-secondary'
+                    }`}
+                  >
+                    <p className="font-medium text-brand-text">{item.name}</p>
+                    <p className="text-xs text-brand-muted mt-1">{item.bio}</p>
+                  </button>
+                ))}
+              </div>
+              <div className="mt-8 flex justify-between">
+                <button
+                  onClick={() => setStep('service')}
+                  className="inline-flex items-center gap-2 px-6 py-3 border border-brand-surface text-brand-muted font-medium rounded-full hover:bg-brand-surface transition-colors"
+                >
+                  <ArrowLeft size={16} />
+                  Voltar
+                </button>
+                <button
+                  onClick={() => setStep('date')}
+                  disabled={!selectedProfessional}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-white font-medium rounded-full hover:bg-brand-wine/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Próximo
+                  <ArrowRight size={16} />
+                </button>
+              </div>
+            </div>
+          )}
+
           {step === 'date' && (
             <div className="animate-fade-in">
               <h2 className="font-display text-xl font-semibold text-brand-primary mb-6 flex items-center gap-2">
@@ -213,10 +306,10 @@ export default function Booking() {
                 Escolha a data
               </h2>
               <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
-                {getAvailableDates().map(date => (
+                {getAvailableDates().map((date) => (
                   <button
                     key={date}
-                    onClick={() => setSelectedDate(date)}
+                    onClick={() => { setSelectedDate(date); setSelectedTime(''); setSelectedStart(''); }}
                     className={`p-3 rounded-xl text-center transition-all border ${
                       selectedDate === date
                         ? 'border-brand-primary bg-brand-primary text-white'
@@ -237,7 +330,7 @@ export default function Booking() {
               </div>
               <div className="mt-8 flex justify-between">
                 <button
-                  onClick={() => setStep('service')}
+                  onClick={() => setStep('professional')}
                   className="inline-flex items-center gap-2 px-6 py-3 border border-brand-surface text-brand-muted font-medium rounded-full hover:bg-brand-surface transition-colors"
                 >
                   <ArrowLeft size={16} />
@@ -255,7 +348,6 @@ export default function Booking() {
             </div>
           )}
 
-          {/* Step 3: Time */}
           {step === 'time' && (
             <div className="animate-fade-in">
               <h2 className="font-display text-xl font-semibold text-brand-primary mb-2 flex items-center gap-2">
@@ -271,10 +363,13 @@ export default function Booking() {
                 </p>
               ) : (
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-                  {timeSlots.map(slot => (
+                  {timeSlots.map((slot) => (
                     <button
                       key={slot.time}
-                      onClick={() => setSelectedTime(slot.time)}
+                      onClick={() => {
+                        setSelectedTime(slot.time);
+                        setSelectedStart(slot.start.toISOString());
+                      }}
                       disabled={!slot.available}
                       className={`p-3 rounded-xl text-center text-sm font-medium transition-all border ${
                         selectedTime === slot.time
@@ -309,53 +404,51 @@ export default function Booking() {
             </div>
           )}
 
-          {/* Step 4: Info */}
           {step === 'info' && (
             <div className="animate-fade-in">
               <h2 className="font-display text-xl font-semibold text-brand-primary mb-6 flex items-center gap-2">
                 <User size={20} />
                 Seus dados
               </h2>
+              {!auth.user && (
+                <div className="mb-6 p-4 bg-brand-surface/50 rounded-xl text-sm text-brand-muted">
+                  Para confirmar, entre ou crie sua conta.{' '}
+                  <Link to="/login" className="text-brand-primary underline">Entrar</Link>
+                  {' · '}
+                  <Link to="/cadastro" className="text-brand-primary underline">Cadastrar</Link>
+                </div>
+              )}
               <div className="space-y-4 max-w-md">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-brand-text mb-1">
-                    Nome completo *
-                  </label>
+                  <label htmlFor="name" className="block text-sm font-medium text-brand-text mb-1">Nome completo *</label>
                   <input
                     id="name"
                     type="text"
                     value={clientName}
-                    onChange={e => setClientName(e.target.value)}
+                    onChange={(e) => setClientName(e.target.value)}
                     className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors"
-                    placeholder="Seu nome"
                     required
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-brand-text mb-1">
-                    WhatsApp *
-                  </label>
+                  <label htmlFor="phone" className="block text-sm font-medium text-brand-text mb-1">WhatsApp *</label>
                   <input
                     id="phone"
                     type="tel"
                     value={clientPhone}
-                    onChange={e => setClientPhone(e.target.value)}
+                    onChange={(e) => setClientPhone(e.target.value)}
                     className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors"
-                    placeholder="(11) 99999-9999"
                     required
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-brand-text mb-1">
-                    E-mail (opcional)
-                  </label>
+                  <label htmlFor="email" className="block text-sm font-medium text-brand-text mb-1">E-mail</label>
                   <input
                     id="email"
                     type="email"
                     value={clientEmail}
-                    onChange={e => setClientEmail(e.target.value)}
+                    onChange={(e) => setClientEmail(e.target.value)}
                     className="w-full px-4 py-3 border border-brand-surface rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors"
-                    placeholder="seu@email.com"
                   />
                 </div>
               </div>
@@ -379,7 +472,6 @@ export default function Booking() {
             </div>
           )}
 
-          {/* Step 5: Confirm */}
           {step === 'confirm' && (
             <div className="animate-fade-in">
               <h2 className="font-display text-xl font-semibold text-brand-primary mb-6 flex items-center gap-2">
@@ -391,6 +483,10 @@ export default function Booking() {
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-brand-muted">Serviço:</span>
                     <span className="font-medium text-brand-text">{service?.name}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-brand-muted">Profissional:</span>
+                    <span className="font-medium text-brand-text">{professional?.name}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-brand-muted">Data:</span>
@@ -408,10 +504,6 @@ export default function Booking() {
                     <span className="text-sm text-brand-muted">Nome:</span>
                     <span className="font-medium text-brand-text">{clientName}</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-brand-muted">WhatsApp:</span>
-                    <span className="font-medium text-brand-text">{clientPhone}</span>
-                  </div>
                   <hr className="border-brand-surface" />
                   <div className="flex justify-between items-center">
                     <span className="font-medium text-brand-text">Total:</span>
@@ -420,16 +512,31 @@ export default function Booking() {
                 </div>
               </div>
 
-              {/* LGPD Consent */}
-              <div className="bg-brand-surface/30 rounded-xl p-4 mb-6">
-                <p className="text-xs text-brand-muted">
-                  Ao confirmar, você concorda com nossos{' '}
-                  <Link to="/termos" className="text-brand-primary underline">Termos de Uso</Link>
-                  {' '}e{' '}
-                  <Link to="/politica-de-privacidade" className="text-brand-primary underline">Política de Privacidade</Link>
-                  . Seus dados serão tratados conforme a LGPD.
-                </p>
+              <div className="space-y-3 bg-brand-surface/30 rounded-xl p-4 mb-6">
+                <label className="flex items-start gap-2 text-xs text-brand-muted">
+                  <input type="checkbox" checked={operational} onChange={(e) => setOperational(e.target.checked)} className="mt-1" />
+                  <span>
+                    Consentimento operacional * — concordo com os{' '}
+                    <Link to="/termos" className="text-brand-primary underline">Termos</Link> e a{' '}
+                    <Link to="/politica-de-privacidade" className="text-brand-primary underline">Política de Privacidade</Link>
+                    {' '}(LGPD v1.0).
+                  </span>
+                </label>
+                <label className="flex items-start gap-2 text-xs text-brand-muted">
+                  <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} className="mt-1" />
+                  <span>Consentimento de marketing (opcional).</span>
+                </label>
+                <label className="flex items-start gap-2 text-xs text-brand-muted">
+                  <input type="checkbox" checked={imageUse} onChange={(e) => setImageUse(e.target.checked)} className="mt-1" />
+                  <span>Consentimento de uso de imagem (opcional).</span>
+                </label>
               </div>
+
+              {error && (
+                <div className="mb-4 p-3 bg-brand-danger/10 text-brand-danger text-sm rounded-xl" role="alert">
+                  {error}
+                </div>
+              )}
 
               <div className="flex justify-between">
                 <button
@@ -440,11 +547,12 @@ export default function Booking() {
                   Voltar
                 </button>
                 <button
-                  onClick={handleConfirm}
-                  className="inline-flex items-center gap-2 px-8 py-3 bg-brand-success text-white font-medium rounded-full hover:bg-brand-success/90 transition-colors"
+                  onClick={() => void handleConfirm()}
+                  disabled={busy}
+                  className="inline-flex items-center gap-2 px-8 py-3 bg-brand-success text-white font-medium rounded-full hover:bg-brand-success/90 transition-colors disabled:opacity-50"
                 >
                   <Check size={16} />
-                  Confirmar Agendamento
+                  {busy ? 'Reservando…' : 'Confirmar Agendamento'}
                 </button>
               </div>
             </div>

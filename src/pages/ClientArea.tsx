@@ -1,32 +1,39 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Calendar, Clock, LogOut, User, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
-import { isAuthenticated, setAuthenticated, getClient, getBookings, updateBookingStatus } from '../lib/store';
-import { Booking } from '../lib/data';
 import { formatCurrency, formatDate } from '../lib/store';
+import { useAuth } from '../lib/auth/AuthProvider';
+import { cancelAppointment, listMyAppointments, type AppointmentView } from '../lib/booking/api';
 
 export default function ClientArea() {
   const navigate = useNavigate();
-  const [bookings, setBookings] = useState<Booking[]>([]);
-  const client = getClient();
+  const auth = useAuth();
+  const [bookings, setBookings] = useState<AppointmentView[]>([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!auth.ready) return;
+    if (!auth.user) {
       navigate('/login');
       return;
     }
-    setBookings(getBookings());
-  }, [navigate]);
+    void listMyAppointments()
+      .then(setBookings)
+      .catch((err) => setError(err instanceof Error ? err.message : 'Não foi possível carregar os agendamentos.'));
+  }, [auth.ready, auth.user, navigate]);
 
-  const handleCancel = (id: string) => {
-    if (confirm('Deseja realmente cancelar este agendamento?')) {
-      updateBookingStatus(id, 'cancelled');
-      setBookings(getBookings());
+  const handleCancel = async (id: string) => {
+    if (!confirm('Deseja realmente cancelar este agendamento?')) return;
+    try {
+      await cancelAppointment(id);
+      setBookings(await listMyAppointments());
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Não foi possível cancelar.');
     }
   };
 
-  const handleLogout = () => {
-    setAuthenticated(false);
+  const handleLogout = async () => {
+    await auth.signOut();
     navigate('/');
   };
 
@@ -35,26 +42,30 @@ export default function ClientArea() {
     confirmed: { label: 'Confirmado', icon: CheckCircle, color: 'text-brand-success' },
     completed: { label: 'Concluído', icon: CheckCircle, color: 'text-brand-primary' },
     cancelled: { label: 'Cancelado', icon: XCircle, color: 'text-brand-danger' },
+    no_show: { label: 'Não compareceu', icon: XCircle, color: 'text-brand-danger' },
   };
 
-  const upcomingBookings = bookings.filter(b => b.status !== 'cancelled' && b.status !== 'completed');
-  const pastBookings = bookings.filter(b => b.status === 'completed' || b.status === 'cancelled');
+  const upcomingBookings = bookings.filter((b) => b.status !== 'cancelled' && b.status !== 'completed' && b.status !== 'no_show');
+  const pastBookings = bookings.filter((b) => b.status === 'completed' || b.status === 'cancelled' || b.status === 'no_show');
+
+  if (!auth.ready) {
+    return <div className="py-20 text-center text-brand-muted">Carregando sessão…</div>;
+  }
 
   return (
     <div className="py-12 md:py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="font-display text-2xl md:text-3xl font-bold text-brand-primary">
               Minha Conta
             </h1>
             <p className="text-brand-muted text-sm mt-1">
-              Olá, {client?.name || 'Cliente'}! 👋
+              Olá, {auth.user?.name || 'Cliente'}
             </p>
           </div>
           <button
-            onClick={handleLogout}
+            onClick={() => void handleLogout()}
             className="inline-flex items-center gap-2 px-4 py-2 text-sm text-brand-muted hover:text-brand-danger border border-brand-surface rounded-full hover:border-brand-danger/30 transition-colors"
           >
             <LogOut size={16} />
@@ -62,7 +73,10 @@ export default function ClientArea() {
           </button>
         </div>
 
-        {/* Quick Actions */}
+        {error && (
+          <div className="mb-6 p-3 bg-brand-danger/10 text-brand-danger text-sm rounded-xl" role="alert">{error}</div>
+        )}
+
         <div className="grid sm:grid-cols-3 gap-4 mb-8">
           <Link
             to="/agendar"
@@ -75,7 +89,7 @@ export default function ClientArea() {
           <div className="bg-white rounded-2xl p-5 border border-brand-surface">
             <User size={24} className="mb-2 text-brand-primary" />
             <p className="font-medium text-brand-text">Meus Dados</p>
-            <p className="text-xs text-brand-muted mt-1">{client?.email || 'Não informado'}</p>
+            <p className="text-xs text-brand-muted mt-1">{auth.user?.email || 'Não informado'}</p>
           </div>
           <div className="bg-white rounded-2xl p-5 border border-brand-surface">
             <Calendar size={24} className="mb-2 text-brand-primary" />
@@ -84,7 +98,6 @@ export default function ClientArea() {
           </div>
         </div>
 
-        {/* Upcoming Bookings */}
         <div className="mb-8">
           <h2 className="font-display text-xl font-semibold text-brand-primary mb-4">
             Próximos Agendamentos
@@ -102,7 +115,7 @@ export default function ClientArea() {
             </div>
           ) : (
             <div className="space-y-3">
-              {upcomingBookings.map(booking => {
+              {upcomingBookings.map((booking) => {
                 const status = statusConfig[booking.status];
                 return (
                   <div key={booking.id} className="bg-white rounded-2xl p-5 border border-brand-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -132,7 +145,7 @@ export default function ClientArea() {
                       <span className="font-bold text-brand-primary">{formatCurrency(booking.price)}</span>
                       {booking.status === 'pending' && (
                         <button
-                          onClick={() => handleCancel(booking.id)}
+                          onClick={() => void handleCancel(booking.id)}
                           className="text-xs text-brand-danger hover:underline"
                         >
                           Cancelar
@@ -146,14 +159,13 @@ export default function ClientArea() {
           )}
         </div>
 
-        {/* Past Bookings */}
         {pastBookings.length > 0 && (
           <div>
             <h2 className="font-display text-xl font-semibold text-brand-primary mb-4">
               Histórico
             </h2>
             <div className="space-y-3">
-              {pastBookings.map(booking => {
+              {pastBookings.map((booking) => {
                 const status = statusConfig[booking.status];
                 return (
                   <div key={booking.id} className="bg-white/50 rounded-2xl p-5 border border-brand-surface/50 flex items-center justify-between">

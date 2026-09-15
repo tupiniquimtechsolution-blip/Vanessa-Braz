@@ -3,7 +3,6 @@ import { Calendar, Star, ChevronDown, ChevronUp, MapPin, Clock, Phone, Instagram
 import { useState } from 'react';
 import { services, faqItems, testimonials, businessInfo } from '../lib/data';
 import { heroImage, galleryImages, detailImages, environmentImages } from '../lib/media';
-import Gallery from '../components/Gallery';
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -268,7 +267,7 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-            {testimonials.map((t, idx) => (
+            {testimonials.map((t) => (
               <div key={t.id} className="text-center md:text-left">
                 <div className="flex justify-center md:justify-start mb-4">
                   {[...Array(t.rating)].map((_, i) => (
