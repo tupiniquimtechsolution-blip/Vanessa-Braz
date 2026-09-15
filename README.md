@@ -1,2 +1,1 @@
-# Vanessa-Braz
-Produção Local com Governança Tupiniquim
+# Vanessa Braz
