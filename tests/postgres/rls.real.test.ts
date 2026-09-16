@@ -16,7 +16,7 @@ if (process.env.CI && !enabled) {
 }
 
 describe.skipIf(!enabled)('real postgres migrations + RLS', () => {
-  it('applies migrations, enforces singleton/hours uniqueness, denies cross-customer reads and double booking', async () => {
+  it('enforces RLS, booking constraints, and atomic payment-event idempotency', async () => {
     const sql = connect();
     try {
       await resetPostgresTestSchemas(sql);
@@ -136,6 +136,66 @@ describe.skipIf(!enabled)('real postgres migrations + RLS', () => {
       expect((firstPay[0].result as { duplicate: boolean }).duplicate).toBe(false);
       const secondPay = await sql`select public.apply_payment_event('demo', 'evt-1', 'payment.updated', 'pay-1', ${appointmentId}::uuid, 'paid', 1000, '{}'::jsonb) as result`;
       expect((secondPay[0].result as { duplicate: boolean }).duplicate).toBe(true);
+
+      // Hold the winning INSERT open so both independent PostgreSQL sessions
+      // contend for the same provider/event acquisition.
+      await sql.unsafe(`
+        create or replace function public.test_hold_payment_event_insert()
+        returns trigger
+        language plpgsql
+        as $$
+        begin
+          if new.provider = 'demo' and new.provider_event_id = 'evt-concurrent-1' then
+            perform pg_sleep(0.25);
+          end if;
+          return new;
+        end;
+        $$;
+      `);
+      await sql`create trigger test_hold_payment_event_insert after insert on public.payment_events for each row execute function public.test_hold_payment_event_insert()`;
+
+      const workerOne = connect();
+      const workerTwo = connect();
+      try {
+        const [firstConcurrent, secondConcurrent] = await Promise.all([
+          workerOne`select public.apply_payment_event('demo', 'evt-concurrent-1', 'payment.updated', 'pay-concurrent-1', ${appointmentId}::uuid, 'paid', 1000, '{}'::jsonb) as result`,
+          workerTwo`select public.apply_payment_event('demo', 'evt-concurrent-1', 'payment.updated', 'pay-concurrent-1', ${appointmentId}::uuid, 'paid', 1000, '{}'::jsonb) as result`,
+        ]);
+        const concurrentResults = [
+          firstConcurrent[0].result as { duplicate: boolean },
+          secondConcurrent[0].result as { duplicate: boolean },
+        ];
+        expect(concurrentResults.filter((result) => result.duplicate === false)).toHaveLength(1);
+        expect(concurrentResults.filter((result) => result.duplicate === true)).toHaveLength(1);
+
+        const concurrentEvents = await sql`
+          select count(*)::int as n
+          from public.payment_events
+          where provider = 'demo' and provider_event_id = 'evt-concurrent-1'
+        `;
+        expect(concurrentEvents[0].n).toBe(1);
+
+        const concurrentPayments = await sql`
+          select count(*)::int as n
+          from public.payments
+          where provider = 'demo' and provider_ref = 'pay-concurrent-1'
+        `;
+        expect(concurrentPayments[0].n).toBe(1);
+
+        const concurrentApplications = await sql`
+          select count(*)::int as n
+          from public.audit_logs
+          where action = 'payment.apply'
+            and metadata->>'event_id' = 'evt-concurrent-1'
+        `;
+        expect(concurrentApplications[0].n).toBe(1);
+      } finally {
+        await workerOne.end({ timeout: 1 });
+        await workerTwo.end({ timeout: 1 });
+        await sql`drop trigger if exists test_hold_payment_event_insert on public.payment_events`;
+        await sql`drop function if exists public.test_hold_payment_event_insert()`;
+      }
+
       await expect(
         sql`select public.apply_payment_event('demo', 'evt-2', 'payment.updated', 'pay-2', ${appointmentId}::uuid, 'paid', 1, '{}'::jsonb)`,
       ).rejects.toThrow(/price_mismatch/);
