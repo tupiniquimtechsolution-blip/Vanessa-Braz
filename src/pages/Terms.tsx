@@ -12,82 +12,70 @@ export default function Terms() {
             <h1 className="font-display text-2xl md:text-3xl font-bold text-brand-primary">
               Termos de Uso
             </h1>
-            <p className="text-sm text-brand-muted">Condições de utilização do site e serviços</p>
+            <p className="text-sm text-brand-muted">Informações em revisão antes da publicação definitiva</p>
           </div>
         </div>
 
         <div className="prose prose-sm max-w-none text-brand-muted space-y-6">
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">1. Aceitação dos Termos</h2>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">1. Status deste conteúdo</h2>
             <p>
-              Ao acessar e utilizar este site e nossos serviços, você concorda com estes Termos de Uso. 
-              Caso não concorde com alguma disposição, pedimos que não utilize nossos serviços.
+              Esta página está em revisão e não confirma, neste momento, condições comerciais,
+              operacionais ou de atendimento. Informações confirmadas serão apresentadas antes
+              de qualquer contratação ou agendamento.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">2. Serviços</h2>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">2. Serviços e informações</h2>
             <p>
-              Oferecemos serviços de beleza e estética, incluindo mas não limitado a: design de sobrancelhas, 
-              micropigmentação, extensão de cílios, tratamentos faciais e corporais.
-            </p>
-            <p>
-              Os preços, disponibilidade e condições dos serviços estão sujeitos a alterações sem aviso prévio.
+              A disponibilidade, a descrição e as condições dos serviços serão exibidas apenas
+              quando forem confirmadas no catálogo. Nenhum procedimento, preço ou benefício é
+              declarado por esta página enquanto essas informações estiverem pendentes.
             </p>
           </section>
 
           <section>
             <h2 className="font-display text-xl font-semibold text-brand-primary">3. Agendamentos</h2>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Agendamentos devem ser realizados com antecedência mínima</li>
-              <li>Cancelamentos devem ser comunicados com pelo menos 24 horas de antecedência</li>
-              <li>Atrasos superiores a 15 minutos podem resultar em cancelamento automático</li>
-              <li>Nos reservamos o direito de recusar atendimentos em caso de descumprimento das políticas</li>
-            </ul>
+            <p>
+              Quando o agendamento estiver disponível, as regras aplicáveis de confirmação,
+              alteração, cancelamento e comparecimento serão informadas antes da conclusão.
+            </p>
           </section>
 
           <section>
             <h2 className="font-display text-xl font-semibold text-brand-primary">4. Pagamentos</h2>
             <p>
-              O pagamento deverá ser realizado no momento do atendimento, salvo acordo prévio. 
-              Aceitamos PIX, cartão de crédito, débito e dinheiro.
+              As formas de pagamento, os valores e o momento de cobrança serão confirmados no
+              fluxo de agendamento ou em comunicação oficial antes da contratação.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">5. Responsabilidades do Cliente</h2>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Informar sobre alergias, condições de saúde ou medicamentos em uso</li>
-              <li>Seguir orientações pré e pós-procedimento</li>
-              <li>Comparecer pontualmente ao horário agendado</li>
-              <li>Fornecer dados pessoais verdadeiros e atualizados</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">6. Propriedade Intelectual</h2>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">5. Informações relevantes</h2>
             <p>
-              Todo o conteúdo deste site (textos, imagens, logos, design) é de propriedade de 
-              Vanessa Braz — Beleza & Autoestima e está protegido por leis de propriedade intelectual.
+              Quando aplicável ao serviço confirmado, orientações e informações necessárias serão
+              apresentadas previamente para que a pessoa possa decidir como deseja prosseguir.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">7. Limitação de Responsabilidade</h2>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">6. Conteúdo e imagens</h2>
             <p>
-              Não nos responsabilizamos por danos decorrentes do não cumprimento das orientações 
-              pré e pós-procedimento pelo cliente.
+              O acervo visual exibido neste site é preservado sem afirmar procedimentos,
+              resultados ou condições que não tenham sido confirmados. O uso de conteúdos segue
+              as autorizações e os direitos aplicáveis.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">8. Alterações</h2>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">7. Atualizações</h2>
             <p>
-              Estes termos podem ser modificados a qualquer momento. Recomendamos a consulta 
-              periódica desta página.
+              Esta página será atualizada quando as informações operacionais e comerciais forem
+              confirmadas para publicação.
             </p>
             <p className="mt-4 text-xs text-brand-muted italic">
-              Última atualização: {new Date().toLocaleDateString('pt-BR')} — DADOS_DEMONSTRATIVOS
+              Status: conteúdo em revisão — DADOS_DEMONSTRATIVOS
             </p>
           </section>
         </div>

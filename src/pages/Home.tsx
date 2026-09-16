@@ -41,8 +41,8 @@ export default function Home() {
               Vanessa Braz
             </h1>
             <p className="text-white/80 text-lg md:text-xl leading-relaxed mb-8 max-w-lg font-light">
-              Cuidado profissional para realçar sua beleza natural com técnica, 
-              produtos de qualidade e atendimento humanizado.
+              Um espaço para acompanhar informações confirmadas sobre serviços,
+              disponibilidade e formas de agendamento.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -96,17 +96,16 @@ export default function Home() {
                 Nossa Essência
               </p>
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-text font-light leading-tight mb-8">
-                Beleza que transforma, cuidado que acolhe.
+                Beleza e autocuidado, no seu tempo.
               </h2>
               <div className="space-y-6 text-brand-muted leading-relaxed">
                 <p>
-                  Cada atendimento é uma experiência pensada para você. Combinamos técnica 
-                  refinada, produtos selecionados e um ambiente acolhedor para que você se 
-                  sinta cuidada em cada detalhe.
+                  Este espaço reúne a identidade visual de Vanessa Braz e informações que
+                  podem ser consultadas antes do agendamento.
                 </p>
                 <p>
-                  Acreditamos que beleza é autoestima. E autoestima se constrói com cuidado 
-                  genuíno, atenção individual e resultados que falam por si.
+                  Detalhes sobre serviços, técnicas, estrutura e disponibilidade serão
+                  publicados somente após confirmação.
                 </p>
               </div>
               <div className="mt-10 flex items-center gap-8">
@@ -133,7 +132,7 @@ export default function Home() {
                 Serviços
               </p>
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-text font-light">
-                Tratamentos especializados
+                Serviços e informações
               </h2>
             </div>
             <Link
@@ -196,10 +195,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">
-              Resultados Reais
+              Galeria
             </p>
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-brand-text font-light">
-              Nosso trabalho fala por si
+              Imagens do acervo
             </h2>
           </div>
 
@@ -245,20 +244,20 @@ export default function Home() {
       <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
         <img
           src={environmentImages[0]}
-          alt="Ambiente Vanessa Braz"
+          alt="Imagem do acervo Vanessa Braz"
           className="w-full h-full object-cover"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
           <div className="text-center text-white max-w-2xl px-4">
             <p className="text-sm uppercase tracking-[0.3em] mb-4 text-white/70">
-              Ambiente
+              Acervo
             </p>
             <h2 className="font-display text-3xl md:text-5xl font-light mb-6">
-              Um espaço pensado para você
+              Um olhar sobre o acervo
             </h2>
             <p className="text-white/80 text-lg font-light">
-              Conforto, privacidade e atmosfera acolhedora em cada detalhe.
+              Informações sobre local, estrutura e atendimento serão atualizadas quando confirmadas.
             </p>
           </div>
         </div>
@@ -266,12 +265,12 @@ export default function Home() {
 
       <section className="py-20 md:py-32 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">Depoimentos</p>
+          <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">Relatos</p>
           <h2 className="font-display text-3xl md:text-4xl text-brand-text font-light mb-6">
-            Palavras de quem passou por aqui
+            Informações em atualização
           </h2>
           <p className="text-brand-muted">
-            Depoimentos publicados somente com autorização e registro de consentimento de imagem. Nenhum relato fictício é exibido.
+            Relatos serão publicados somente após confirmação de autoria e autorização de publicação.
           </p>
         </div>
       </section>
@@ -327,7 +326,7 @@ export default function Home() {
             Pronta para se cuidar?
           </h2>
           <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto font-light">
-            Agende seu horário e descubra uma experiência de beleza pensada para você.
+            Acompanhe as informações confirmadas e, quando disponível, faça seu agendamento.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -363,7 +362,7 @@ export default function Home() {
                 Localização
               </p>
               <h2 className="font-display text-3xl md:text-4xl text-brand-text font-light mb-8">
-                Venha nos visitar
+                Informações de localização
               </h2>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">

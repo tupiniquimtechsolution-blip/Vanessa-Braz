@@ -27,7 +27,7 @@ export default function Services() {
               Serviços
             </p>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-brand-text font-light leading-tight mb-6">
-              Tratamentos pensados para você
+              Catálogo de serviços
             </h1>
             <p className="text-brand-muted text-lg leading-relaxed max-w-2xl">
               O catálogo público só lista procedimentos e preços confirmados no banco. Nada inventado entra em produção.

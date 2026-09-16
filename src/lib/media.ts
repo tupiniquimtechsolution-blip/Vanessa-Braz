@@ -1,5 +1,5 @@
-// Catálogo de mídias reais — Vanessa Braz
-// Originais em apps/web/public/media/source/ (185 arquivos: 157 imagens + 28 vídeos)
+// Catálogo de mídias do acervo fornecido — Vanessa Braz
+// Originais em apps/web/public/media/source/.
 
 const MEDIA_BASE = '/media/source';
 
@@ -72,8 +72,8 @@ export const heroImage = media.hero[0];
 
 export const galleryImages = media.gallery.map((src, index) => ({
   src,
-  alt: `Trabalho real Vanessa Braz — ${index + 1}`,
-  category: 'Resultado',
+  alt: `Imagem do acervo Vanessa Braz — ${index + 1}`,
+  category: 'Acervo',
 }));
 
 export const detailImages = media.details;

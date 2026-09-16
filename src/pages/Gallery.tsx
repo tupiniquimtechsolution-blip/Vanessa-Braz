@@ -16,11 +16,11 @@ export default function GalleryPage() {
               </p>
             </div>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-brand-text font-light leading-tight mb-6">
-              Resultados reais
+              Acervo visual
             </h1>
             <p className="text-brand-muted text-lg leading-relaxed max-w-2xl">
-              Cada imagem aqui é de um atendimento real. Sem filtros pesados, sem resultados 
-              inventados — apenas o trabalho dedicado de cada sessão.
+              Uma seleção de imagens do acervo visual de Vanessa Braz. Informações sobre
+              procedimentos e resultados são publicadas somente quando confirmadas.
             </p>
           </div>
         </div>
@@ -34,8 +34,8 @@ export default function GalleryPage() {
           {/* Info */}
           <div className="mt-20 text-center max-w-2xl mx-auto">
             <p className="text-brand-muted leading-relaxed">
-              Este acervo contém {galleryImages.length} fotos selecionadas do nosso trabalho. 
-              O acervo completo possui mais de 150 imagens e 28 vídeos de procedimentos reais.
+              Esta seleção reúne {galleryImages.length} imagens do acervo. Novas informações
+              editoriais serão incluídas somente após confirmação.
             </p>
             <div className="mt-8">
               <a

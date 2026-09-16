@@ -119,7 +119,7 @@ export default function Layout({ children }: LayoutProps) {
             <div className="md:col-span-5">
               <h2 className="font-display text-2xl font-light mb-4">Vanessa Braz</h2>
               <p className="text-white/50 text-sm leading-relaxed max-w-sm">
-                Beleza & Autoestima. Cuidado profissional para realçar sua beleza natural.
+                Beleza & Autoestima. Informações de serviços e disponibilidade são publicadas após confirmação.
               </p>
             </div>
 
@@ -154,7 +154,7 @@ export default function Layout({ children }: LayoutProps) {
 
           <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/30 text-xs">
-              © {new Date().getFullYear()} Vanessa Braz. Todos os direitos reservados.
+              © {new Date().getFullYear()} Vanessa Braz. Informações sujeitas a confirmação.
             </p>
             <div className="flex items-center gap-6">
               <Link to="/politica-de-privacidade" className="text-white/30 text-xs hover:text-white/60 transition-colors">

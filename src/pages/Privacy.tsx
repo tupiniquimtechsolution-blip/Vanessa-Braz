@@ -12,102 +12,72 @@ export default function Privacy() {
             <h1 className="font-display text-2xl md:text-3xl font-bold text-brand-primary">
               Política de Privacidade
             </h1>
-            <p className="text-sm text-brand-muted">Conforme a Lei Geral de Proteção de Dados (LGPD)</p>
+            <p className="text-sm text-brand-muted">Conteúdo em revisão antes da publicação definitiva</p>
           </div>
         </div>
 
         <div className="prose prose-sm max-w-none text-brand-muted space-y-6">
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">1. Introdução</h2>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">1. Status deste conteúdo</h2>
             <p>
-              Esta Política de Privacidade descreve como Vanessa Braz — Beleza & Autoestima ("nós", "nosso") 
-              coleta, usa, armazena e protege seus dados pessoais quando você utiliza nosso site e serviços.
-            </p>
-            <p>
-              Estamos comprometidos com a proteção de seus dados pessoais em conformidade com a Lei Geral 
-              de Proteção de Dados (Lei nº 13.709/2018 — LGPD).
+              Esta é uma versão de trabalho e não substitui uma política de privacidade publicada.
+              As informações de contato, tratamento de dados, retenção e atendimento aos direitos
+              serão confirmadas antes de disponibilizar o serviço ao público.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">2. Dados Coletados</h2>
-            <p>Coletamos os seguintes dados pessoais:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li><strong>Dados de identificação:</strong> nome completo, e-mail, telefone/WhatsApp</li>
-              <li><strong>Dados de agendamento:</strong> serviços solicitados, datas e horários preferidos</li>
-              <li><strong>Dados de navegação:</strong> endereço IP, tipo de dispositivo, páginas visitadas</li>
-            </ul>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">2. Dados no fluxo</h2>
+            <p>
+              Quando configurado, o aplicativo pode solicitar dados necessários para criar conta e
+              agendamento, como nome, e-mail, telefone e informações da reserva. Não há declaração
+              nesta página sobre coleta adicional enquanto a configuração de produção estiver pendente.
+            </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">3. Finalidade do Tratamento</h2>
-            <p>Seus dados são utilizados para:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Processar e confirmar agendamentos</li>
-              <li>Enviar comunicações sobre seus serviços</li>
-              <li>Melhorar nossos serviços e experiência</li>
-              <li>Cumprir obrigações legais</li>
-            </ul>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">3. Finalidades</h2>
+            <p>
+              As finalidades, as bases legais e os canais de comunicação aplicáveis serão publicados
+              junto da política definitiva e das informações comerciais confirmadas.
+            </p>
           </section>
 
           <section>
             <h2 className="font-display text-xl font-semibold text-brand-primary">4. Consentimentos</h2>
-            <p>Trabalhamos com consentimentos separados para:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li><strong>Consentimento necessário:</strong> para funcionamento básico do serviço</li>
-              <li><strong>Consentimento de marketing:</strong> para envio de promoções e novidades (opcional)</li>
-              <li><strong>Consentimento de uso de imagem:</strong> para divulgação de resultados (opcional e separado)</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">5. Seus Direitos (LGPD)</h2>
-            <p>Você tem direito a:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Acessar seus dados pessoais</li>
-              <li>Corrigir dados incompletos ou incorretos</li>
-              <li>Solicitar a exclusão de seus dados</li>
-              <li>Revogar consentimentos a qualquer momento</li>
-              <li>Solicitar portabilidade dos dados</li>
-              <li>Ser informado sobre o tratamento dos seus dados</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">6. Segurança</h2>
             <p>
-              Adotamos medidas técnicas e organizacionais adequadas para proteger seus dados contra 
-              acesso não autorizado, alteração, divulgação ou destruição.
+              O fluxo técnico separa o consentimento operacional dos consentimentos opcionais de
+              marketing e de uso de imagem. Os textos e as condições de publicação desses
+              consentimentos serão confirmados antes da operação pública.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">7. Retenção de Dados</h2>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">5. Direitos e solicitações</h2>
             <p>
-              Mantemos seus dados apenas pelo tempo necessário para cumprir as finalidades para as 
-              quais foram coletados, ou conforme exigido por lei.
+              Os canais e o procedimento para solicitações relacionadas a dados pessoais serão
+              informados quando estiverem confirmados. Até lá, esta página não anuncia prazo,
+              responsável ou canal de atendimento.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">8. Contato</h2>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">6. Segurança e retenção</h2>
             <p>
-              Para exercer seus direitos ou tirar dúvidas sobre esta política, entre em contato:
-            </p>
-            <p className="mt-2">
-              <strong>E-mail:</strong> contato@vanessabraz.com.br<br />
-              <strong>WhatsApp:</strong> Disponível no site
+              A configuração de produção, as medidas aplicáveis e os períodos de retenção serão
+              documentados antes do lançamento. Não há promessa pública de certificação, prazo ou
+              nível de proteção nesta versão.
             </p>
           </section>
 
           <section>
-            <h2 className="font-display text-xl font-semibold text-brand-primary">9. Atualizações</h2>
+            <h2 className="font-display text-xl font-semibold text-brand-primary">7. Atualizações</h2>
             <p>
-              Esta política pode ser atualizada periodicamente. A versão mais recente estará sempre 
-              disponível em nosso site com a data da última atualização.
+              Esta página será atualizada quando as informações operacionais, jurídicas e de contato
+              forem confirmadas para publicação.
             </p>
             <p className="mt-4 text-xs text-brand-muted italic">
-              Última atualização: {new Date().toLocaleDateString('pt-BR')} — DADOS_DEMONSTRATIVOS
+              Status: conteúdo em revisão — DADOS_DEMONSTRATIVOS
             </p>
           </section>
         </div>
