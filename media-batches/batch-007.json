@@ -1,5 +1,6 @@
 {
   "batch_id": "batch-007",
+  "run_revision": 2,
   "source": {
     "root": "apps/web/public/media/source/images",
     "extensions": [".jpg", ".jpeg", ".png", ".webp"],
