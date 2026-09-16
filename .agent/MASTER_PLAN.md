@@ -45,7 +45,7 @@ Direção editorial e acervo fornecido preservados. Claims públicas e comerciai
 ### FASE 13 — GitHub 🟡
 - [x] Repositório conectado
 - [x] CI, CodeQL e Dependabot configurados
-- [ ] Checks do HEAD final confirmados no GitHub após o push desta revisão
+- [x] CI e CodeQL dos commits de código confirmados no GitHub (PR #3)
 - [ ] Proteção de `main` após auditoria
 
 ## STATUS ATUAL

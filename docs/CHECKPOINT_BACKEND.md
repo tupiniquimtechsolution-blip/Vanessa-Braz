@@ -55,7 +55,12 @@ npm run build          PASS
 
 ## GITHUB_STATUS
 
-CI e CodeQL do HEAD final devem ser confirmados no GitHub após o push. Este documento não declara aprovação baseada apenas na execução local.
+Os commits de código desta revisão passaram nos checks reais do PR [#3](https://github.com/tupiniquimtechsolution-blip/Vanessa-Braz/pull/3):
+
+- CI `quality`: [run 35138494872](https://github.com/tupiniquimtechsolution-blip/Vanessa-Braz/actions/runs/35138494872) — **PASS**.
+- CodeQL `Analyze (javascript-typescript)`: [run 35138495005](https://github.com/tupiniquimtechsolution-blip/Vanessa-Braz/actions/runs/35138495005) — **PASS**.
+
+O GitHub continua sendo a fonte de verdade para o HEAD de qualquer commit posterior.
 
 ## INTEGRATION_PENDING
 
