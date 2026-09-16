@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, MessageCircle } from 'lucide-react';
-import { businessInfo } from '../lib/data';
+import { businessInfo, isPendingValue, isPublicHandleConfigured, isWhatsAppConfigured } from '../lib/data';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -138,12 +138,15 @@ export default function Layout({ children }: LayoutProps) {
             <div className="md:col-span-4">
               <h3 className="text-xs uppercase tracking-[0.2em] text-white/40 mb-6">Contato</h3>
               <ul className="space-y-3 text-white/70 text-sm">
-                <li>{businessInfo.instagram}</li>
-                <li>{businessInfo.city}, {businessInfo.state}</li>
+                <li>{isPublicHandleConfigured(businessInfo.instagram) ? businessInfo.instagram : 'Instagram — PENDENTE_DE_CONFIRMACAO'}</li>
+                <li>
+                  {isPendingValue(businessInfo.city) || isPendingValue(businessInfo.state)
+                    ? 'Localização — PENDENTE_DE_CONFIRMACAO'
+                    : `${businessInfo.city}, ${businessInfo.state}`}
+                </li>
                 <li className="pt-2">
                   <span className="text-white/40 text-xs">Horários</span><br />
-                  Seg–Sex: 9h–19h/20h<br />
-                  Sáb: 9h–16h
+                  PENDENTE_DE_CONFIRMACAO
                 </li>
               </ul>
             </div>
@@ -165,16 +168,17 @@ export default function Layout({ children }: LayoutProps) {
         </div>
       </footer>
 
-      {/* WhatsApp Floating Button */}
-      <a
-        href={`https://wa.me/${businessInfo.whatsapp}?text=Olá! Gostaria de agendar um horário.`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-brand-text hover:bg-brand-text/90 text-white flex items-center justify-center shadow-lg transition-all"
-        aria-label="Contato via WhatsApp"
-      >
-        <MessageCircle size={24} />
-      </a>
+      {isWhatsAppConfigured(businessInfo.whatsapp) && (
+        <a
+          href={`https://wa.me/${businessInfo.whatsapp}?text=Olá! Gostaria de agendar um horário.`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-brand-text hover:bg-brand-text/90 text-white flex items-center justify-center shadow-lg transition-all"
+          aria-label="Contato via WhatsApp"
+        >
+          <MessageCircle size={24} />
+        </a>
+      )}
     </div>
   );
 }

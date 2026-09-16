@@ -1,11 +1,18 @@
 import { Link } from 'react-router-dom';
-import { Calendar, Star, ChevronDown, ChevronUp, MapPin, Clock, Phone, Instagram, ArrowRight } from 'lucide-react';
-import { useState } from 'react';
-import { services, faqItems, testimonials, businessInfo } from '../lib/data';
+import { Calendar, ChevronDown, ChevronUp, MapPin, Clock, Phone, Instagram, ArrowRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { faqItems, businessInfo, isPendingValue, isPublicHandleConfigured, isWhatsAppConfigured } from '../lib/data';
 import { heroImage, galleryImages, detailImages, environmentImages } from '../lib/media';
+import { loadCatalog, type CatalogService } from '../lib/catalog';
+import { formatCurrency } from '../lib/store';
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [services, setServices] = useState<CatalogService[]>([]);
+
+  useEffect(() => {
+    void loadCatalog().then((catalog) => setServices(catalog.services));
+  }, []);
 
   return (
     <div>
@@ -46,15 +53,17 @@ export default function Home() {
                 Agendar Horário
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <a
-                href={`https://wa.me/${businessInfo.whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/40 text-white font-medium rounded-none hover:bg-white/10 transition-all"
-              >
-                <Phone size={18} />
-                WhatsApp
-              </a>
+              {isWhatsAppConfigured(businessInfo.whatsapp) && (
+                <a
+                  href={`https://wa.me/${businessInfo.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/40 text-white font-medium rounded-none hover:bg-white/10 transition-all"
+                >
+                  <Phone size={18} />
+                  WhatsApp
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -135,7 +144,9 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Featured services — editorial layout */}
+          {services.length === 0 ? (
+            <p className="text-brand-muted">Catálogo de serviços — PENDENTE_DE_CONFIRMACAO. Nenhum preço ou procedimento inventado é exibido.</p>
+          ) : (
           <div className="grid md:grid-cols-2 gap-px bg-brand-surface">
             {services.slice(0, 4).map((service, idx) => (
               <div
@@ -157,7 +168,7 @@ export default function Home() {
                   <div className="flex items-center justify-between pt-6 border-t border-brand-surface">
                     <div>
                       <span className="text-2xl font-light text-brand-text">
-                        R$ {service.price}
+                        {formatCurrency(service.price)}
                       </span>
                       <span className="text-sm text-brand-muted ml-2">
                         · {service.duration}min
@@ -174,6 +185,7 @@ export default function Home() {
               </div>
             ))}
           </div>
+          )}
         </div>
       </section>
 
@@ -252,38 +264,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          DEPOIMENTOS — Sem inventar, apenas reais
-         ═══════════════════════════════════════════ */}
       <section className="py-20 md:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">
-              Depoimentos
-            </p>
-            <h2 className="font-display text-3xl md:text-4xl text-brand-text font-light">
-              O que nossas clientes dizem
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-            {testimonials.map((t) => (
-              <div key={t.id} className="text-center md:text-left">
-                <div className="flex justify-center md:justify-start mb-4">
-                  {[...Array(t.rating)].map((_, i) => (
-                    <Star key={i} size={14} className="fill-brand-accent text-brand-accent" />
-                  ))}
-                </div>
-                <p className="text-brand-muted leading-relaxed mb-6 italic font-light">
-                  "{t.text}"
-                </p>
-                <div>
-                  <p className="font-medium text-brand-text">{t.name}</p>
-                  <p className="text-xs text-brand-muted mt-1">{t.service}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-brand-accent text-sm uppercase tracking-[0.2em] mb-4">Depoimentos</p>
+          <h2 className="font-display text-3xl md:text-4xl text-brand-text font-light mb-6">
+            Palavras de quem passou por aqui
+          </h2>
+          <p className="text-brand-muted">
+            Depoimentos publicados somente com autorização e registro de consentimento de imagem. Nenhum relato fictício é exibido.
+          </p>
         </div>
       </section>
 
@@ -348,15 +337,17 @@ export default function Home() {
               <Calendar size={18} />
               Agendar Agora
             </Link>
-            <a
-              href={`https://wa.me/${businessInfo.whatsapp}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-10 py-4 border border-white/30 text-white font-medium hover:bg-white/10 transition-all"
-            >
-              <Phone size={18} />
-              Falar no WhatsApp
-            </a>
+            {isWhatsAppConfigured(businessInfo.whatsapp) && (
+              <a
+                href={`https://wa.me/${businessInfo.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-10 py-4 border border-white/30 text-white font-medium hover:bg-white/10 transition-all"
+              >
+                <Phone size={18} />
+                Falar no WhatsApp
+              </a>
+            )}
           </div>
         </div>
       </section>
@@ -380,10 +371,12 @@ export default function Home() {
                   <div>
                     <p className="text-brand-text font-medium">Endereço</p>
                     <p className="text-brand-muted text-sm mt-1">
-                      {businessInfo.address || 'PENDENTE_DE_CONFIRMAÇÃO'}
+                      {isPendingValue(businessInfo.address) ? 'PENDENTE_DE_CONFIRMACAO' : businessInfo.address}
                     </p>
                     <p className="text-brand-muted text-sm">
-                      {businessInfo.city}, {businessInfo.state}
+                      {isPendingValue(businessInfo.city) || isPendingValue(businessInfo.state)
+                        ? 'PENDENTE_DE_CONFIRMACAO'
+                        : `${businessInfo.city}, ${businessInfo.state}`}
                     </p>
                   </div>
                 </div>
@@ -391,15 +384,16 @@ export default function Home() {
                   <Clock size={20} className="text-brand-accent mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-brand-text font-medium">Horários</p>
-                    <p className="text-brand-muted text-sm mt-1">Seg a Sex: 9h – 19h/20h</p>
-                    <p className="text-brand-muted text-sm">Sábado: 9h – 16h</p>
+                    <p className="text-brand-muted text-sm mt-1">PENDENTE_DE_CONFIRMACAO</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Instagram size={20} className="text-brand-accent mt-1 flex-shrink-0" />
                   <div>
                     <p className="text-brand-text font-medium">Instagram</p>
-                    <p className="text-brand-muted text-sm mt-1">{businessInfo.instagram}</p>
+                    <p className="text-brand-muted text-sm mt-1">
+                      {isPublicHandleConfigured(businessInfo.instagram) ? businessInfo.instagram : 'PENDENTE_DE_CONFIRMACAO'}
+                    </p>
                   </div>
                 </div>
               </div>

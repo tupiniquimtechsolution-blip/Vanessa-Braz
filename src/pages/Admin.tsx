@@ -5,8 +5,8 @@ import {
   CheckCircle, Clock, TrendingUp, Eye
 } from 'lucide-react';
 import { formatCurrency, formatDate } from '../lib/store';
-import { services } from '../lib/data';
 import { useAuth } from '../lib/auth/AuthProvider';
+import { loadCatalog, type CatalogService } from '../lib/catalog';
 import { authErrorMessage } from '../lib/auth/errors';
 import { adminSetAppointmentStatus, listAdminAppointments, type AppointmentView } from '../lib/booking/api';
 import type { AppointmentStatus } from '../lib/supabase/types';
@@ -21,10 +21,12 @@ export default function Admin() {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [services, setServices] = useState<CatalogService[]>([]);
 
   useEffect(() => {
     if (auth.ready && auth.isAdmin) {
       void listAdminAppointments().then(setBookings).catch(() => setBookings([]));
+      void loadCatalog().then((catalog) => setServices(catalog.services));
     }
   }, [auth.ready, auth.isAdmin]);
 
@@ -360,6 +362,7 @@ export default function Admin() {
             <h2 className="font-display text-2xl font-bold text-brand-primary mb-6">Serviços</h2>
             <div className="bg-white rounded-2xl border border-brand-surface p-6">
               <div className="grid sm:grid-cols-2 gap-4">
+                {services.length === 0 && <p className="text-sm text-brand-muted">Catálogo — PENDENTE_DE_CONFIRMACAO.</p>}
                 {services.map(s => (
                   <div key={s.id} className="p-4 bg-brand-surface/30 rounded-xl">
                     <div className="flex justify-between items-start">
