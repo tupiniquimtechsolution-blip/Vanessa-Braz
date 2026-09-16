@@ -8,7 +8,6 @@ on:
     paths:
       - scripts/media/visual_audit_gate.py
       - .github/workflows/visual-media-gate.yml
-      - apps/web/public/media/optimized/audit/visual/manual-decisions.json
 
 permissions:
   contents: write
@@ -49,109 +48,131 @@ jobs:
       - name: Install audit-only image tooling
         run: python -m pip install --disable-pip-version-check Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.12.0.88
 
-      - name: Generate visual evidence
+      - name: Generate visual evidence and quantitative precheck
         run: python scripts/media/visual_audit_gate.py --prepare-only
 
-      - name: Persist reviewed visual decisions
+      - name: Invalidate synthesized decisions and write truthful review checkpoint
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
           from pathlib import Path
+          from datetime import datetime, timezone
 
           root = Path('apps/web/public/media/optimized/audit/visual')
-          precheck = json.loads((root / 'visual-precheck.json').read_text(encoding='utf-8'))
+          precheck_path = root / 'visual-precheck.json'
+          precheck = json.loads(precheck_path.read_text(encoding='utf-8'))
+          records = precheck.get('records', [])
+          responsive = precheck.get('responsive_sample', [])
+
+          # Any previously synthesized "manual" decisions are invalid evidence.
           decisions_path = root / 'manual-decisions.json'
+          if decisions_path.exists():
+              decisions_path.unlink()
 
-          if not decisions_path.exists():
-              statuses = {
-                  ('hero', 1): 'PASS', ('hero', 2): 'PASS',
-                  ('gallery', 1): 'PASS', ('gallery', 2): 'PASS', ('gallery', 3): 'REVIEW',
-                  ('gallery', 4): 'PASS', ('gallery', 5): 'PASS', ('gallery', 6): 'PASS',
-                  ('gallery', 7): 'PASS', ('gallery', 8): 'PASS', ('gallery', 9): 'PASS',
-                  ('gallery', 10): 'PASS', ('gallery', 11): 'PASS', ('gallery', 12): 'PASS',
-                  ('gallery', 13): 'REVIEW', ('gallery', 14): 'PASS', ('gallery', 15): 'REVIEW',
-                  ('gallery', 16): 'PASS', ('gallery', 17): 'PASS', ('gallery', 18): 'PASS',
-                  ('gallery', 19): 'REVIEW', ('gallery', 20): 'PASS',
-                  ('details', 1): 'REVIEW', ('details', 2): 'PASS', ('details', 3): 'REVIEW',
-                  ('details', 4): 'FAIL', ('details', 5): 'PASS', ('details', 6): 'PASS',
-                  ('details', 7): 'REVIEW', ('details', 8): 'REVIEW', ('details', 9): 'PASS',
-                  ('details', 10): 'REVIEW',
-                  ('environment', 1): 'REVIEW', ('environment', 2): 'REVIEW',
-                  ('environment', 3): 'FAIL', ('environment', 4): 'REVIEW',
-                  ('environment', 5): 'FAIL', ('environment', 6): 'REVIEW',
-                  ('environment', 7): 'REVIEW', ('environment', 8): 'REVIEW',
-              }
-              non_pending = {('hero', 1), ('gallery', 4), ('gallery', 9), ('gallery', 14)}
-              items = []
-              for record in precheck['records']:
-                  key = (record['category'], int(record['position']))
-                  status = statuses[key]
-                  final_variant = 'original' if status == 'FAIL' else 'web'
-                  publication = (
-                      'NAO_APLICAVEL_SEM_PESSOA_IDENTIFICAVEL_NO_QUADRO'
-                      if key in non_pending else 'PENDENTE_DE_CONFIRMACAO'
-                  )
-                  if key[0] == 'hero':
-                      note = 'Manual matched-scale review: WEB retained; ENHANCED adds deterministic pixels without meaningful recovered photographic detail.'
-                  elif status == 'FAIL':
-                      note = 'Manual contact-sheet review: visible detail/resampling degradation; ORIGINAL retained.'
-                  elif status == 'REVIEW':
-                      note = 'Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked.'
-                  else:
-                      note = 'Manual contact-sheet review: no material defect perceptible at normal web size.'
-                  items.append({
-                      'category': record['category'],
-                      'position': record['position'],
-                      'source_name': record['source_name'],
-                      'visual_quality_status': status,
-                      'final_variant': final_variant,
-                      'defects': record['defects'],
-                      'publication_authorization_status': publication,
-                      'review_note': note,
-                  })
+          items = []
+          for record in records:
+              items.append({
+                  'category': record['category'],
+                  'position': record['position'],
+                  'source_name': record['source_name'],
+                  'visual_quality_status': 'REVIEW',
+                  'final_variant': 'PENDING_MANUAL_REVIEW',
+                  'quantitative_precheck_status': record.get('suggested_status'),
+                  'defects': record.get('defects', {}),
+                  'metrics': record.get('metrics', {}),
+                  'publication_authorization_status': 'PENDENTE_DE_CONFIRMACAO',
+                  'review_note': 'Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required.',
+              })
 
-              responsive_statuses = {
-                  ('hero', 1): 'PASS', ('hero', 2): 'PASS',
-                  ('gallery', 1): 'PASS', ('gallery', 2): 'REVIEW',
-                  ('gallery', 3): 'REVIEW', ('gallery', 4): 'PASS',
-                  ('details', 1): 'REVIEW', ('details', 2): 'REVIEW',
-                  ('environment', 1): 'PASS', ('environment', 2): 'PASS',
-              }
-              responsive = []
-              for record in precheck['responsive_sample']:
-                  key = (record['category'], int(record['position']))
-                  responsive.append({
-                      'category': record['category'],
-                      'position': record['position'],
-                      'source_name': record['source_name'],
-                      'status': responsive_statuses[key],
-                      'review_note': 'Manual equal-scale responsive comparison; no production asset changed.',
-                  })
+          responsive_items = []
+          for record in responsive:
+              responsive_items.append({
+                  'category': record['category'],
+                  'position': record['position'],
+                  'source_name': record['source_name'],
+                  'status': 'REVIEW',
+                  'review_note': 'Responsive derivative requires visual inspection of the generated equal-scale evidence.',
+              })
 
-              decisions = {
-                  'review_basis': 'Manual review of 9 contact sheets for 40 uses plus equal-scale responsive comparisons for the 10-item sample. Deterministic metrics are supporting signals only.',
-                  'items': items,
-                  'responsive_sample': responsive,
-              }
-              decisions_path.write_text(json.dumps(decisions, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-              print('Persisted reviewed manual decisions:', decisions_path)
-          else:
-              print('Existing manual decisions preserved:', decisions_path)
+          audit = {
+              'generated_at_utc': datetime.now(timezone.utc).isoformat(),
+              'status_basis': 'Evidence generated + quantitative precheck only. No fabricated manual decisions.',
+              'total_uses': len(items),
+              'pass_count': 0,
+              'review_count': len(items),
+              'fail_count': 0,
+              'hero_1_status': 'REVIEW',
+              'hero_1_final_variant': 'PENDING_MANUAL_REVIEW',
+              'hero_2_status': 'REVIEW',
+              'hero_2_final_variant': 'PENDING_MANUAL_REVIEW',
+              'web_final_count': 0,
+              'original_final_count': 0,
+              'enhanced_final_count': 0,
+              'responsive_sample_pass': 0,
+              'responsive_sample_review': len(responsive_items),
+              'responsive_sample_fail': 0,
+              'publication_authorization_pending_count': len(items),
+              'visual_gate_status': 'BLOCKED_FOR_MANUAL_REVIEW',
+              'items': items,
+              'responsive_sample': responsive_items,
+          }
+          (root / 'visual-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          md = [
+              '# VISUAL_AUDIT — Vanessa Braz',
+              '',
+              f"TOTAL_USES={audit['total_uses']}",
+              f"PASS_COUNT={audit['pass_count']}",
+              f"REVIEW_COUNT={audit['review_count']}",
+              f"FAIL_COUNT={audit['fail_count']}",
+              '',
+              f"HERO_1_STATUS={audit['hero_1_status']}",
+              f"HERO_1_FINAL_VARIANT={audit['hero_1_final_variant']}",
+              f"HERO_2_STATUS={audit['hero_2_status']}",
+              f"HERO_2_FINAL_VARIANT={audit['hero_2_final_variant']}",
+              '',
+              f"WEB_FINAL_COUNT={audit['web_final_count']}",
+              f"ORIGINAL_FINAL_COUNT={audit['original_final_count']}",
+              f"ENHANCED_FINAL_COUNT={audit['enhanced_final_count']}",
+              '',
+              f"RESPONSIVE_SAMPLE_PASS={audit['responsive_sample_pass']}",
+              f"RESPONSIVE_SAMPLE_REVIEW={audit['responsive_sample_review']}",
+              f"RESPONSIVE_SAMPLE_FAIL={audit['responsive_sample_fail']}",
+              '',
+              f"PUBLICATION_AUTHORIZATION_PENDING_COUNT={audit['publication_authorization_pending_count']}",
+              f"VISUAL_GATE_STATUS={audit['visual_gate_status']}",
+              '',
+              '## Audit note',
+              '',
+              '- Contact sheets and 1:1 crops are generated as evidence only.',
+              '- Quantitative metrics are supporting signals and do not substitute visual inspection.',
+              '- No PASS/FAIL has been invented. All 40 uses remain REVIEW until the evidence is actually inspected.',
+              '- Publication authorization remains separate from visual quality and is conservatively pending for all 40 uses.',
+              '- Frontend, backend, media/source, enhanced assets and structural manifests remain unchanged.',
+              '',
+              '## Per-use checkpoint',
+              '',
+          ]
+          for row in items:
+              md.append(f"- {row['category']} #{row['position']} `{row['source_name']}` — REVIEW; quantitative_precheck={row['quantitative_precheck_status']}; final=PENDING_MANUAL_REVIEW")
+          (root / 'VISUAL_AUDIT.md').write_text('\n'.join(md) + '\n', encoding='utf-8')
+          print(json.dumps({
+              'TOTAL_USES': audit['total_uses'],
+              'PASS_COUNT': audit['pass_count'],
+              'REVIEW_COUNT': audit['review_count'],
+              'FAIL_COUNT': audit['fail_count'],
+              'RESPONSIVE_SAMPLE_REVIEW': audit['responsive_sample_review'],
+              'VISUAL_GATE_STATUS': audit['visual_gate_status'],
+          }, indent=2))
           PY
 
-      - name: Finalize visual gate
-        run: python scripts/media/visual_audit_gate.py
-
-      - name: Upload visual evidence for manual review
+      - name: Upload visual evidence for inspection
         uses: actions/upload-artifact@v4
         with:
           name: visual-gate-evidence
-          path: |
-            apps/web/public/media/optimized/audit/visual/
-            apps/web/public/media/source/images/
-            apps/web/public/media/optimized/web/
+          path: apps/web/public/media/optimized/audit/visual/
           if-no-files-found: error
           retention-days: 7
 
@@ -168,27 +189,27 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BAD=$(git status --short | grep -Ev 'apps/web/public/media/optimized/audit/visual/|apps/web/public/media/optimized/manifests/' || true)
+          BAD=$(git status --short | grep -Ev 'apps/web/public/media/optimized/audit/visual/' || true)
           if [ -n "$BAD" ]; then
-            echo 'ERROR: visual gate changed files outside allowed audit/manifests scope:' >&2
+            echo 'ERROR: visual gate changed files outside audit/visual:' >&2
             printf '%s\n' "$BAD" >&2
             exit 1
           fi
-          if git status --short | grep -Eq '^.. (src/|apps/web/src/|server/|api/|tests/|apps/web/public/media/source/|apps/web/public/media/optimized/enhanced/)'; then
-            echo 'ERROR: frontend/backend/source/enhanced changed.' >&2
+          if git status --short | grep -Eq '^.. (src/|apps/web/src/|server/|api/|tests/|apps/web/public/media/source/|apps/web/public/media/optimized/enhanced/|apps/web/public/media/optimized/manifests/)'; then
+            echo 'ERROR: forbidden project/media scope changed.' >&2
             exit 1
           fi
 
-      - name: Commit audit evidence and visual decisions only
+      - name: Commit audit evidence only
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/web/public/media/optimized/audit/visual apps/web/public/media/optimized/manifests
+          git add -A apps/web/public/media/optimized/audit/visual
           if git diff --cached --quiet; then
             echo 'No visual audit changes to commit.'
             exit 0
           fi
-          git commit -m 'docs(media): finalize manual visual gate [skip ci]'
+          git commit -m 'docs(media): correct visual gate to evidence-only review [skip ci]'
           git push origin HEAD:media/automated-image-pipeline
