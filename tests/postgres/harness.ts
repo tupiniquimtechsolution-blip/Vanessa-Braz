@@ -46,6 +46,19 @@ exception when duplicate_object then null;
 end $$;
 `;
 
+/**
+ * The CI PostgreSQL service is shared by npm test, test:security, and
+ * test:postgres. Reset the disposable schemas so every invocation exercises
+ * the real migrations from an empty database.
+ */
+export async function resetPostgresTestSchemas(sql: postgres.Sql): Promise<void> {
+  await sql.unsafe(`
+    drop schema if exists public cascade;
+    drop schema if exists auth cascade;
+    create schema public;
+  `);
+}
+
 export async function applyMigrations(sql: postgres.Sql): Promise<void> {
   await sql.unsafe(AUTH_STUB);
   const dir = join(process.cwd(), 'supabase/migrations');
@@ -53,6 +66,58 @@ export async function applyMigrations(sql: postgres.Sql): Promise<void> {
   for (const file of files) {
     const body = readFileSync(join(dir, file), 'utf8');
     await sql.unsafe(body);
+  }
+}
+
+export type RlsIdentity = {
+  role: 'anon' | 'authenticated';
+  subject: string | null;
+};
+
+type RlsScenarioOptions = {
+  commit?: boolean;
+};
+
+/**
+ * Runs an RLS scenario on one reserved connection. Both the JWT subject and
+ * database role are local to the explicit transaction. Scenarios roll back by
+ * default; a committed fixture still clears SET LOCAL state at transaction end.
+ */
+export async function withRlsIdentity<T>(
+  sql: postgres.Sql,
+  identity: RlsIdentity,
+  scenario: (connection: postgres.ReservedSql) => Promise<T>,
+  options: RlsScenarioOptions = {},
+): Promise<T> {
+  const connection = await sql.reserve();
+  let transactionOpen = false;
+
+  try {
+    await connection`begin`;
+    transactionOpen = true;
+    await connection`select set_config('request.jwt.claim.sub', ${identity.subject ?? ''}, true)`;
+
+    if (identity.role === 'anon') {
+      await connection`set local role anon`;
+    } else {
+      await connection`set local role authenticated`;
+    }
+
+    const result = await scenario(connection);
+    if (options.commit) {
+      await connection`commit`;
+    } else {
+      await connection`rollback`;
+    }
+    transactionOpen = false;
+    return result;
+  } catch (error) {
+    if (transactionOpen) {
+      await connection`rollback`;
+    }
+    throw error;
+  } finally {
+    connection.release();
   }
 }
 
