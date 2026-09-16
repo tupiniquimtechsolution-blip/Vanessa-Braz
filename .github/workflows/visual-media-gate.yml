@@ -56,7 +56,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: visual-gate-evidence
-          path: apps/web/public/media/optimized/audit/visual/
+          path: |
+            apps/web/public/media/optimized/audit/visual/
+            apps/web/public/media/source/images/
+            apps/web/public/media/optimized/web/
           if-no-files-found: error
           retention-days: 7
 
