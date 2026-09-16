@@ -52,6 +52,14 @@ jobs:
       - name: Generate visual evidence or finalize decisions
         run: python scripts/media/visual_audit_gate.py
 
+      - name: Upload visual evidence for manual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-gate-evidence
+          path: apps/web/public/media/optimized/audit/visual/
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Verify immutable media unchanged
         shell: bash
         run: |
