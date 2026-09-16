@@ -1628,7 +1628,28 @@
           "quality": 82,
           "reuses_main_web": false
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "none",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "minor",
+          "hair_detail_loss": "minor",
+          "fine_detail_loss": "minor",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "minor"
+        },
+        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.45 (1).jpeg",

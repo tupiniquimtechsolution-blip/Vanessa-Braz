@@ -449,7 +449,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "REVIEW",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "visible",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "visible"
+        },
+        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.05.jpeg",
@@ -517,7 +538,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "REVIEW",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "visible",
+          "hair_detail_loss": "visible",
+          "fine_detail_loss": "visible",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "visible"
+        },
+        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.06 (1).jpeg",
@@ -653,7 +695,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "REVIEW",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "visible",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "visible"
+        },
+        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.07.jpeg",
@@ -730,7 +793,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
+        "publication_authorization_status": "NAO_APLICAVEL_SEM_PESSOA_IDENTIFICAVEL_NO_QUADRO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "minor",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "minor"
+        },
+        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.08.jpeg",
@@ -756,9 +840,9 @@
           "sha256": "fe74f4e187cbbbf5a40799507b81c255ed85a343b3be3d78ad786e54f61612f1"
         }
       },
-      "recommended_variant": "web",
-      "recommended_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.08-13804368.webp",
-      "reason": "web saves 41.08% (>= 10% gate)",
+      "recommended_variant": "original",
+      "recommended_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.08.jpeg",
+      "reason": "visual gate FAIL: original retained",
       "saving_bytes": 32154,
       "saving_percent": 41.08,
       "selected_quality": 82,
@@ -807,7 +891,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "FAIL",
+        "final_variant": "original",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "severe",
+          "hair_detail_loss": "severe",
+          "fine_detail_loss": "severe",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "severe"
+        },
+        "review_note": "Manual contact-sheet review: visible detail/resampling degradation; ORIGINAL retained."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.09.jpeg",
@@ -875,7 +980,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "REVIEW",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "visible",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "visible"
+        },
+        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.29 (1).jpeg",
@@ -1079,7 +1205,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "REVIEW",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "visible",
+          "hair_detail_loss": "visible",
+          "fine_detail_loss": "visible",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "visible"
+        },
+        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.30 (1).jpeg",
@@ -1173,9 +1320,9 @@
           "sha256": "6a4560ab2c61264e723654fce612d9d3de292d7f34e79d5ba1720e943f5624f2"
         }
       },
-      "recommended_variant": "web",
-      "recommended_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.30-989d7b9a.webp",
-      "reason": "web saves 42.26% (>= 10% gate)",
+      "recommended_variant": "original",
+      "recommended_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.30.jpeg",
+      "reason": "visual gate FAIL: original retained",
       "saving_bytes": 27407,
       "saving_percent": 42.26,
       "selected_quality": 82,
@@ -1215,7 +1362,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "FAIL",
+        "final_variant": "original",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "severe",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "severe"
+        },
+        "review_note": "Manual contact-sheet review: visible detail/resampling degradation; ORIGINAL retained."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.31 (1).jpeg",
@@ -1351,7 +1519,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "REVIEW",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "visible",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "visible"
+        },
+        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.32 (1).jpeg",
@@ -1623,7 +1812,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "REVIEW",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "visible",
+          "hair_detail_loss": "visible",
+          "fine_detail_loss": "visible",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "visible"
+        },
+        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.33 (1).jpeg",

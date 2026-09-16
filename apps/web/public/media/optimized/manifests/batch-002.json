@@ -313,7 +313,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "minor",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "minor"
+        },
+        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.39 (1).jpeg",
@@ -381,7 +402,28 @@
           "quality": 78,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "none",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "none",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "none"
+        },
+        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.39 (2).jpeg",
@@ -644,7 +686,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "minor",
+          "hair_detail_loss": "minor",
+          "fine_detail_loss": "minor",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "minor"
+        },
+        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.41 (1).jpeg",
@@ -1138,7 +1201,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "minor",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "minor"
+        },
+        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.43 (1).jpeg",
@@ -1283,7 +1367,28 @@
           "quality": 82,
           "reuses_main_web": true
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "minor",
+          "hair_detail_loss": "minor",
+          "fine_detail_loss": "minor",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "minor"
+        },
+        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      }
     },
     {
       "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.44 (1).jpeg",
@@ -1732,7 +1837,28 @@
           "quality": 82,
           "reuses_main_web": false
         }
-      ]
+      ],
+      "visual_gate": {
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
+        "publication_authorization_status": "NAO_APLICAVEL_SEM_PESSOA_IDENTIFICAVEL_NO_QUADRO",
+        "defects": {
+          "compression_artifacts": "none",
+          "banding": "none",
+          "blocking": "minor",
+          "halo": "none",
+          "oversharpening": "none",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "none",
+          "color_shift": "none",
+          "contrast_shift": "none",
+          "noise_amplification": "none",
+          "edge_ringing": "none",
+          "resampling_artifacts": "none"
+        },
+        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      }
     }
   ]
 }
