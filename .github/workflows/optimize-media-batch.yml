@@ -6,6 +6,10 @@ on:
       - media/automated-image-pipeline
     paths:
       - 'media-batches/*.json'
+      - 'scripts/media/optimize_images.py'
+      - 'scripts/media/audit_manifests.py'
+      - '.github/workflows/optimize-media-batch.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -18,7 +22,7 @@ jobs:
   optimize:
     if: github.ref_name == 'media/automated-image-pipeline'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     steps:
       - name: Checkout latest isolated media branch
@@ -35,6 +39,13 @@ jobs:
           test "$BRANCH" = "media/automated-image-pipeline"
           echo "Media pipeline is isolated on $BRANCH"
 
+      - name: Snapshot immutable source and enhanced hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          find apps/web/public/media/source/images -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/source-before.sha256
+          find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-before.sha256
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -43,17 +54,13 @@ jobs:
       - name: Install pinned image processor
         run: python -m pip install --disable-pip-version-check Pillow==11.3.0
 
-      - name: Resolve all declared batch manifests
+      - name: Resolve all seven batch manifests
         id: batches
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t FILES < <(git ls-files 'media-batches/*.json' | sort)
-          if [ "${#FILES[@]}" -eq 0 ]; then
-            echo "No batch manifests declared."
-            echo "files=" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
+          mapfile -t FILES < <(git ls-files 'media-batches/batch-*.json' | sort)
+          test "${#FILES[@]}" -eq 7
           printf '%s\n' "${FILES[@]}"
           {
             echo 'files<<EOF'
@@ -61,8 +68,7 @@ jobs:
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
-      - name: Process all declared batches idempotently
-        if: steps.batches.outputs.files != ''
+      - name: Reprocess WEB only for all batches
         shell: bash
         env:
           BATCH_FILES: ${{ steps.batches.outputs.files }}
@@ -73,43 +79,73 @@ jobs:
             python scripts/media/optimize_images.py --batch "$batch"
           done <<< "$BATCH_FILES"
 
-      - name: Verify source media is untouched
+      - name: Verify source and enhanced are byte-identical
         shell: bash
         run: |
           set -euo pipefail
+          find apps/web/public/media/source/images -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/source-after.sha256
+          find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-after.sha256
+          diff -u /tmp/source-before.sha256 /tmp/source-after.sha256
+          diff -u /tmp/enhanced-before.sha256 /tmp/enhanced-after.sha256
           if git diff --name-only | grep -q '^apps/web/public/media/source/'; then
             echo 'ERROR: source media was modified.' >&2
-            git diff --name-only
             exit 1
           fi
+          if git diff --name-only | grep -q '^apps/web/public/media/optimized/enhanced/'; then
+            echo 'ERROR: enhanced media was modified.' >&2
+            exit 1
+          fi
+
+      - name: Fetch audited frontend branch read-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin arena/01a0a695-vanessa-braz
+          git show FETCH_HEAD:src/lib/media.ts > /tmp/frontend-media.ts
+          echo "FRONTEND_SHA=$(git rev-parse FETCH_HEAD)" >> "$GITHUB_ENV"
+
+      - name: Run WEB-v2 exhaustive audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/media/audit_manifests.py \
+            --frontend-media /tmp/frontend-media.ts \
+            --frontend-ref "arena/01a0a695-vanessa-braz@$FRONTEND_SHA"
 
       - name: Guard repository size
         shell: bash
         run: |
           set -euo pipefail
-          if find apps/web/public/media/optimized -type f -size +20M -print -quit 2>/dev/null | grep -q .; then
+          if find apps/web/public/media/optimized -type f -size +20M -print -quit | grep -q .; then
             echo 'ERROR: an optimized file exceeds 20 MB.' >&2
-            find apps/web/public/media/optimized -type f -size +20M -print
             exit 1
           fi
-          TOTAL=$(du -sb apps/web/public/media/optimized 2>/dev/null | cut -f1 || echo 0)
+          TOTAL=$(du -sb apps/web/public/media/optimized | cut -f1)
           LIMIT=$((250 * 1024 * 1024))
           echo "Optimized media bytes: $TOTAL"
-          if [ "$TOTAL" -gt "$LIMIT" ]; then
-            echo 'ERROR: optimized media exceeds 250 MB safety limit.' >&2
+          test "$TOTAL" -le "$LIMIT"
+
+      - name: Verify no frontend or backend changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          BAD=$(git status --short | grep -Ev 'apps/web/public/media/optimized/(web/|manifests/|audit/)' || true)
+          if [ -n "$BAD" ]; then
+            echo 'ERROR: WEB-v2 run changed files outside allowed media outputs:' >&2
+            printf '%s\n' "$BAD" >&2
             exit 1
           fi
 
-      - name: Commit optimized derivatives to media branch only
+      - name: Commit WEB-v2 derivatives, manifests and audit only
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/web/public/media/optimized
+          git add apps/web/public/media/optimized/web apps/web/public/media/optimized/manifests apps/web/public/media/optimized/audit
           if git diff --cached --quiet; then
-            echo 'No optimized media changes to commit.'
+            echo 'No WEB-v2 changes to commit.'
             exit 0
           fi
-          git commit -m 'assets(media): refresh optimized image batches [skip ci]'
+          git commit -m 'assets(media): adaptive WEB-v2 optimization and audit [skip ci]'
           git push origin HEAD:media/automated-image-pipeline
