@@ -1,0 +1,3001 @@
+{
+  "generated_at_utc": "2026-09-16T21:09:33.465310+00:00",
+  "phase": "PREPARE_VISUAL_EVIDENCE",
+  "expected_uses": 40,
+  "actual_uses": 40,
+  "contact_sheets": [
+    "apps/web/public/media/optimized/audit/visual/hero/hero-contact-01.jpg",
+    "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-01.jpg",
+    "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-02.jpg",
+    "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-03.jpg",
+    "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-04.jpg",
+    "apps/web/public/media/optimized/audit/visual/details/details-contact-01.jpg",
+    "apps/web/public/media/optimized/audit/visual/details/details-contact-02.jpg",
+    "apps/web/public/media/optimized/audit/visual/environment/environment-contact-01.jpg",
+    "apps/web/public/media/optimized/audit/visual/environment/environment-contact-02.jpg"
+  ],
+  "records": [
+    {
+      "category": "hero",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba.webp",
+      "enhanced_path": "apps/web/public/media/optimized/enhanced/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba.webp",
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        1254,
+        1254
+      ],
+      "source_size_bytes": 187070,
+      "web_size_bytes": 147552,
+      "selected_quality": 78,
+      "saving_percent": 21.12,
+      "detail_crop_normalized": [
+        0.660287,
+        0.0,
+        1.0,
+        0.339713
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 1,
+        "people": 11
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 2.2226,
+        "rmse": 3.3484,
+        "psnr_db": 37.634,
+        "mean_rgb_shift": 0.2846,
+        "contrast_ratio": 0.9988,
+        "edge_ratio": 0.9286,
+        "block_boundary_delta": -1.2726,
+        "highpass_ratio": 0.9779
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": {
+        "mae": 1.6404,
+        "rmse": 3.0736,
+        "psnr_db": 38.378,
+        "mean_rgb_shift": 0.5042,
+        "contrast_ratio": 1.0066,
+        "edge_ratio": 1.1009,
+        "block_boundary_delta": 0.0575,
+        "highpass_ratio": 1.1597
+      }
+    },
+    {
+      "category": "hero",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1.webp",
+      "enhanced_path": "apps/web/public/media/optimized/enhanced/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1.webp",
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 163466,
+      "web_size_bytes": 137812,
+      "selected_quality": 82,
+      "saving_percent": 15.69,
+      "detail_crop_normalized": [
+        0.660417,
+        0.185938,
+        1.0,
+        0.440625
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.9662,
+        "rmse": 2.7543,
+        "psnr_db": 39.331,
+        "mean_rgb_shift": 0.1737,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9572,
+        "block_boundary_delta": -0.6298,
+        "highpass_ratio": 0.9869
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "none",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "none",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "none"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": {
+        "mae": 1.4118,
+        "rmse": 2.3434,
+        "psnr_db": 40.734,
+        "mean_rgb_shift": 0.3062,
+        "contrast_ratio": 1.0046,
+        "edge_ratio": 1.0899,
+        "block_boundary_delta": 0.2218,
+        "highpass_ratio": 1.1582
+      }
+    },
+    {
+      "category": "gallery",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.30.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.30.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 135622,
+      "web_size_bytes": 104072,
+      "selected_quality": 82,
+      "saving_percent": 23.26,
+      "detail_crop_normalized": [
+        0.164583,
+        0.745312,
+        0.504167,
+        1.0
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 1,
+        "people": 1
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.7639,
+        "rmse": 2.469,
+        "psnr_db": 40.28,
+        "mean_rgb_shift": 0.2074,
+        "contrast_ratio": 1.0005,
+        "edge_ratio": 0.9171,
+        "block_boundary_delta": -1.0296,
+        "highpass_ratio": 0.9856
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.31.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.31.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        1280,
+        960
+      ],
+      "web_dimensions": [
+        1280,
+        960
+      ],
+      "source_size_bytes": 113078,
+      "web_size_bytes": 80664,
+      "selected_quality": 82,
+      "saving_percent": 28.67,
+      "detail_crop_normalized": [
+        0.185938,
+        0.494792,
+        0.440625,
+        0.834375
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 1,
+        "people": 1
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.6444,
+        "rmse": 2.294,
+        "psnr_db": 40.919,
+        "mean_rgb_shift": 0.1571,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9112,
+        "block_boundary_delta": -0.8603,
+        "highpass_ratio": 0.9888
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 3,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.32.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.32.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 111431,
+      "web_size_bytes": 79342,
+      "selected_quality": 82,
+      "saving_percent": 28.8,
+      "detail_crop_normalized": [
+        0.164583,
+        0.558594,
+        0.504167,
+        0.813281
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 1,
+        "people": 1
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.6075,
+        "rmse": 2.2239,
+        "psnr_db": 41.189,
+        "mean_rgb_shift": 0.206,
+        "contrast_ratio": 0.9999,
+        "edge_ratio": 0.875,
+        "block_boundary_delta": -1.1891,
+        "highpass_ratio": 0.9752
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "visible",
+        "hair_detail_loss": "visible",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 4,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.34.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.34.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        1254,
+        1254
+      ],
+      "web_dimensions": [
+        1254,
+        1254
+      ],
+      "source_size_bytes": 135638,
+      "web_size_bytes": 104656,
+      "selected_quality": 82,
+      "saving_percent": 22.84,
+      "detail_crop_normalized": [
+        0.330144,
+        0.165072,
+        0.669856,
+        0.504785
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 1,
+        "people": 6
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.0389,
+        "rmse": 2.3898,
+        "psnr_db": 40.564,
+        "mean_rgb_shift": 0.1117,
+        "contrast_ratio": 0.9989,
+        "edge_ratio": 0.9652,
+        "block_boundary_delta": -0.2622,
+        "highpass_ratio": 0.9902
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "none",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "none",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "none"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 5,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.35.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.35.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.35-c4f9f102.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        851,
+        1280
+      ],
+      "web_dimensions": [
+        851,
+        1280
+      ],
+      "source_size_bytes": 166713,
+      "web_size_bytes": 130408,
+      "selected_quality": 82,
+      "saving_percent": 21.78,
+      "detail_crop_normalized": [
+        0.0,
+        0.386719,
+        0.3396,
+        0.6125
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 4,
+        "people": 8
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 2.016,
+        "rmse": 3.0918,
+        "psnr_db": 38.326,
+        "mean_rgb_shift": 0.2912,
+        "contrast_ratio": 0.9994,
+        "edge_ratio": 0.9654,
+        "block_boundary_delta": -0.4211,
+        "highpass_ratio": 0.9911
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "none",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "none",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "none"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 6,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.38.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.38.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.38-799dfd8a.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 143675,
+      "web_size_bytes": 118172,
+      "selected_quality": 82,
+      "saving_percent": 17.75,
+      "detail_crop_normalized": [
+        0.494792,
+        0.185938,
+        0.834375,
+        0.440625
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.8071,
+        "rmse": 2.6046,
+        "psnr_db": 39.816,
+        "mean_rgb_shift": 0.1984,
+        "contrast_ratio": 1.001,
+        "edge_ratio": 0.9407,
+        "block_boundary_delta": -1.0199,
+        "highpass_ratio": 0.9817
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 7,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.39 (1).jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.39 (1).jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.39-1-11d9d252.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 192530,
+      "web_size_bytes": 165584,
+      "selected_quality": 78,
+      "saving_percent": 14.0,
+      "detail_crop_normalized": [
+        0.494792,
+        0.185938,
+        0.834375,
+        0.440625
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 2.3919,
+        "rmse": 3.3945,
+        "psnr_db": 37.515,
+        "mean_rgb_shift": 0.1866,
+        "contrast_ratio": 1.0007,
+        "edge_ratio": 0.9687,
+        "block_boundary_delta": -0.5905,
+        "highpass_ratio": 0.9908
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "none",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "none",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "none"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 8,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.42.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.42.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.42-47d7cd6f.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 146178,
+      "web_size_bytes": 119774,
+      "selected_quality": 82,
+      "saving_percent": 18.06,
+      "detail_crop_normalized": [
+        0.660417,
+        0.558594,
+        1.0,
+        0.813281
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.8379,
+        "rmse": 2.6204,
+        "psnr_db": 39.764,
+        "mean_rgb_shift": 0.138,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9414,
+        "block_boundary_delta": -0.7415,
+        "highpass_ratio": 0.9795
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 9,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.45.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.45.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.45-a928af47.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        853,
+        1280
+      ],
+      "web_dimensions": [
+        853,
+        1280
+      ],
+      "source_size_bytes": 190078,
+      "web_size_bytes": 162742,
+      "selected_quality": 82,
+      "saving_percent": 14.38,
+      "detail_crop_normalized": [
+        0.329426,
+        0.192969,
+        0.669402,
+        0.419531
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 2,
+        "people": 1
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 2.346,
+        "rmse": 3.1514,
+        "psnr_db": 38.161,
+        "mean_rgb_shift": 0.2386,
+        "contrast_ratio": 0.9974,
+        "edge_ratio": 0.9524,
+        "block_boundary_delta": -0.7257,
+        "highpass_ratio": 0.9889
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "none",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "none"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 10,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.47 (1).jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.47 (1).jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.47-1-97ffd28d.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 147041,
+      "web_size_bytes": 114994,
+      "selected_quality": 82,
+      "saving_percent": 21.79,
+      "detail_crop_normalized": [
+        0.494792,
+        0.185938,
+        0.834375,
+        0.440625
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.8005,
+        "rmse": 2.5556,
+        "psnr_db": 39.981,
+        "mean_rgb_shift": 0.2448,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9589,
+        "block_boundary_delta": -0.7385,
+        "highpass_ratio": 0.9906
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "none",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "none"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 11,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.50.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.50.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.50-60105930.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 225043,
+      "web_size_bytes": 197264,
+      "selected_quality": 78,
+      "saving_percent": 12.34,
+      "detail_crop_normalized": [
+        0.330208,
+        0.185938,
+        0.669792,
+        0.440625
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 2,
+        "people": 0
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 2.5158,
+        "rmse": 3.5205,
+        "psnr_db": 37.199,
+        "mean_rgb_shift": 0.1564,
+        "contrast_ratio": 1.0001,
+        "edge_ratio": 0.9875,
+        "block_boundary_delta": -0.1999,
+        "highpass_ratio": 0.996
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "none",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "none",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "none"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 12,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.52.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.52.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.52-6435adab.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 128998,
+      "web_size_bytes": 93704,
+      "selected_quality": 82,
+      "saving_percent": 27.36,
+      "detail_crop_normalized": [
+        0.330208,
+        0.372656,
+        0.669792,
+        0.627344
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 3,
+        "people": 0
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.7135,
+        "rmse": 2.4425,
+        "psnr_db": 40.374,
+        "mean_rgb_shift": 0.2,
+        "contrast_ratio": 0.9996,
+        "edge_ratio": 0.9374,
+        "block_boundary_delta": -1.0349,
+        "highpass_ratio": 0.9815
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 13,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.04.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.04.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.04-8e7252c4.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 72675,
+      "web_size_bytes": 42856,
+      "selected_quality": 82,
+      "saving_percent": 41.03,
+      "detail_crop_normalized": [
+        0.330208,
+        0.0,
+        0.669792,
+        0.254688
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.267,
+        "rmse": 1.7978,
+        "psnr_db": 43.036,
+        "mean_rgb_shift": 0.2548,
+        "contrast_ratio": 1.0007,
+        "edge_ratio": 0.7894,
+        "block_boundary_delta": -1.0246,
+        "highpass_ratio": 0.9204
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 14,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.07.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.07.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        1280,
+        960
+      ],
+      "web_dimensions": [
+        1280,
+        960
+      ],
+      "source_size_bytes": 117108,
+      "web_size_bytes": 83382,
+      "selected_quality": 82,
+      "saving_percent": 28.8,
+      "detail_crop_normalized": [
+        0.372656,
+        0.330208,
+        0.627344,
+        0.669792
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.6144,
+        "rmse": 2.3728,
+        "psnr_db": 40.626,
+        "mean_rgb_shift": 0.1983,
+        "contrast_ratio": 0.9994,
+        "edge_ratio": 0.9038,
+        "block_boundary_delta": -1.1311,
+        "highpass_ratio": 0.9654
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 15,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.29.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.29.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.29-f75a326d.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 71635,
+      "web_size_bytes": 42806,
+      "selected_quality": 82,
+      "saving_percent": 40.24,
+      "detail_crop_normalized": [
+        0.0,
+        0.372656,
+        0.339583,
+        0.627344
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 3
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.2686,
+        "rmse": 1.7856,
+        "psnr_db": 43.095,
+        "mean_rgb_shift": 0.1822,
+        "contrast_ratio": 1.0,
+        "edge_ratio": 0.8114,
+        "block_boundary_delta": -1.0196,
+        "highpass_ratio": 0.902
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "visible",
+        "hair_detail_loss": "visible",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 16,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.34.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.34.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.34-ba230c0d.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 144560,
+      "web_size_bytes": 111394,
+      "selected_quality": 82,
+      "saving_percent": 22.94,
+      "detail_crop_normalized": [
+        0.330208,
+        0.372656,
+        0.669792,
+        0.627344
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.8655,
+        "rmse": 2.6279,
+        "psnr_db": 39.739,
+        "mean_rgb_shift": 0.1843,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9585,
+        "block_boundary_delta": -0.5092,
+        "highpass_ratio": 0.9949
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "none",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "none",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "none"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 17,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.38.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.38.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.38-fd056810.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        722,
+        1114
+      ],
+      "web_dimensions": [
+        722,
+        1114
+      ],
+      "source_size_bytes": 33072,
+      "web_size_bytes": 16200,
+      "selected_quality": 82,
+      "saving_percent": 51.02,
+      "detail_crop_normalized": [
+        0.660665,
+        0.780072,
+        1.0,
+        1.0
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 2
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 0.739,
+        "rmse": 1.3873,
+        "psnr_db": 45.287,
+        "mean_rgb_shift": 0.1706,
+        "contrast_ratio": 0.9989,
+        "edge_ratio": 0.9449,
+        "block_boundary_delta": -0.3611,
+        "highpass_ratio": 0.9958
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "none",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 18,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.44.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.44.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.44-e7aa07c8.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        889,
+        759
+      ],
+      "web_dimensions": [
+        889,
+        759
+      ],
+      "source_size_bytes": 262978,
+      "web_size_bytes": 29434,
+      "selected_quality": 82,
+      "saving_percent": 88.81,
+      "detail_crop_normalized": [
+        0.176603,
+        0.660079,
+        0.466817,
+        1.0
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 2,
+        "people": 0
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.439,
+        "rmse": 1.98,
+        "psnr_db": 42.197,
+        "mean_rgb_shift": 0.203,
+        "contrast_ratio": 0.9995,
+        "edge_ratio": 0.8978,
+        "block_boundary_delta": -0.0139,
+        "highpass_ratio": 1.0103
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "none",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 19,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.45.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.45.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        1080,
+        1275
+      ],
+      "web_dimensions": [
+        1080,
+        1275
+      ],
+      "source_size_bytes": 457074,
+      "web_size_bytes": 45060,
+      "selected_quality": 82,
+      "saving_percent": 90.14,
+      "detail_crop_normalized": [
+        0.0,
+        0.356078,
+        0.339815,
+        0.643922
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 1,
+        "people": 1
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.2515,
+        "rmse": 1.8389,
+        "psnr_db": 42.84,
+        "mean_rgb_shift": 0.1401,
+        "contrast_ratio": 1.0004,
+        "edge_ratio": 0.7872,
+        "block_boundary_delta": -0.1361,
+        "highpass_ratio": 0.9539
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "none",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "visible",
+        "hair_detail_loss": "visible",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "gallery",
+      "position": 20,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.48.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.48.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.48-8112dfbb.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        774,
+        1032
+      ],
+      "web_dimensions": [
+        774,
+        1032
+      ],
+      "source_size_bytes": 89839,
+      "web_size_bytes": 71212,
+      "selected_quality": 82,
+      "saving_percent": 20.73,
+      "detail_crop_normalized": [
+        0.164083,
+        0.745155,
+        0.503876,
+        1.0
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 5,
+        "people": 0
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.8223,
+        "rmse": 2.5202,
+        "psnr_db": 40.102,
+        "mean_rgb_shift": 0.1606,
+        "contrast_ratio": 0.9994,
+        "edge_ratio": 0.9269,
+        "block_boundary_delta": -0.7671,
+        "highpass_ratio": 0.9822
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.30 (1).jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.30 (1).jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        1280,
+        960
+      ],
+      "web_dimensions": [
+        1280,
+        960
+      ],
+      "source_size_bytes": 107917,
+      "web_size_bytes": 76578,
+      "selected_quality": 82,
+      "saving_percent": 29.04,
+      "detail_crop_normalized": [
+        0.745312,
+        0.164583,
+        1.0,
+        0.504167
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.5762,
+        "rmse": 2.1997,
+        "psnr_db": 41.283,
+        "mean_rgb_shift": 0.2102,
+        "contrast_ratio": 0.9996,
+        "edge_ratio": 0.8608,
+        "block_boundary_delta": -1.3941,
+        "highpass_ratio": 0.9568
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.32 (1).jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.32 (1).jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        1280,
+        960
+      ],
+      "web_dimensions": [
+        1280,
+        960
+      ],
+      "source_size_bytes": 98397,
+      "web_size_bytes": 69268,
+      "selected_quality": 82,
+      "saving_percent": 29.6,
+      "detail_crop_normalized": [
+        0.185938,
+        0.494792,
+        0.440625,
+        0.834375
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 1,
+        "people": 2
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.4829,
+        "rmse": 2.095,
+        "psnr_db": 41.707,
+        "mean_rgb_shift": 0.1325,
+        "contrast_ratio": 1.0001,
+        "edge_ratio": 0.895,
+        "block_boundary_delta": -0.8932,
+        "highpass_ratio": 0.9848
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 3,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.33.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.33.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.33-a1b70797.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 74962,
+      "web_size_bytes": 44620,
+      "selected_quality": 82,
+      "saving_percent": 40.48,
+      "detail_crop_normalized": [
+        0.330208,
+        0.0,
+        0.669792,
+        0.254688
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.2871,
+        "rmse": 1.8403,
+        "psnr_db": 42.833,
+        "mean_rgb_shift": 0.1857,
+        "contrast_ratio": 1.0001,
+        "edge_ratio": 0.8042,
+        "block_boundary_delta": -1.0487,
+        "highpass_ratio": 0.9443
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 4,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.36.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.36.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.36-dc1b7dd0.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 61541,
+      "web_size_bytes": 37488,
+      "selected_quality": 82,
+      "saving_percent": 39.08,
+      "detail_crop_normalized": [
+        0.660417,
+        0.372656,
+        1.0,
+        0.627344
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.2128,
+        "rmse": 1.6715,
+        "psnr_db": 43.669,
+        "mean_rgb_shift": 0.2562,
+        "contrast_ratio": 0.9991,
+        "edge_ratio": 0.6972,
+        "block_boundary_delta": -1.1121,
+        "highpass_ratio": 0.7941
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "severe",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "severe"
+      },
+      "suggested_status": "FAIL",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 5,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.40.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.40.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.40-47b249e5.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 102012,
+      "web_size_bytes": 70040,
+      "selected_quality": 82,
+      "saving_percent": 31.34,
+      "detail_crop_normalized": [
+        0.0,
+        0.372656,
+        0.339583,
+        0.627344
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 2
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.4788,
+        "rmse": 2.1778,
+        "psnr_db": 41.37,
+        "mean_rgb_shift": 0.1357,
+        "contrast_ratio": 1.0011,
+        "edge_ratio": 0.8921,
+        "block_boundary_delta": -1.047,
+        "highpass_ratio": 0.9566
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 6,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.43.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.43.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.43-bf400f40.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 107176,
+      "web_size_bytes": 70006,
+      "selected_quality": 82,
+      "saving_percent": 34.68,
+      "detail_crop_normalized": [
+        0.0,
+        0.372656,
+        0.339583,
+        0.627344
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 2,
+        "people": 1
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.5508,
+        "rmse": 2.1993,
+        "psnr_db": 41.285,
+        "mean_rgb_shift": 0.2036,
+        "contrast_ratio": 1.0003,
+        "edge_ratio": 0.9067,
+        "block_boundary_delta": -0.962,
+        "highpass_ratio": 0.9698
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "minor",
+        "hair_detail_loss": "minor",
+        "fine_detail_loss": "minor",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "minor"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 7,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.46.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.46.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        1280,
+        960
+      ],
+      "web_dimensions": [
+        1280,
+        960
+      ],
+      "source_size_bytes": 71086,
+      "web_size_bytes": 42748,
+      "selected_quality": 82,
+      "saving_percent": 39.86,
+      "detail_crop_normalized": [
+        0.372656,
+        0.494792,
+        0.627344,
+        0.834375
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 2
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.2275,
+        "rmse": 1.7628,
+        "psnr_db": 43.207,
+        "mean_rgb_shift": 0.2068,
+        "contrast_ratio": 1.0001,
+        "edge_ratio": 0.8285,
+        "block_boundary_delta": -1.0062,
+        "highpass_ratio": 0.8843
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "visible",
+        "hair_detail_loss": "visible",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 8,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.49.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.49.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        1280,
+        960
+      ],
+      "web_dimensions": [
+        1280,
+        960
+      ],
+      "source_size_bytes": 110561,
+      "web_size_bytes": 79330,
+      "selected_quality": 82,
+      "saving_percent": 28.25,
+      "detail_crop_normalized": [
+        0.372656,
+        0.164583,
+        0.627344,
+        0.504167
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.695,
+        "rmse": 2.3773,
+        "psnr_db": 40.609,
+        "mean_rgb_shift": 0.155,
+        "contrast_ratio": 0.9996,
+        "edge_ratio": 0.8096,
+        "block_boundary_delta": -1.6834,
+        "highpass_ratio": 0.922
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 9,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.51.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.51.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.51-73104450.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 167654,
+      "web_size_bytes": 141438,
+      "selected_quality": 82,
+      "saving_percent": 15.64,
+      "detail_crop_normalized": [
+        0.494792,
+        0.558594,
+        0.834375,
+        0.813281
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 1,
+        "people": 0
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.8535,
+        "rmse": 2.6405,
+        "psnr_db": 39.697,
+        "mean_rgb_shift": 0.2165,
+        "contrast_ratio": 1.0004,
+        "edge_ratio": 0.9642,
+        "block_boundary_delta": -0.8225,
+        "highpass_ratio": 0.9902
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "none",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "none"
+      },
+      "suggested_status": "PASS",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "details",
+      "position": 10,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.54.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.54.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.54-022828e2.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 90748,
+      "web_size_bytes": 59148,
+      "selected_quality": 82,
+      "saving_percent": 34.82,
+      "detail_crop_normalized": [
+        0.330208,
+        0.372656,
+        0.669792,
+        0.627344
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 2,
+        "people": 2
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.3969,
+        "rmse": 1.9618,
+        "psnr_db": 42.278,
+        "mean_rgb_shift": 0.1925,
+        "contrast_ratio": 1.0,
+        "edge_ratio": 0.8784,
+        "block_boundary_delta": -0.9698,
+        "highpass_ratio": 0.9601
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "visible",
+        "hair_detail_loss": "visible",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "environment",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.05.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.05.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 76106,
+      "web_size_bytes": 46822,
+      "selected_quality": 82,
+      "saving_percent": 38.48,
+      "detail_crop_normalized": [
+        0.660417,
+        0.185938,
+        1.0,
+        0.440625
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 6
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.2925,
+        "rmse": 1.8648,
+        "psnr_db": 42.718,
+        "mean_rgb_shift": 0.112,
+        "contrast_ratio": 1.001,
+        "edge_ratio": 0.8486,
+        "block_boundary_delta": -0.9459,
+        "highpass_ratio": 0.9221
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "visible",
+        "hair_detail_loss": "visible",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "environment",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.06.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.06.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 91385,
+      "web_size_bytes": 58130,
+      "selected_quality": 82,
+      "saving_percent": 36.39,
+      "detail_crop_normalized": [
+        0.494792,
+        0.0,
+        0.834375,
+        0.254688
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.4663,
+        "rmse": 2.0563,
+        "psnr_db": 41.869,
+        "mean_rgb_shift": 0.215,
+        "contrast_ratio": 0.9993,
+        "edge_ratio": 0.838,
+        "block_boundary_delta": -1.0855,
+        "highpass_ratio": 0.974
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "environment",
+      "position": 3,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.08.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.08.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.08-13804368.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        1280,
+        1280
+      ],
+      "web_dimensions": [
+        1280,
+        1280
+      ],
+      "source_size_bytes": 78276,
+      "web_size_bytes": 46122,
+      "selected_quality": 82,
+      "saving_percent": 41.08,
+      "detail_crop_normalized": [
+        0.329688,
+        0.494531,
+        0.669531,
+        0.834375
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 1,
+        "people": 0
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.1288,
+        "rmse": 1.69,
+        "psnr_db": 43.573,
+        "mean_rgb_shift": 0.3038,
+        "contrast_ratio": 1.0,
+        "edge_ratio": 0.7349,
+        "block_boundary_delta": -0.9568,
+        "highpass_ratio": 0.8915
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "severe",
+        "hair_detail_loss": "severe",
+        "fine_detail_loss": "severe",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "severe"
+      },
+      "suggested_status": "FAIL",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "environment",
+      "position": 4,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.09.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.09.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.09-b128d12e.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 72903,
+      "web_size_bytes": 44306,
+      "selected_quality": 82,
+      "saving_percent": 39.23,
+      "detail_crop_normalized": [
+        0.494792,
+        0.0,
+        0.834375,
+        0.254688
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.2593,
+        "rmse": 1.788,
+        "psnr_db": 43.084,
+        "mean_rgb_shift": 0.1576,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.8639,
+        "block_boundary_delta": -0.8445,
+        "highpass_ratio": 0.9344
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "environment",
+      "position": 5,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.30.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.30.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.30-989d7b9a.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 64853,
+      "web_size_bytes": 37446,
+      "selected_quality": 82,
+      "saving_percent": 42.26,
+      "detail_crop_normalized": [
+        0.164583,
+        0.372656,
+        0.504167,
+        0.627344
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.2261,
+        "rmse": 1.6977,
+        "psnr_db": 43.533,
+        "mean_rgb_shift": 0.1476,
+        "contrast_ratio": 0.9995,
+        "edge_ratio": 0.7291,
+        "block_boundary_delta": -1.116,
+        "highpass_ratio": 0.8738
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "severe",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "severe"
+      },
+      "suggested_status": "FAIL",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "environment",
+      "position": 6,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.31.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.31.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.31-017738a3.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 84778,
+      "web_size_bytes": 53340,
+      "selected_quality": 82,
+      "saving_percent": 37.08,
+      "detail_crop_normalized": [
+        0.330208,
+        0.185938,
+        0.669792,
+        0.440625
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.3705,
+        "rmse": 1.9438,
+        "psnr_db": 42.358,
+        "mean_rgb_shift": 0.2008,
+        "contrast_ratio": 0.9999,
+        "edge_ratio": 0.8432,
+        "block_boundary_delta": -1.0613,
+        "highpass_ratio": 0.9498
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "environment",
+      "position": 7,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.32.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.32.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.32-dfb6b026.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 81350,
+      "web_size_bytes": 50086,
+      "selected_quality": 82,
+      "saving_percent": 38.43,
+      "detail_crop_normalized": [
+        0.660417,
+        0.372656,
+        1.0,
+        0.627344
+      ],
+      "person_presence_signal": {
+        "detected": true,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 1
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "metrics": {
+        "mae": 1.3578,
+        "rmse": 1.9318,
+        "psnr_db": 42.411,
+        "mean_rgb_shift": 0.1548,
+        "contrast_ratio": 0.9999,
+        "edge_ratio": 0.8263,
+        "block_boundary_delta": -1.0473,
+        "highpass_ratio": 0.9325
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "visible",
+        "hair_detail_loss": "visible",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    },
+    {
+      "category": "environment",
+      "position": 8,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.33.jpeg",
+      "source_path": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.33.jpeg",
+      "web_path": "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.33-c5f8bdd5.webp",
+      "enhanced_path": null,
+      "source_dimensions": [
+        960,
+        1280
+      ],
+      "web_dimensions": [
+        960,
+        1280
+      ],
+      "source_size_bytes": 69372,
+      "web_size_bytes": 42316,
+      "selected_quality": 82,
+      "saving_percent": 39.0,
+      "detail_crop_normalized": [
+        0.330208,
+        0.0,
+        0.669792,
+        0.254688
+      ],
+      "person_presence_signal": {
+        "detected": false,
+        "method": "opencv_face_hog",
+        "faces": 0,
+        "people": 0
+      },
+      "publication_authorization_status": "NAO_APLICAVEL_POR_DETECCAO_AUTOMATICA",
+      "metrics": {
+        "mae": 1.2182,
+        "rmse": 1.7541,
+        "psnr_db": 43.25,
+        "mean_rgb_shift": 0.096,
+        "contrast_ratio": 1.0009,
+        "edge_ratio": 0.8478,
+        "block_boundary_delta": -0.8694,
+        "highpass_ratio": 0.9571
+      },
+      "defects": {
+        "compression_artifacts": "none",
+        "banding": "none",
+        "blocking": "minor",
+        "halo": "none",
+        "oversharpening": "none",
+        "plastic_skin": "none",
+        "hair_detail_loss": "none",
+        "fine_detail_loss": "visible",
+        "color_shift": "none",
+        "contrast_shift": "none",
+        "noise_amplification": "none",
+        "edge_ringing": "none",
+        "resampling_artifacts": "visible"
+      },
+      "suggested_status": "REVIEW",
+      "enhanced_metrics_at_web_scale": null
+    }
+  ],
+  "responsive_sample": [
+    {
+      "category": "hero",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-640w.webp",
+          "width": 640,
+          "height": 640,
+          "quality": 82,
+          "metrics": {
+            "mae": 4.1104,
+            "rmse": 7.5297,
+            "psnr_db": 30.595,
+            "mean_rgb_shift": 0.9491,
+            "contrast_ratio": 1.0236,
+            "edge_ratio": 1.2795,
+            "block_boundary_delta": 2.7759,
+            "highpass_ratio": 1.3018
+          },
+          "defects": {
+            "compression_artifacts": "visible",
+            "banding": "visible",
+            "blocking": "visible",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-960w.webp",
+          "width": 960,
+          "height": 960,
+          "quality": 82,
+          "metrics": {
+            "mae": 3.5144,
+            "rmse": 6.5464,
+            "psnr_db": 31.811,
+            "mean_rgb_shift": 0.6208,
+            "contrast_ratio": 1.018,
+            "edge_ratio": 1.2751,
+            "block_boundary_delta": 2.0856,
+            "highpass_ratio": 1.3129
+          },
+          "defects": {
+            "compression_artifacts": "visible",
+            "banding": "visible",
+            "blocking": "visible",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    },
+    {
+      "category": "hero",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1-640w.webp",
+          "width": 640,
+          "height": 853,
+          "quality": 82,
+          "metrics": {
+            "mae": 3.3626,
+            "rmse": 5.3102,
+            "psnr_db": 33.629,
+            "mean_rgb_shift": 0.0576,
+            "contrast_ratio": 1.0131,
+            "edge_ratio": 1.3304,
+            "block_boundary_delta": 2.2428,
+            "highpass_ratio": 1.4191
+          },
+          "defects": {
+            "compression_artifacts": "minor",
+            "banding": "minor",
+            "blocking": "visible",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    },
+    {
+      "category": "gallery",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.30.jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281-640w.webp",
+          "width": 640,
+          "height": 853,
+          "quality": 82,
+          "metrics": {
+            "mae": 2.6718,
+            "rmse": 4.6191,
+            "psnr_db": 34.84,
+            "mean_rgb_shift": 0.0804,
+            "contrast_ratio": 1.0081,
+            "edge_ratio": 1.2529,
+            "block_boundary_delta": 1.1307,
+            "highpass_ratio": 1.4113
+          },
+          "defects": {
+            "compression_artifacts": "minor",
+            "banding": "minor",
+            "blocking": "minor",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    },
+    {
+      "category": "gallery",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.31.jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-640w.webp",
+          "width": 640,
+          "height": 480,
+          "quality": 82,
+          "metrics": {
+            "mae": 2.5487,
+            "rmse": 4.2947,
+            "psnr_db": 35.472,
+            "mean_rgb_shift": 0.1987,
+            "contrast_ratio": 1.0076,
+            "edge_ratio": 1.2241,
+            "block_boundary_delta": 1.437,
+            "highpass_ratio": 1.3942
+          },
+          "defects": {
+            "compression_artifacts": "minor",
+            "banding": "minor",
+            "blocking": "minor",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-960w.webp",
+          "width": 960,
+          "height": 720,
+          "quality": 82,
+          "metrics": {
+            "mae": 2.1738,
+            "rmse": 3.6738,
+            "psnr_db": 36.829,
+            "mean_rgb_shift": 0.1741,
+            "contrast_ratio": 1.0049,
+            "edge_ratio": 1.1657,
+            "block_boundary_delta": 0.8983,
+            "highpass_ratio": 1.3557
+          },
+          "defects": {
+            "compression_artifacts": "none",
+            "banding": "none",
+            "blocking": "minor",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    },
+    {
+      "category": "gallery",
+      "position": 3,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.32.jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6-640w.webp",
+          "width": 640,
+          "height": 853,
+          "quality": 82,
+          "metrics": {
+            "mae": 2.1909,
+            "rmse": 3.7469,
+            "psnr_db": 36.657,
+            "mean_rgb_shift": 0.067,
+            "contrast_ratio": 1.0066,
+            "edge_ratio": 1.1848,
+            "block_boundary_delta": 0.9464,
+            "highpass_ratio": 1.3876
+          },
+          "defects": {
+            "compression_artifacts": "none",
+            "banding": "none",
+            "blocking": "minor",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    },
+    {
+      "category": "gallery",
+      "position": 4,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.34.jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-640w.webp",
+          "width": 640,
+          "height": 640,
+          "quality": 82,
+          "metrics": {
+            "mae": 2.5896,
+            "rmse": 6.9613,
+            "psnr_db": 31.277,
+            "mean_rgb_shift": 0.7948,
+            "contrast_ratio": 1.0453,
+            "edge_ratio": 1.3088,
+            "block_boundary_delta": 2.0401,
+            "highpass_ratio": 1.329
+          },
+          "defects": {
+            "compression_artifacts": "visible",
+            "banding": "visible",
+            "blocking": "visible",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "minor",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-960w.webp",
+          "width": 960,
+          "height": 960,
+          "quality": 82,
+          "metrics": {
+            "mae": 2.203,
+            "rmse": 5.9859,
+            "psnr_db": 32.588,
+            "mean_rgb_shift": 0.511,
+            "contrast_ratio": 1.0324,
+            "edge_ratio": 1.2957,
+            "block_boundary_delta": 1.6691,
+            "highpass_ratio": 1.3266
+          },
+          "defects": {
+            "compression_artifacts": "minor",
+            "banding": "minor",
+            "blocking": "minor",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "minor",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    },
+    {
+      "category": "details",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.30 (1).jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-640w.webp",
+          "width": 640,
+          "height": 480,
+          "quality": 82,
+          "metrics": {
+            "mae": 2.3892,
+            "rmse": 4.0635,
+            "psnr_db": 35.953,
+            "mean_rgb_shift": 0.0478,
+            "contrast_ratio": 1.0077,
+            "edge_ratio": 1.2272,
+            "block_boundary_delta": 1.4478,
+            "highpass_ratio": 1.4111
+          },
+          "defects": {
+            "compression_artifacts": "minor",
+            "banding": "minor",
+            "blocking": "minor",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-960w.webp",
+          "width": 960,
+          "height": 720,
+          "quality": 82,
+          "metrics": {
+            "mae": 1.9725,
+            "rmse": 3.4265,
+            "psnr_db": 37.434,
+            "mean_rgb_shift": 0.0794,
+            "contrast_ratio": 1.0051,
+            "edge_ratio": 1.1577,
+            "block_boundary_delta": 0.4746,
+            "highpass_ratio": 1.3741
+          },
+          "defects": {
+            "compression_artifacts": "none",
+            "banding": "none",
+            "blocking": "none",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    },
+    {
+      "category": "details",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.32 (1).jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-640w.webp",
+          "width": 640,
+          "height": 480,
+          "quality": 82,
+          "metrics": {
+            "mae": 2.2338,
+            "rmse": 3.7988,
+            "psnr_db": 36.538,
+            "mean_rgb_shift": 0.143,
+            "contrast_ratio": 1.0068,
+            "edge_ratio": 1.1894,
+            "block_boundary_delta": 1.0975,
+            "highpass_ratio": 1.3718
+          },
+          "defects": {
+            "compression_artifacts": "none",
+            "banding": "none",
+            "blocking": "minor",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-960w.webp",
+          "width": 960,
+          "height": 720,
+          "quality": 82,
+          "metrics": {
+            "mae": 1.9,
+            "rmse": 3.2275,
+            "psnr_db": 37.953,
+            "mean_rgb_shift": 0.1272,
+            "contrast_ratio": 1.0039,
+            "edge_ratio": 1.1482,
+            "block_boundary_delta": 0.7442,
+            "highpass_ratio": 1.3326
+          },
+          "defects": {
+            "compression_artifacts": "none",
+            "banding": "none",
+            "blocking": "minor",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    },
+    {
+      "category": "environment",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.05.jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e-640w.webp",
+          "width": 640,
+          "height": 853,
+          "quality": 82,
+          "metrics": {
+            "mae": 1.5123,
+            "rmse": 2.4403,
+            "psnr_db": 40.382,
+            "mean_rgb_shift": 0.0909,
+            "contrast_ratio": 1.0017,
+            "edge_ratio": 1.0656,
+            "block_boundary_delta": 0.2994,
+            "highpass_ratio": 1.325
+          },
+          "defects": {
+            "compression_artifacts": "none",
+            "banding": "none",
+            "blocking": "none",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    },
+    {
+      "category": "environment",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.06.jpeg",
+      "status": "FAIL",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0-640w.webp",
+          "width": 640,
+          "height": 853,
+          "quality": 82,
+          "metrics": {
+            "mae": 1.7935,
+            "rmse": 3.0032,
+            "psnr_db": 38.579,
+            "mean_rgb_shift": 0.1055,
+            "contrast_ratio": 1.0053,
+            "edge_ratio": 1.1098,
+            "block_boundary_delta": 0.5433,
+            "highpass_ratio": 1.3267
+          },
+          "defects": {
+            "compression_artifacts": "none",
+            "banding": "none",
+            "blocking": "none",
+            "halo": "severe",
+            "oversharpening": "severe",
+            "plastic_skin": "none",
+            "hair_detail_loss": "none",
+            "fine_detail_loss": "none",
+            "color_shift": "none",
+            "contrast_shift": "none",
+            "noise_amplification": "severe",
+            "edge_ringing": "severe",
+            "resampling_artifacts": "severe"
+          },
+          "suggested_status": "FAIL"
+        }
+      ]
+    }
+  ],
+  "manual_decisions_required": true,
+  "status": "PASS"
+}
