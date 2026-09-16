@@ -1,0 +1,269 @@
+{
+  "generated_at_utc": "2026-09-16T19:34:32.322149+00:00",
+  "media_branch_reference": "media/automated-image-pipeline",
+  "frontend_ref": "arena/01a0a695-vanessa-braz@83d3834cf528e913e0d371b57c2775361cd14d64",
+  "manifest_files": [
+    "apps/web/public/media/optimized/manifests/batch-001.json",
+    "apps/web/public/media/optimized/manifests/batch-002.json",
+    "apps/web/public/media/optimized/manifests/batch-003.json",
+    "apps/web/public/media/optimized/manifests/batch-004.json",
+    "apps/web/public/media/optimized/manifests/batch-005.json",
+    "apps/web/public/media/optimized/manifests/batch-006.json",
+    "apps/web/public/media/optimized/manifests/batch-007.json"
+  ],
+  "manifest_count": 7,
+  "source_items": 157,
+  "expected_source_items": 157,
+  "complete_157": true,
+  "unique_source_paths": 157,
+  "duplicate_source_content_groups": [
+    {
+      "sha256": "03dedfbb2c9631846bc4917de511b60e3bf6e75865dd785f217cd97ce7d97d6f",
+      "paths": [
+        "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.44 (1).jpeg",
+        "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.44.jpeg"
+      ]
+    },
+    {
+      "sha256": "c1686bf93e6ca47b3fe29ea4d35a0a10620f40b0da1ab90bed3e4e0ad3a31476",
+      "paths": [
+        "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.47 (2).jpeg",
+        "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.48.jpeg"
+      ]
+    }
+  ],
+  "duplicate_web_content_groups": [
+    {
+      "sha256": "f65a0669f14ad4164a18ec12acd6097d37dd8c256dc0f749e4a386d24cac0ecc",
+      "paths": [
+        "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.44-1-03dedfbb.webp",
+        "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.44-03dedfbb.webp"
+      ]
+    },
+    {
+      "sha256": "207f520932df88febc98996c936f856abfb95e05f9fd1ef13fe3d5fd2786533c",
+      "paths": [
+        "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.47-2-c1686bf9.webp",
+        "apps/web/public/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.48-c1686bf9.webp"
+      ]
+    }
+  ],
+  "duplicate_enhanced_content_groups": [
+    {
+      "sha256": "b521a46bb57230b536a31645bb904b23f37fdb87f2194094cd1ea0dc9d21d563",
+      "paths": [
+        "apps/web/public/media/optimized/enhanced/WhatsApp-Image-2026-09-12-at-10.26.44-1-03dedfbb.webp",
+        "apps/web/public/media/optimized/enhanced/WhatsApp-Image-2026-09-12-at-10.26.44-03dedfbb.webp"
+      ]
+    },
+    {
+      "sha256": "77cae14bcedccab4c4d95aa0f2d729bd223ba668effaa0c46b0fa1f519250328",
+      "paths": [
+        "apps/web/public/media/optimized/enhanced/WhatsApp-Image-2026-09-12-at-10.26.47-2-c1686bf9.webp",
+        "apps/web/public/media/optimized/enhanced/WhatsApp-Image-2026-09-12-at-10.26.48-c1686bf9.webp"
+      ]
+    }
+  ],
+  "bytes": {
+    "source_total": 16104641,
+    "web_total": 16029752,
+    "enhanced_total": 45956924,
+    "web_vs_source_delta_percent": -0.47,
+    "enhanced_vs_source_delta_percent": 185.36
+  },
+  "web_files_larger_than_source": 63,
+  "web_files_over_20_percent_larger_than_source": 26,
+  "enhanced_max_scale": 2.0,
+  "frontend": {
+    "media_file": "/tmp/frontend-media.ts",
+    "uses": 40,
+    "mapped": 40,
+    "missing": []
+  },
+  "issues": [],
+  "warnings": [
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
+      "source_bytes": 187070,
+      "web_bytes": 247420,
+      "delta_percent": 32.26
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
+      "source_bytes": 163466,
+      "web_bytes": 209418,
+      "delta_percent": 28.11
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.38 (1).jpeg",
+      "source_bytes": 162279,
+      "web_bytes": 214794,
+      "delta_percent": 32.36
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.38.jpeg",
+      "source_bytes": 143675,
+      "web_bytes": 179328,
+      "delta_percent": 24.82
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.39 (1).jpeg",
+      "source_bytes": 192530,
+      "web_bytes": 280986,
+      "delta_percent": 45.94
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.39 (2).jpeg",
+      "source_bytes": 178607,
+      "web_bytes": 243686,
+      "delta_percent": 36.44
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.42 (1).jpeg",
+      "source_bytes": 192659,
+      "web_bytes": 275808,
+      "delta_percent": 43.16
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.42.jpeg",
+      "source_bytes": 146178,
+      "web_bytes": 186044,
+      "delta_percent": 27.27
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.44 (2).jpeg",
+      "source_bytes": 205613,
+      "web_bytes": 281418,
+      "delta_percent": 36.87
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.45 (1).jpeg",
+      "source_bytes": 162427,
+      "web_bytes": 197996,
+      "delta_percent": 21.9
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.45.jpeg",
+      "source_bytes": 190078,
+      "web_bytes": 246540,
+      "delta_percent": 29.7
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.47 (1).jpeg",
+      "source_bytes": 147041,
+      "web_bytes": 178066,
+      "delta_percent": 21.1
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.47.jpeg",
+      "source_bytes": 127578,
+      "web_bytes": 157282,
+      "delta_percent": 23.28
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.50 (1).jpeg",
+      "source_bytes": 172471,
+      "web_bytes": 225354,
+      "delta_percent": 30.66
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.50.jpeg",
+      "source_bytes": 225043,
+      "web_bytes": 329724,
+      "delta_percent": 46.52
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.51 (1).jpeg",
+      "source_bytes": 156791,
+      "web_bytes": 196612,
+      "delta_percent": 25.4
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.51.jpeg",
+      "source_bytes": 167654,
+      "web_bytes": 215342,
+      "delta_percent": 28.44
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.52 (2).jpeg",
+      "source_bytes": 152287,
+      "web_bytes": 197954,
+      "delta_percent": 29.99
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.26.55 (3).jpeg",
+      "source_bytes": 135454,
+      "web_bytes": 170442,
+      "delta_percent": 25.83
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.34 (1).jpeg",
+      "source_bytes": 169399,
+      "web_bytes": 227564,
+      "delta_percent": 34.34
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.39 (2).jpeg",
+      "source_bytes": 189913,
+      "web_bytes": 278134,
+      "delta_percent": 46.45
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.39 (3).jpeg",
+      "source_bytes": 152916,
+      "web_bytes": 198758,
+      "delta_percent": 29.98
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.40.jpeg",
+      "source_bytes": 166463,
+      "web_bytes": 229626,
+      "delta_percent": 37.94
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.43 (1).jpeg",
+      "source_bytes": 99096,
+      "web_bytes": 124846,
+      "delta_percent": 25.98
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.46 (1).jpeg",
+      "source_bytes": 132322,
+      "web_bytes": 159806,
+      "delta_percent": 20.77
+    },
+    {
+      "type": "web_over_20_percent_larger",
+      "source": "apps/web/public/media/source/images/WhatsApp Image 2026-09-12 at 10.53.47 (3).jpeg",
+      "source_bytes": 108943,
+      "web_bytes": 149620,
+      "delta_percent": 37.34
+    }
+  ],
+  "status": "PASS"
+}
