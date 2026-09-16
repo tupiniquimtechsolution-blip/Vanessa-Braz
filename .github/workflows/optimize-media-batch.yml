@@ -1,0 +1,120 @@
+name: Optimize media batch
+
+on:
+  push:
+    branches:
+      - media/automated-image-pipeline
+    paths:
+      - 'media-batches/*.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vanessa-media-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  optimize:
+    if: github.ref_name == 'media/automated-image-pipeline'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout isolated media branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Assert branch isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "media/automated-image-pipeline"
+          echo "Media pipeline is isolated on $GITHUB_REF_NAME"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install pinned image processor
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+
+      - name: Resolve changed batch manifests
+        id: batches
+        shell: bash
+        run: |
+          set -euo pipefail
+          BEFORE='${{ github.event.before }}'
+          if [[ "$BEFORE" =~ ^0+$ ]]; then
+            mapfile -t FILES < <(git ls-files 'media-batches/*.json')
+          else
+            mapfile -t FILES < <(git diff --name-only "$BEFORE" "$GITHUB_SHA" -- 'media-batches/*.json')
+          fi
+
+          if [ "${#FILES[@]}" -eq 0 ]; then
+            echo "No batch manifests changed."
+            echo "files=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          printf '%s\n' "${FILES[@]}"
+          {
+            echo 'files<<EOF'
+            printf '%s\n' "${FILES[@]}"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Process batches
+        if: steps.batches.outputs.files != ''
+        shell: bash
+        env:
+          BATCH_FILES: ${{ steps.batches.outputs.files }}
+        run: |
+          set -euo pipefail
+          while IFS= read -r batch; do
+            [ -n "$batch" ] || continue
+            python scripts/media/optimize_images.py --batch "$batch"
+          done <<< "$BATCH_FILES"
+
+      - name: Verify source media is untouched
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --name-only | grep -q '^apps/web/public/media/source/'; then
+            echo 'ERROR: source media was modified.' >&2
+            git diff --name-only
+            exit 1
+          fi
+
+      - name: Guard repository size
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find apps/web/public/media/optimized -type f -size +20M -print -quit 2>/dev/null | grep -q .; then
+            echo 'ERROR: an optimized file exceeds 20 MB.' >&2
+            find apps/web/public/media/optimized -type f -size +20M -print
+            exit 1
+          fi
+          TOTAL=$(du -sb apps/web/public/media/optimized 2>/dev/null | cut -f1 || echo 0)
+          LIMIT=$((250 * 1024 * 1024))
+          echo "Optimized media bytes: $TOTAL"
+          if [ "$TOTAL" -gt "$LIMIT" ]; then
+            echo 'ERROR: optimized media exceeds 250 MB safety limit.' >&2
+            exit 1
+          fi
+
+      - name: Commit optimized derivatives to media branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/public/media/optimized
+          if git diff --cached --quiet; then
+            echo 'No optimized media changes to commit.'
+            exit 0
+          fi
+          git commit -m 'assets(media): add optimized image batch [skip ci]'
+          git push origin HEAD:media/automated-image-pipeline
