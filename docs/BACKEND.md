@@ -35,7 +35,12 @@ Required env on the frontend:
 
 Never set `VITE_SUPABASE_SERVICE_ROLE_KEY`.
 
+## Demo vs produção
+
+- Migrations em `supabase/migrations/` não carregam preços, horários ou contatos inventados.
+- Preview local: `supabase/seed/demo.sql` + `VITE_DEMO_CATALOG=true`.
+- Sem isso, o catálogo público permanece vazio / PENDENTE_DE_CONFIRMACAO.
+
 ## Live Supabase
 
-Until a project is linked, catalog pages use the local fallback in `src/lib/data.ts`.
 Login, booking confirmation and admin writes require a configured project.
