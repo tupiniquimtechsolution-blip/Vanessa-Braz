@@ -1,0 +1,20 @@
+{
+  "batch_id": "batch-005",
+  "source": {
+    "root": "apps/web/public/media/source/images",
+    "extensions": [".jpg", ".jpeg", ".png", ".webp"],
+    "offset": 95,
+    "limit": 25
+  },
+  "web": {
+    "enabled": true,
+    "long_edge": 1920,
+    "quality": 86
+  },
+  "enhanced": {
+    "enabled": true,
+    "long_edge": 3840,
+    "quality": 92,
+    "max_scale": 2.0
+  }
+}
