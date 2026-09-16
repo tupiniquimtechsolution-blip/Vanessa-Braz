@@ -3,6 +3,7 @@ import {
   hmacSha256Hex,
   mercadoPagoManifest,
   parseMercadoPagoSignature,
+  resolveMercadoPagoNotificationDataId,
   verifyMercadoPagoSignature,
 } from '../../src/lib/payments/mp-signature';
 
@@ -21,5 +22,16 @@ describe('Mercado Pago official signature', () => {
     await expect(
       verifyMercadoPagoSignature({ secret, signatureHeader: secret, requestId, dataId }),
     ).resolves.toBe(false);
+  });
+
+  it('uses data.id from the notification URL and rejects a body mismatch', () => {
+    const payload = { data: { id: '123456' } };
+    const notificationUrl = 'https://example.com/payments-webhook?topic=payment&data.id=123456';
+
+    expect(resolveMercadoPagoNotificationDataId(payload, notificationUrl)).toBe('123456');
+    expect(resolveMercadoPagoNotificationDataId({ data: { id: 123456 } })).toBe('123456');
+    expect(() =>
+      resolveMercadoPagoNotificationDataId(payload, 'https://example.com/payments-webhook?data.id=999999'),
+    ).toThrow('webhook_payment_id_mismatch');
   });
 });

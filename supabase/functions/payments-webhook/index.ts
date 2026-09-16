@@ -1,9 +1,13 @@
 // Webhook is the payment authority.
 // Mercado Pago: official x-signature HMAC + GET /v1/payments/{id}.
 // Persistence: apply_payment_event() is transactional and idempotent.
-// Keep signature algorithm in sync with src/lib/payments/mp-signature.ts.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import {
+  resolveMercadoPagoNotificationDataId,
+  verifyMercadoPagoSignature,
+  type MercadoPagoNotificationPayload,
+} from '../../../src/lib/payments/mp-signature.ts';
 
 const MP_API = 'https://api.mercadopago.com';
 
@@ -12,49 +16,6 @@ const json = (body: unknown, status = 200) =>
     status,
     headers: { 'Content-Type': 'application/json' },
   });
-
-function parseSignature(header: string | null): { ts: string; v1: string } | null {
-  if (!header) return null;
-  const parts: Record<string, string> = {};
-  for (const chunk of header.split(',')) {
-    const [key, value] = chunk.trim().split('=');
-    if (key && value) parts[key] = value;
-  }
-  if (!parts.ts || !parts.v1) return null;
-  return { ts: parts.ts, v1: parts.v1 };
-}
-
-function timingSafeEqual(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  let result = 0;
-  for (let i = 0; i < a.length; i += 1) result |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return result === 0;
-}
-
-async function hmacSha256Hex(secret: string, message: string): Promise<string> {
-  const key = await crypto.subtle.importKey(
-    'raw',
-    new TextEncoder().encode(secret),
-    { name: 'HMAC', hash: 'SHA-256' },
-    false,
-    ['sign'],
-  );
-  const signature = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(message));
-  return [...new Uint8Array(signature)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
-}
-
-async function verifyMercadoPagoSignature(args: {
-  secret: string;
-  signatureHeader: string | null;
-  requestId: string | null;
-  dataId: string;
-}): Promise<boolean> {
-  const parsed = parseSignature(args.signatureHeader);
-  if (!parsed || !args.secret || !args.requestId) return false;
-  const manifest = `id:${args.dataId};request-id:${args.requestId};ts:${parsed.ts};`;
-  const expected = await hmacSha256Hex(args.secret, manifest);
-  return timingSafeEqual(expected, parsed.v1);
-}
 
 const STATUS_MAP: Record<string, string> = {
   pending: 'pending',
@@ -94,9 +55,14 @@ Deno.serve(async (req) => {
       const accessToken = Deno.env.get('MERCADOPAGO_ACCESS_TOKEN') ?? '';
       if (!secret || !accessToken) return json({ error: 'misconfigured' }, 500);
 
-      const payload = JSON.parse(raw) as { id?: string | number; type?: string; action?: string; data?: { id?: string } };
-      const paymentId = payload.data?.id;
-      if (!paymentId) return json({ error: 'webhook_missing_payment_id' }, 400);
+      const payload = JSON.parse(raw) as MercadoPagoNotificationPayload & {
+        id?: string | number;
+        type?: string;
+        action?: string;
+      };
+      // Mercado Pago signs data.id from the notification URL. If the body also
+      // contains it, the shared resolver rejects a mismatch before HMAC.
+      const paymentId = resolveMercadoPagoNotificationDataId(payload, req.url);
 
       const valid = await verifyMercadoPagoSignature({
         secret,
@@ -106,16 +72,21 @@ Deno.serve(async (req) => {
       });
       if (!valid) return json({ error: 'invalid_signature' }, 401);
 
-      const paymentRes = await fetch(`${MP_API}/v1/payments/${paymentId}`, {
+      // The signed notification identifies a payment only. Mercado Pago's GET
+      // response remains authoritative for its status, amount, and reference.
+      const paymentRes = await fetch(`${MP_API}/v1/payments/${encodeURIComponent(paymentId)}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       if (!paymentRes.ok) return json({ error: 'webhook_payment_lookup_failed' }, 502);
       const payment = await paymentRes.json() as {
-        id: number;
+        id: string | number;
         status: string;
         transaction_amount: number;
         external_reference?: string;
       };
+      if (String(payment.id) !== paymentId) {
+        return json({ error: 'webhook_payment_lookup_mismatch' }, 502);
+      }
       if (!payment.external_reference) return json({ error: 'missing_appointment' }, 400);
 
       event = {
@@ -148,7 +119,13 @@ Deno.serve(async (req) => {
         payload,
       };
     }
-  } catch {
+  } catch (error) {
+    if (error instanceof Error && error.message === 'webhook_payment_id_mismatch') {
+      return json({ error: 'webhook_payment_id_mismatch' }, 400);
+    }
+    if (error instanceof Error && error.message === 'webhook_missing_payment_id') {
+      return json({ error: 'webhook_missing_payment_id' }, 400);
+    }
     return json({ error: 'invalid_payload' }, 400);
   }
 

@@ -3,6 +3,12 @@ export interface MercadoPagoSignature {
   v1: string;
 }
 
+export interface MercadoPagoNotificationPayload {
+  data?: {
+    id?: string | number | null;
+  } | null;
+}
+
 export function parseMercadoPagoSignature(header: string | undefined | null): MercadoPagoSignature | null {
   if (!header) return null;
   const parts = Object.fromEntries(
@@ -14,6 +20,44 @@ export function parseMercadoPagoSignature(header: string | undefined | null): Me
   );
   if (!parts.ts || !parts.v1) return null;
   return { ts: parts.ts, v1: parts.v1 };
+}
+
+function normalizeNotificationDataId(value: unknown): string | null {
+  if (typeof value === 'string') {
+    const normalized = value.trim();
+    return normalized || null;
+  }
+  if (typeof value === 'number' && Number.isSafeInteger(value)) {
+    return String(value);
+  }
+  return null;
+}
+
+/**
+ * Mercado Pago signs the notification URL's `data.id`. When a body also
+ * carries `data.id`, accepting different identifiers would verify one payment
+ * and apply another, so the values must agree before signature verification.
+ */
+export function resolveMercadoPagoNotificationDataId(
+  payload: MercadoPagoNotificationPayload,
+  notificationUrl?: string,
+): string {
+  const bodyDataId = normalizeNotificationDataId(payload.data?.id);
+  const queryDataId = notificationUrl
+    ? normalizeNotificationDataId(
+      new URL(notificationUrl, 'https://mercadopago-webhook.invalid').searchParams.get('data.id'),
+    )
+    : null;
+
+  if (bodyDataId && queryDataId && bodyDataId !== queryDataId) {
+    throw new Error('webhook_payment_id_mismatch');
+  }
+
+  const dataId = queryDataId ?? bodyDataId;
+  if (!dataId) {
+    throw new Error('webhook_missing_payment_id');
+  }
+  return dataId;
 }
 
 export function mercadoPagoManifest(dataId: string, requestId: string, ts: string): string {

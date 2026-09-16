@@ -27,7 +27,11 @@ export interface WebhookEvent {
 export interface PaymentProvider {
   readonly name: string;
   createPayment(input: CreatePaymentInput): Promise<PaymentIntent>;
-  parseWebhook(rawBody: string, headers: Record<string, string | undefined>): Promise<WebhookEvent>;
+  parseWebhook(
+    rawBody: string,
+    headers: Record<string, string | undefined>,
+    notificationUrl?: string,
+  ): Promise<WebhookEvent>;
 }
 
 export class PriceMismatchError extends Error {

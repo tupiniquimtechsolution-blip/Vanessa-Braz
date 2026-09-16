@@ -1,4 +1,8 @@
-import { verifyMercadoPagoSignature } from './mp-signature';
+import {
+  resolveMercadoPagoNotificationDataId,
+  verifyMercadoPagoSignature,
+  type MercadoPagoNotificationPayload,
+} from './mp-signature';
 import type { CreatePaymentInput, PaymentIntent, PaymentProvider, WebhookEvent } from './provider';
 
 export const MERCADO_PAGO_API = 'https://api.mercadopago.com';
@@ -67,15 +71,17 @@ export class MercadoPagoProvider implements PaymentProvider {
     };
   }
 
-  async parseWebhook(rawBody: string, headers: Record<string, string | undefined>): Promise<WebhookEvent> {
-    const payload = JSON.parse(rawBody) as {
+  async parseWebhook(
+    rawBody: string,
+    headers: Record<string, string | undefined>,
+    notificationUrl?: string,
+  ): Promise<WebhookEvent> {
+    const payload = JSON.parse(rawBody) as MercadoPagoNotificationPayload & {
       id?: string | number;
       type?: string;
       action?: string;
-      data?: { id?: string };
     };
-    const paymentId = payload.data?.id;
-    if (!paymentId) throw new Error('webhook_missing_payment_id');
+    const paymentId = resolveMercadoPagoNotificationDataId(payload, notificationUrl);
 
     const valid = await verifyMercadoPagoSignature({
       secret: this.webhookSecret,
@@ -85,7 +91,9 @@ export class MercadoPagoProvider implements PaymentProvider {
     });
     if (!valid) throw new Error('invalid_webhook_signature');
 
-    const paymentRes = await fetch(`${MERCADO_PAGO_API}/v1/payments/${paymentId}`, {
+    // Notification fields only identify the payment. The provider lookup is
+    // authoritative for status, amount, and appointment reference.
+    const paymentRes = await fetch(`${MERCADO_PAGO_API}/v1/payments/${encodeURIComponent(paymentId)}`, {
       headers: { Authorization: `Bearer ${this.accessToken}` },
     });
     if (!paymentRes.ok) throw new Error('webhook_payment_lookup_failed');
@@ -96,6 +104,7 @@ export class MercadoPagoProvider implements PaymentProvider {
       transaction_amount: number;
       external_reference?: string;
     };
+    if (String(payment.id) !== paymentId) throw new Error('webhook_payment_lookup_mismatch');
 
     return {
       eventId: String(payload.id ?? `mp:${payment.id}:${payload.action ?? payload.type ?? 'payment'}`),
