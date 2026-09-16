@@ -1,64 +1,71 @@
-# CHECKPOINT — Backend (review fixes)
+# CHECKPOINT — Backend e pagamentos
 
 ## BRANCH
-`arena/01a0a695-vanessa-braz`
+`arena/01a0aada-vanessa-braz`
 
-Sem merge em `main`. Sem troca de branch.
+Sem merge em `main`. Sem force push.
 
 ## BASE_SHA
-`eff2fa85b88c829115fc68b19cf0d4c3e5f87a4e`
+`9067422296f98d195e97d5daf175b43628fa2381`
 
-## HEAD_SHA
-`3c14fab` (CI). Docs commit seguinte atualiza este campo.
+## CHANGESET_DESTA_REVISAO
 
-## REVIEW_FIXES
-1. Toolbox/governança restaurada — `c12d91d`
-2. Seed de produção sem catálogo inventado; demo isolado — `1cd9b99`
-3. Singleton real + `business_hours` globais únicos — `22db5ad`
-4. Webhook MP HMAC oficial + lookup + `apply_payment_event` — `e51c2cc` / `22db5ad`
-5. CI + CodeQL + Dependabot — `3c14fab`
-6. Teste Postgres real (CI / `DATABASE_URL`) — `0026568`
-7. AGENTS.md e este checkpoint — `24a2e62`
+1. `780a10f` — aquisição atômica de eventos de pagamento e teste PostgreSQL concorrente.
+2. `00ebd05` — ID canônico da notificação Mercado Pago e validação URL/body.
+3. `167c452` — neutralização de claims públicas sem confirmação.
+4. Documentação deste checkpoint e `.agent/STATUS.md` — registrada no commit subsequente.
 
 ## SCHEMA_STATUS
-PASS no SQL versionado. Live `db push`: INTEGRATION_PENDING.
 
-## AUTH_STATUS
-PASS no código. Live Auth: INTEGRATION_PENDING.
-
-## RLS_STATUS
-PASS no SQL. Teste real: CI com Postgres 15 (`DATABASE_URL` obrigatório).
-Local sem `DATABASE_URL`: skip (não declara PASS live).
-
-## BOOKING_STATUS
-PASS no domínio. Catálogo público vazio até dados confirmados.
+- Migrations versionadas incluem `20260916000002_payment_event_concurrency.sql`.
+- `apply_payment_event` insere primeiro um evento provisório em `payment_events` com a chave única `(provider, provider_event_id)`.
+- A transação que não adquirir a chave retorna `{ ok: true, duplicate: true }`; ela não altera `payments`, `appointments` ou `audit_logs`.
+- Erros posteriores fazem rollback da aquisição, permitindo retry legítimo.
+- Aplicação em Supabase hospedado: **INTEGRATION_PENDING** (`supabase db push`).
 
 ## PAYMENT_WEBHOOK_STATUS
-HMAC `ts/v1` + `x-request-id`, GET `/v1/payments/{id}`, unique `(provider, provider_ref)`, RPC transacional/idempotente.
 
-## DEMO_DATA_STATUS
-Isolado. `src/lib/data.ts` sem serviços/preços/depoimentos. Migrations sem `5511999999999` / preços demo.
+- HMAC Mercado Pago: manifesto oficial `id:<data.id>;request-id:<x-request-id>;ts:<ts>;`.
+- A fonte canônica de `data.id` é o query string/URL da notificação.
+- Se o body também fornecer `data.id`, qualquer divergência retorna `webhook_payment_id_mismatch` antes da validação HMAC.
+- O lookup autenticado `GET /v1/payments/{id}` é a fonte de verdade para ID, status, valor e `external_reference`.
+- Credenciais, segredo e URL registrada no Mercado Pago: **INTEGRATION_PENDING**.
 
-## TOOLBOX_STATUS
-Restaurada (SKILL, MASTER_PLAN, AUDIT_REPORT, GITHUB_HANDOFF, CHANGELOG, ADRs).
+## RLS_STATUS
 
-## CI_STATUS
-Arquivos adicionados. Execução GitHub após o push.
+Preservado do HEAD base validado: PostgreSQL real, `DATABASE_URL` obrigatório no CI e cenários transacionais para anon, customer A, customer B e admin. Não há alteração da estratégia de RLS nesta revisão.
+
+## CONTENT_STATUS
+
+Layout, direção editorial e acervo fornecido foram preservados. Claims sobre serviços, produtos, atendimento, resultados, espaço físico, pagamentos, contato e termos foram trocadas por conteúdo condicional ou `PENDENTE_DE_CONFIRMACAO` até confirmação.
 
 ## QUALITY_GATES (local, 2026-09-16)
+
+Executado contra PostgreSQL real 15.18 via `DATABASE_URL`:
+
+```text
+npm ci                 PASS
+npm run lint           PASS
+npm run typecheck      PASS
+npm test               PASS (36 testes, 12 arquivos)
+npm run test:security  PASS (13 testes, 4 arquivos)
+npm run test:postgres  PASS (1 teste real, 1 arquivo)
+npm run build          PASS
 ```
-npm run lint        PASS
-npm run typecheck   PASS
-npm test            PASS (32 passed, 1 skipped — postgres sem DATABASE_URL)
-npm run test:security PASS (12 passed, 1 skipped)
-npm run build       PASS
-npm run test:postgres SKIP local (sem DATABASE_URL / Docker)
-```
+
+## GITHUB_STATUS
+
+CI e CodeQL do HEAD final devem ser confirmados no GitHub após o push. Este documento não declara aprovação baseada apenas na execução local.
 
 ## INTEGRATION_PENDING
-Supabase hospedado, admin bootstrap, MP sandbox keys, dados comerciais reais.
+
+1. `supabase db push` em projeto hospedado descartável/validado.
+2. Credenciais sandbox/produção do Mercado Pago configuradas somente no ambiente server-side.
+3. Registro da URL do Edge Function no Mercado Pago e teste de webhook assinado ponta a ponta.
+4. Confirmação do catálogo, preços, contato, localização, regras e textos jurídicos.
 
 ## RISKS
-1. Sem Docker local; RLS real depende do CI.
-2. Catálogo público vazio até seed confirmado.
-3. Assinatura MP exige `x-request-id` + secret.
+
+1. `DATABASE_URL` de testes é destrutiva para os schemas de teste e nunca pode apontar para produção.
+2. O endpoint de pagamento não substitui a configuração real de secrets, HTTPS e observabilidade no ambiente hospedado.
+3. Conteúdo público continua deliberadamente conservador até a confirmação da responsável.
