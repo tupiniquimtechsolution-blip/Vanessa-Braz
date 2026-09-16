@@ -1,6 +1,6 @@
 {
   "batch_id": "batch-007",
-  "generated_at_utc": "2026-09-16T16:46:02.642811+00:00",
+  "generated_at_utc": "2026-09-16T16:49:17.704637+00:00",
   "processor": "Pillow/LANCZOS + conservative UnsharpMask",
   "generative_ai": false,
   "note": "Enhanced output is deterministic resampling, not AI super-resolution. It must not be described as recovered photographic detail.",
