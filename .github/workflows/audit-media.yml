@@ -1,0 +1,82 @@
+name: Audit optimized media
+
+on:
+  push:
+    branches:
+      - media/automated-image-pipeline
+    paths:
+      - 'scripts/media/audit_manifests.py'
+      - '.github/workflows/audit-media.yml'
+      - 'apps/web/public/media/optimized/manifests/*.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vanessa-media-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    if: github.ref_name == 'media/automated-image-pipeline'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout isolated media branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Assert media branch isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "media/automated-image-pipeline"
+
+      - name: Fetch current audited frontend branch read-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin arena/01a0a695-vanessa-braz
+          git show FETCH_HEAD:src/lib/media.ts > /tmp/frontend-media.ts
+          echo "FRONTEND_SHA=$(git rev-parse FETCH_HEAD)" >> "$GITHUB_ENV"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run exhaustive manifest audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/media/audit_manifests.py \
+            --frontend-media /tmp/frontend-media.ts \
+            --frontend-ref "arena/01a0a695-vanessa-braz@$FRONTEND_SHA"
+
+      - name: Verify backend and source media untouched
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHANGED=$(git status --short)
+          printf '%s\n' "$CHANGED"
+          if git status --short | grep -Ev '^.. apps/web/public/media/optimized/audit/' | grep -q .; then
+            echo 'ERROR: audit changed files outside optimized/audit.' >&2
+            exit 1
+          fi
+
+      - name: Commit audit outputs to media branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/public/media/optimized/audit
+          if git diff --cached --quiet; then
+            echo 'Audit outputs unchanged.'
+            exit 0
+          fi
+          git commit -m 'docs(media): refresh manifest audit [skip ci]'
+          git push origin HEAD:media/automated-image-pipeline
