@@ -1,28 +1,30 @@
 {
-  "generated_at_utc": "2026-09-16T21:40:31.888028+00:00",
+  "generated_at_utc": "2026-09-16T21:54:15.807379+00:00",
+  "status_basis": "Evidence generated + quantitative precheck only. No fabricated manual decisions.",
   "total_uses": 40,
-  "pass_count": 22,
-  "review_count": 15,
-  "fail_count": 3,
-  "hero_1_status": "PASS",
-  "hero_1_final_variant": "web",
-  "hero_2_status": "PASS",
-  "hero_2_final_variant": "web",
-  "web_final_count": 37,
-  "original_final_count": 3,
+  "pass_count": 0,
+  "review_count": 40,
+  "fail_count": 0,
+  "hero_1_status": "REVIEW",
+  "hero_1_final_variant": "PENDING_MANUAL_REVIEW",
+  "hero_2_status": "REVIEW",
+  "hero_2_final_variant": "PENDING_MANUAL_REVIEW",
+  "web_final_count": 0,
+  "original_final_count": 0,
   "enhanced_final_count": 0,
-  "responsive_sample_pass": 6,
-  "responsive_sample_review": 4,
+  "responsive_sample_pass": 0,
+  "responsive_sample_review": 10,
   "responsive_sample_fail": 0,
-  "publication_authorization_pending_count": 36,
+  "publication_authorization_pending_count": 40,
   "visual_gate_status": "BLOCKED_FOR_MANUAL_REVIEW",
   "items": [
     {
       "category": "hero",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -38,15 +40,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
-      "publication_authorization_status": "NAO_APLICAVEL_SEM_PESSOA_IDENTIFICAVEL_NO_QUADRO",
-      "review_note": "Manual matched-scale review: WEB retained; ENHANCED adds deterministic pixels without meaningful recovered photographic detail."
+      "metrics": {
+        "mae": 2.2226,
+        "rmse": 3.3484,
+        "psnr_db": 37.634,
+        "mean_rgb_shift": 0.2846,
+        "contrast_ratio": 0.9988,
+        "edge_ratio": 0.9286,
+        "block_boundary_delta": -1.2726,
+        "highpass_ratio": 0.9779
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "hero",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -62,15 +75,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "none"
       },
+      "metrics": {
+        "mae": 1.9662,
+        "rmse": 2.7543,
+        "psnr_db": 39.331,
+        "mean_rgb_shift": 0.1737,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9572,
+        "block_boundary_delta": -0.6298,
+        "highpass_ratio": 0.9869
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual matched-scale review: WEB retained; ENHANCED adds deterministic pixels without meaningful recovered photographic detail."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.30.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -86,15 +110,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.7639,
+        "rmse": 2.469,
+        "psnr_db": 40.28,
+        "mean_rgb_shift": 0.2074,
+        "contrast_ratio": 1.0005,
+        "edge_ratio": 0.9171,
+        "block_boundary_delta": -1.0296,
+        "highpass_ratio": 0.9856
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.31.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -110,15 +145,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.6444,
+        "rmse": 2.294,
+        "psnr_db": 40.919,
+        "mean_rgb_shift": 0.1571,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9112,
+        "block_boundary_delta": -0.8603,
+        "highpass_ratio": 0.9888
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 3,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.32.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -134,15 +180,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.6075,
+        "rmse": 2.2239,
+        "psnr_db": 41.189,
+        "mean_rgb_shift": 0.206,
+        "contrast_ratio": 0.9999,
+        "edge_ratio": 0.875,
+        "block_boundary_delta": -1.1891,
+        "highpass_ratio": 0.9752
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 4,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.34.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -158,15 +215,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "none"
       },
-      "publication_authorization_status": "NAO_APLICAVEL_SEM_PESSOA_IDENTIFICAVEL_NO_QUADRO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "metrics": {
+        "mae": 1.0389,
+        "rmse": 2.3898,
+        "psnr_db": 40.564,
+        "mean_rgb_shift": 0.1117,
+        "contrast_ratio": 0.9989,
+        "edge_ratio": 0.9652,
+        "block_boundary_delta": -0.2622,
+        "highpass_ratio": 0.9902
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 5,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.35.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -182,15 +250,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "none"
       },
+      "metrics": {
+        "mae": 2.016,
+        "rmse": 3.0918,
+        "psnr_db": 38.326,
+        "mean_rgb_shift": 0.2912,
+        "contrast_ratio": 0.9994,
+        "edge_ratio": 0.9654,
+        "block_boundary_delta": -0.4211,
+        "highpass_ratio": 0.9911
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 6,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.38.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -206,15 +285,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.8071,
+        "rmse": 2.6046,
+        "psnr_db": 39.816,
+        "mean_rgb_shift": 0.1984,
+        "contrast_ratio": 1.001,
+        "edge_ratio": 0.9407,
+        "block_boundary_delta": -1.0199,
+        "highpass_ratio": 0.9817
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 7,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.39 (1).jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -230,15 +320,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "none"
       },
+      "metrics": {
+        "mae": 2.3919,
+        "rmse": 3.3945,
+        "psnr_db": 37.515,
+        "mean_rgb_shift": 0.1866,
+        "contrast_ratio": 1.0007,
+        "edge_ratio": 0.9687,
+        "block_boundary_delta": -0.5905,
+        "highpass_ratio": 0.9908
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 8,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.42.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -254,15 +355,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.8379,
+        "rmse": 2.6204,
+        "psnr_db": 39.764,
+        "mean_rgb_shift": 0.138,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9414,
+        "block_boundary_delta": -0.7415,
+        "highpass_ratio": 0.9795
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 9,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.45.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -278,15 +390,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "none"
       },
-      "publication_authorization_status": "NAO_APLICAVEL_SEM_PESSOA_IDENTIFICAVEL_NO_QUADRO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "metrics": {
+        "mae": 2.346,
+        "rmse": 3.1514,
+        "psnr_db": 38.161,
+        "mean_rgb_shift": 0.2386,
+        "contrast_ratio": 0.9974,
+        "edge_ratio": 0.9524,
+        "block_boundary_delta": -0.7257,
+        "highpass_ratio": 0.9889
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 10,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.47 (1).jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -302,15 +425,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "none"
       },
+      "metrics": {
+        "mae": 1.8005,
+        "rmse": 2.5556,
+        "psnr_db": 39.981,
+        "mean_rgb_shift": 0.2448,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9589,
+        "block_boundary_delta": -0.7385,
+        "highpass_ratio": 0.9906
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 11,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.50.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -326,15 +460,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "none"
       },
+      "metrics": {
+        "mae": 2.5158,
+        "rmse": 3.5205,
+        "psnr_db": 37.199,
+        "mean_rgb_shift": 0.1564,
+        "contrast_ratio": 1.0001,
+        "edge_ratio": 0.9875,
+        "block_boundary_delta": -0.1999,
+        "highpass_ratio": 0.996
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 12,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.52.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -350,15 +495,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.7135,
+        "rmse": 2.4425,
+        "psnr_db": 40.374,
+        "mean_rgb_shift": 0.2,
+        "contrast_ratio": 0.9996,
+        "edge_ratio": 0.9374,
+        "block_boundary_delta": -1.0349,
+        "highpass_ratio": 0.9815
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 13,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.04.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -374,15 +530,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.267,
+        "rmse": 1.7978,
+        "psnr_db": 43.036,
+        "mean_rgb_shift": 0.2548,
+        "contrast_ratio": 1.0007,
+        "edge_ratio": 0.7894,
+        "block_boundary_delta": -1.0246,
+        "highpass_ratio": 0.9204
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 14,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.07.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -398,15 +565,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
-      "publication_authorization_status": "NAO_APLICAVEL_SEM_PESSOA_IDENTIFICAVEL_NO_QUADRO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "metrics": {
+        "mae": 1.6144,
+        "rmse": 2.3728,
+        "psnr_db": 40.626,
+        "mean_rgb_shift": 0.1983,
+        "contrast_ratio": 0.9994,
+        "edge_ratio": 0.9038,
+        "block_boundary_delta": -1.1311,
+        "highpass_ratio": 0.9654
+      },
+      "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 15,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.29.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -422,15 +600,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.2686,
+        "rmse": 1.7856,
+        "psnr_db": 43.095,
+        "mean_rgb_shift": 0.1822,
+        "contrast_ratio": 1.0,
+        "edge_ratio": 0.8114,
+        "block_boundary_delta": -1.0196,
+        "highpass_ratio": 0.902
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 16,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.34.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -446,15 +635,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "none"
       },
+      "metrics": {
+        "mae": 1.8655,
+        "rmse": 2.6279,
+        "psnr_db": 39.739,
+        "mean_rgb_shift": 0.1843,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.9585,
+        "block_boundary_delta": -0.5092,
+        "highpass_ratio": 0.9949
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 17,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.38.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -470,15 +670,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 0.739,
+        "rmse": 1.3873,
+        "psnr_db": 45.287,
+        "mean_rgb_shift": 0.1706,
+        "contrast_ratio": 0.9989,
+        "edge_ratio": 0.9449,
+        "block_boundary_delta": -0.3611,
+        "highpass_ratio": 0.9958
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 18,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.44.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -494,15 +705,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.439,
+        "rmse": 1.98,
+        "psnr_db": 42.197,
+        "mean_rgb_shift": 0.203,
+        "contrast_ratio": 0.9995,
+        "edge_ratio": 0.8978,
+        "block_boundary_delta": -0.0139,
+        "highpass_ratio": 1.0103
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 19,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.45.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -518,15 +740,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.2515,
+        "rmse": 1.8389,
+        "psnr_db": 42.84,
+        "mean_rgb_shift": 0.1401,
+        "contrast_ratio": 1.0004,
+        "edge_ratio": 0.7872,
+        "block_boundary_delta": -0.1361,
+        "highpass_ratio": 0.9539
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "gallery",
       "position": 20,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.48.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -542,15 +775,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.8223,
+        "rmse": 2.5202,
+        "psnr_db": 40.102,
+        "mean_rgb_shift": 0.1606,
+        "contrast_ratio": 0.9994,
+        "edge_ratio": 0.9269,
+        "block_boundary_delta": -0.7671,
+        "highpass_ratio": 0.9822
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.30 (1).jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -566,15 +810,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.5762,
+        "rmse": 2.1997,
+        "psnr_db": 41.283,
+        "mean_rgb_shift": 0.2102,
+        "contrast_ratio": 0.9996,
+        "edge_ratio": 0.8608,
+        "block_boundary_delta": -1.3941,
+        "highpass_ratio": 0.9568
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.32 (1).jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -590,15 +845,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.4829,
+        "rmse": 2.095,
+        "psnr_db": 41.707,
+        "mean_rgb_shift": 0.1325,
+        "contrast_ratio": 1.0001,
+        "edge_ratio": 0.895,
+        "block_boundary_delta": -0.8932,
+        "highpass_ratio": 0.9848
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 3,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.33.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -614,15 +880,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.2871,
+        "rmse": 1.8403,
+        "psnr_db": 42.833,
+        "mean_rgb_shift": 0.1857,
+        "contrast_ratio": 1.0001,
+        "edge_ratio": 0.8042,
+        "block_boundary_delta": -1.0487,
+        "highpass_ratio": 0.9443
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 4,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.36.jpeg",
-      "visual_quality_status": "FAIL",
-      "final_variant": "original",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "FAIL",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -638,15 +915,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "severe"
       },
+      "metrics": {
+        "mae": 1.2128,
+        "rmse": 1.6715,
+        "psnr_db": 43.669,
+        "mean_rgb_shift": 0.2562,
+        "contrast_ratio": 0.9991,
+        "edge_ratio": 0.6972,
+        "block_boundary_delta": -1.1121,
+        "highpass_ratio": 0.7941
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: visible detail/resampling degradation; ORIGINAL retained."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 5,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.40.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -662,15 +950,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.4788,
+        "rmse": 2.1778,
+        "psnr_db": 41.37,
+        "mean_rgb_shift": 0.1357,
+        "contrast_ratio": 1.0011,
+        "edge_ratio": 0.8921,
+        "block_boundary_delta": -1.047,
+        "highpass_ratio": 0.9566
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 6,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.43.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -686,15 +985,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "minor"
       },
+      "metrics": {
+        "mae": 1.5508,
+        "rmse": 2.1993,
+        "psnr_db": 41.285,
+        "mean_rgb_shift": 0.2036,
+        "contrast_ratio": 1.0003,
+        "edge_ratio": 0.9067,
+        "block_boundary_delta": -0.962,
+        "highpass_ratio": 0.9698
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 7,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.46.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -710,15 +1020,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.2275,
+        "rmse": 1.7628,
+        "psnr_db": 43.207,
+        "mean_rgb_shift": 0.2068,
+        "contrast_ratio": 1.0001,
+        "edge_ratio": 0.8285,
+        "block_boundary_delta": -1.0062,
+        "highpass_ratio": 0.8843
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 8,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.49.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -734,15 +1055,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.695,
+        "rmse": 2.3773,
+        "psnr_db": 40.609,
+        "mean_rgb_shift": 0.155,
+        "contrast_ratio": 0.9996,
+        "edge_ratio": 0.8096,
+        "block_boundary_delta": -1.6834,
+        "highpass_ratio": 0.922
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 9,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.51.jpeg",
-      "visual_quality_status": "PASS",
-      "final_variant": "web",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "PASS",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -758,15 +1090,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "none"
       },
+      "metrics": {
+        "mae": 1.8535,
+        "rmse": 2.6405,
+        "psnr_db": 39.697,
+        "mean_rgb_shift": 0.2165,
+        "contrast_ratio": 1.0004,
+        "edge_ratio": 0.9642,
+        "block_boundary_delta": -0.8225,
+        "highpass_ratio": 0.9902
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "details",
       "position": 10,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.54.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -782,15 +1125,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.3969,
+        "rmse": 1.9618,
+        "psnr_db": 42.278,
+        "mean_rgb_shift": 0.1925,
+        "contrast_ratio": 1.0,
+        "edge_ratio": 0.8784,
+        "block_boundary_delta": -0.9698,
+        "highpass_ratio": 0.9601
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "environment",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.05.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -806,15 +1160,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.2925,
+        "rmse": 1.8648,
+        "psnr_db": 42.718,
+        "mean_rgb_shift": 0.112,
+        "contrast_ratio": 1.001,
+        "edge_ratio": 0.8486,
+        "block_boundary_delta": -0.9459,
+        "highpass_ratio": 0.9221
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "environment",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.06.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -830,15 +1195,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.4663,
+        "rmse": 2.0563,
+        "psnr_db": 41.869,
+        "mean_rgb_shift": 0.215,
+        "contrast_ratio": 0.9993,
+        "edge_ratio": 0.838,
+        "block_boundary_delta": -1.0855,
+        "highpass_ratio": 0.974
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "environment",
       "position": 3,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.08.jpeg",
-      "visual_quality_status": "FAIL",
-      "final_variant": "original",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "FAIL",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -854,15 +1230,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "severe"
       },
+      "metrics": {
+        "mae": 1.1288,
+        "rmse": 1.69,
+        "psnr_db": 43.573,
+        "mean_rgb_shift": 0.3038,
+        "contrast_ratio": 1.0,
+        "edge_ratio": 0.7349,
+        "block_boundary_delta": -0.9568,
+        "highpass_ratio": 0.8915
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: visible detail/resampling degradation; ORIGINAL retained."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "environment",
       "position": 4,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.09.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -878,15 +1265,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.2593,
+        "rmse": 1.788,
+        "psnr_db": 43.084,
+        "mean_rgb_shift": 0.1576,
+        "contrast_ratio": 1.0002,
+        "edge_ratio": 0.8639,
+        "block_boundary_delta": -0.8445,
+        "highpass_ratio": 0.9344
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "environment",
       "position": 5,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.30.jpeg",
-      "visual_quality_status": "FAIL",
-      "final_variant": "original",
+      "visual_quality_status": "REVIEW",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "FAIL",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -902,15 +1300,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "severe"
       },
+      "metrics": {
+        "mae": 1.2261,
+        "rmse": 1.6977,
+        "psnr_db": 43.533,
+        "mean_rgb_shift": 0.1476,
+        "contrast_ratio": 0.9995,
+        "edge_ratio": 0.7291,
+        "block_boundary_delta": -1.116,
+        "highpass_ratio": 0.8738
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: visible detail/resampling degradation; ORIGINAL retained."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "environment",
       "position": 6,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.31.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -926,15 +1335,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.3705,
+        "rmse": 1.9438,
+        "psnr_db": 42.358,
+        "mean_rgb_shift": 0.2008,
+        "contrast_ratio": 0.9999,
+        "edge_ratio": 0.8432,
+        "block_boundary_delta": -1.0613,
+        "highpass_ratio": 0.9498
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "environment",
       "position": 7,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.32.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -950,15 +1370,26 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.3578,
+        "rmse": 1.9318,
+        "psnr_db": 42.411,
+        "mean_rgb_shift": 0.1548,
+        "contrast_ratio": 0.9999,
+        "edge_ratio": 0.8263,
+        "block_boundary_delta": -1.0473,
+        "highpass_ratio": 0.9325
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     },
     {
       "category": "environment",
       "position": 8,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.33.jpeg",
       "visual_quality_status": "REVIEW",
-      "final_variant": "web",
+      "final_variant": "PENDING_MANUAL_REVIEW",
+      "quantitative_precheck_status": "REVIEW",
       "defects": {
         "compression_artifacts": "none",
         "banding": "none",
@@ -974,8 +1405,18 @@
         "edge_ringing": "none",
         "resampling_artifacts": "visible"
       },
+      "metrics": {
+        "mae": 1.2182,
+        "rmse": 1.7541,
+        "psnr_db": 43.25,
+        "mean_rgb_shift": 0.096,
+        "contrast_ratio": 1.0009,
+        "edge_ratio": 0.8478,
+        "block_boundary_delta": -0.8694,
+        "highpass_ratio": 0.9571
+      },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
     }
   ],
   "responsive_sample": [
@@ -983,85 +1424,71 @@
       "category": "hero",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
-      "status": "PASS",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "status": "REVIEW",
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     },
     {
       "category": "hero",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
-      "status": "PASS",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "status": "REVIEW",
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     },
     {
       "category": "gallery",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.30.jpeg",
-      "status": "PASS",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "status": "REVIEW",
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     },
     {
       "category": "gallery",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.31.jpeg",
       "status": "REVIEW",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     },
     {
       "category": "gallery",
       "position": 3,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.32.jpeg",
       "status": "REVIEW",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     },
     {
       "category": "gallery",
       "position": 4,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.34.jpeg",
-      "status": "PASS",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "status": "REVIEW",
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     },
     {
       "category": "details",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.30 (1).jpeg",
       "status": "REVIEW",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     },
     {
       "category": "details",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.32 (1).jpeg",
       "status": "REVIEW",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     },
     {
       "category": "environment",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.05.jpeg",
-      "status": "PASS",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "status": "REVIEW",
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     },
     {
       "category": "environment",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.06.jpeg",
-      "status": "PASS",
-      "review_note": "Manual equal-scale responsive comparison; no production asset changed."
+      "status": "REVIEW",
+      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
     }
-  ],
-  "evidence": {
-    "contact_sheets": [
-      "apps/web/public/media/optimized/audit/visual/hero/hero-contact-01.jpg",
-      "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-01.jpg",
-      "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-02.jpg",
-      "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-03.jpg",
-      "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-04.jpg",
-      "apps/web/public/media/optimized/audit/visual/details/details-contact-01.jpg",
-      "apps/web/public/media/optimized/audit/visual/details/details-contact-02.jpg",
-      "apps/web/public/media/optimized/audit/visual/environment/environment-contact-01.jpg",
-      "apps/web/public/media/optimized/audit/visual/environment/environment-contact-02.jpg"
-    ],
-    "precheck_path": "apps/web/public/media/optimized/audit/visual/visual-precheck.json"
-  }
+  ]
 }
