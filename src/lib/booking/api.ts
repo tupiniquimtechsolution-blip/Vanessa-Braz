@@ -1,6 +1,6 @@
 import { tryGetSupabaseClient } from '../supabase/client';
 import type { AppointmentRow, AppointmentStatus } from '../supabase/types';
-import { generateSlots, type GeneratedSlot } from './overlap';
+import type { GeneratedSlot } from './overlap';
 import { createAppointmentInputSchema } from './engine';
 
 export interface AppointmentView {
@@ -87,15 +87,7 @@ export async function listSlots(args: {
 }): Promise<GeneratedSlot[]> {
   const supabase = tryGetSupabaseClient();
   if (!supabase) {
-    return generateSlots({
-      date: args.date,
-      durationMinutes: args.durationMinutes,
-      slotMinutes: 30,
-      open: '09:00',
-      close: args.date ? weekendClose(args.date) : '19:00',
-      occupied: [],
-      blocked: [],
-    });
+    return [];
   }
 
   const { data, error } = await supabase.rpc('list_available_slots', {
@@ -113,14 +105,6 @@ export async function listSlots(args: {
     start: new Date(slot.slot_start),
     available: slot.available,
   }));
-}
-
-function weekendClose(date: string): string {
-  const day = new Date(`${date}T12:00:00`).getDay();
-  if (day === 0) return '';
-  if (day === 6) return '16:00';
-  if (day === 4 || day === 5) return '20:00';
-  return '19:00';
 }
 
 export async function createAppointment(input: {

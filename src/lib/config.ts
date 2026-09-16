@@ -6,6 +6,7 @@ export const appConfig = {
   supabaseUrl,
   supabaseAnonKey,
   paymentProvider: (import.meta.env.VITE_PAYMENT_PROVIDER ?? 'demo').toLowerCase(),
+  demoCatalog: import.meta.env.VITE_DEMO_CATALOG === 'true',
   lgpdPolicyVersion: '1.0',
 };
 

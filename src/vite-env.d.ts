@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_SUPABASE_ANON_KEY?: string;
   readonly VITE_APP_URL?: string;
   readonly VITE_PAYMENT_PROVIDER?: string;
+  readonly VITE_DEMO_CATALOG?: string;
 }
 
 interface ImportMeta {
