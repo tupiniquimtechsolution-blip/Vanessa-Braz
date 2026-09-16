@@ -5,7 +5,7 @@ import argparse
 import hashlib
 import json
 import re
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -13,6 +13,17 @@ ROOT = Path(__file__).resolve().parents[2]
 MANIFEST_DIR = ROOT / "apps/web/public/media/optimized/manifests"
 AUDIT_DIR = ROOT / "apps/web/public/media/optimized/audit"
 EXPECTED_IMAGES = 157
+EXPECTED_MANIFESTS = 7
+EXPECTED_FRONTEND_USES = 40
+OLD_WEB_TOTAL_BYTES = 16029752
+BASELINE_AUDIT_SHA = "4976289c95086a5b9a39b49441a4828324bac421"
+MIN_SAVING_PERCENT = 10.0
+WEB_MAX_LONG_EDGE = 1280
+ALLOWED_QUALITIES = {82, 78, 74, 70}
+HERO_ENHANCED_NAMES = {
+    "WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
+    "WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
+}
 
 
 def sha256_file(path: Path) -> str:
@@ -29,6 +40,10 @@ def rel(path: Path) -> str:
 
 def pct(delta: int, base: int) -> float:
     return round((delta / base) * 100, 2) if base else 0.0
+
+
+def mib(value: int) -> float:
+    return round(value / 1024 / 1024, 2)
 
 
 def parse_frontend_media(path: Path) -> dict[str, list[str]]:
@@ -51,15 +66,16 @@ def parse_frontend_media(path: Path) -> dict[str, list[str]]:
     return categories
 
 
-def choose_variant(category: str, item: dict) -> tuple[str, str]:
-    web = item["variants"]["web"]
-    enhanced = item["variants"]["enhanced"]
-    if category == "hero":
-        # Enhanced is reserved for the hero only when it provides useful headroom
-        # and remains reasonably sized. All other current frontend uses prefer web.
-        if max(enhanced["width"], enhanced["height"]) >= 2160 and enhanced["size_bytes"] <= 1_250_000:
-            return "enhanced", "hero: extra resolution is useful and file stays under 1.25 MB"
-    return "web", "default: optimized web variant is sufficient"
+def verify_file(meta: dict, kind: str, issues: list[dict]) -> None:
+    path = ROOT / meta["path"]
+    if not path.is_file():
+        issues.append({"type": f"missing_{kind}_file", "path": meta["path"]})
+        return
+    if path.stat().st_size != int(meta["size_bytes"]):
+        issues.append({"type": f"{kind}_size_mismatch", "path": meta["path"]})
+    actual_sha = sha256_file(path)
+    if actual_sha != meta["sha256"]:
+        issues.append({"type": f"{kind}_sha_mismatch", "path": meta["path"]})
 
 
 def main() -> int:
@@ -69,179 +85,244 @@ def main() -> int:
     args = parser.parse_args()
 
     manifest_paths = sorted(MANIFEST_DIR.glob("batch-*.json"))
-    if not manifest_paths:
-        raise SystemExit("No manifests found")
-
     manifests = [json.loads(p.read_text(encoding="utf-8")) for p in manifest_paths]
-    items: list[dict] = []
-    for manifest in manifests:
-        if manifest.get("source_count") != len(manifest.get("items", [])):
-            raise SystemExit(f"source_count mismatch in {manifest.get('batch_id')}")
-        for item in manifest["items"]:
-            item = dict(item)
-            item["batch_id"] = manifest["batch_id"]
-            items.append(item)
-
     issues: list[dict] = []
     warnings: list[dict] = []
-    source_path_seen: set[str] = set()
-    variant_path_seen: set[str] = set()
+
+    if len(manifests) != EXPECTED_MANIFESTS:
+        issues.append({"type": "manifest_count_mismatch", "expected": EXPECTED_MANIFESTS, "actual": len(manifests)})
+
+    items: list[dict] = []
+    for manifest in manifests:
+        if manifest.get("web_schema_version") != 2:
+            issues.append({"type": "web_schema_version_mismatch", "batch": manifest.get("batch_id")})
+        if manifest.get("source_count") != len(manifest.get("items", [])):
+            issues.append({"type": "source_count_mismatch", "batch": manifest.get("batch_id")})
+        for item in manifest.get("items", []):
+            row = dict(item)
+            row["batch_id"] = manifest.get("batch_id")
+            items.append(row)
+
+    if len(items) != EXPECTED_IMAGES:
+        issues.append({"type": "source_total_mismatch", "expected": EXPECTED_IMAGES, "actual": len(items)})
+
+    source_paths: set[str] = set()
     source_sha_groups: dict[str, list[str]] = defaultdict(list)
-    web_sha_groups: dict[str, list[str]] = defaultdict(list)
-    enhanced_sha_groups: dict[str, list[str]] = defaultdict(list)
+    web_path_owners: dict[str, list[str]] = defaultdict(list)
+    enhanced_path_owners: dict[str, list[str]] = defaultdict(list)
+    quality_counts: Counter[int] = Counter()
 
     total_source = total_web = total_enhanced = 0
-    web_larger_count = 0
-    web_larger_20_count = 0
-    enhanced_scale_values: list[float] = []
+    web_recommended = original_recommended = 0
+    web_smaller = web_larger = web_gt20_larger = 0
 
     for item in items:
-        source = item["source_path"]
-        source_sha_groups[item["source_sha256"]].append(source)
-        if source in source_path_seen:
-            issues.append({"type": "duplicate_source_path", "path": source})
-        source_path_seen.add(source)
-
-        sw, sh = item["source_width"], item["source_height"]
-        source_bytes = item["source_size_bytes"]
-        total_source += source_bytes
+        source = item.get("source_path")
+        if not source or source in source_paths:
+            issues.append({"type": "duplicate_or_missing_source_path", "path": source})
+            continue
+        source_paths.add(source)
 
         source_file = ROOT / source
         if not source_file.is_file():
             issues.append({"type": "missing_source_file", "path": source})
-        elif sha256_file(source_file) != item["source_sha256"]:
+            continue
+        actual_source_sha = sha256_file(source_file)
+        if actual_source_sha != item.get("source_sha256"):
             issues.append({"type": "source_sha_mismatch", "path": source})
+        source_size = source_file.stat().st_size
+        if source_size != int(item.get("source_size_bytes", -1)):
+            issues.append({"type": "source_size_mismatch", "path": source})
+        total_source += source_size
+        source_sha_groups[item["source_sha256"]].append(source)
 
-        for variant_name in ("web", "enhanced"):
-            variant = item["variants"][variant_name]
-            vp = variant["path"]
-            if vp in variant_path_seen:
-                issues.append({"type": "duplicate_variant_path", "path": vp})
-            variant_path_seen.add(vp)
+        sw, sh = int(item["source_width"]), int(item["source_height"])
+        web = item.get("variants", {}).get("web")
+        enhanced = item.get("variants", {}).get("enhanced")
+        if not web or not enhanced:
+            issues.append({"type": "missing_variant_metadata", "source": source})
+            continue
 
-            vf = ROOT / vp
-            if not vf.is_file():
-                issues.append({"type": "missing_variant_file", "variant": variant_name, "path": vp})
-            elif sha256_file(vf) != variant["sha256"]:
-                issues.append({"type": "variant_sha_mismatch", "variant": variant_name, "path": vp})
+        verify_file(web, "web", issues)
+        verify_file(enhanced, "enhanced", issues)
+        web_path_owners[web["path"]].append(source)
+        enhanced_path_owners[enhanced["path"]].append(source)
 
-            vw, vh = variant["width"], variant["height"]
-            src_ratio = sw / sh
-            variant_ratio = vw / vh
-            if abs(src_ratio - variant_ratio) > 0.002:
-                issues.append({"type": "aspect_ratio_changed", "source": source, "variant": variant_name})
+        ww, wh = int(web["width"]), int(web["height"])
+        ew, eh = int(enhanced["width"]), int(enhanced["height"])
+        if max(ww, wh) > WEB_MAX_LONG_EDGE:
+            issues.append({"type": "web_dimension_over_limit", "source": source, "dims": [ww, wh]})
+        if ww > sw or wh > sh:
+            issues.append({"type": "web_upscale_detected", "source": source, "source_dims": [sw, sh], "web_dims": [ww, wh]})
+        if abs((sw / sh) - (ww / wh)) > 0.002:
+            issues.append({"type": "web_aspect_ratio_changed", "source": source})
+        if abs((sw / sh) - (ew / eh)) > 0.002:
+            issues.append({"type": "enhanced_aspect_ratio_changed", "source": source})
 
-            if variant_name == "web":
-                total_web += variant["size_bytes"]
-                web_sha_groups[variant["sha256"]].append(vp)
-                if max(vw, vh) > 1920:
-                    issues.append({"type": "web_dimension_over_limit", "path": vp, "width": vw, "height": vh})
-                if vw > sw or vh > sh:
-                    issues.append({"type": "web_unexpected_upscale", "source": source, "path": vp})
-                if max(sw, sh) <= 1920 and (vw != sw or vh != sh):
-                    warnings.append({"type": "web_dimensions_changed_below_limit", "source": source, "source_dims": [sw, sh], "web_dims": [vw, vh]})
-                diff = variant["size_bytes"] - source_bytes
-                if diff > 0:
-                    web_larger_count += 1
-                    if diff / source_bytes > 0.20:
-                        web_larger_20_count += 1
-                        warnings.append({
-                            "type": "web_over_20_percent_larger",
-                            "source": source,
-                            "source_bytes": source_bytes,
-                            "web_bytes": variant["size_bytes"],
-                            "delta_percent": pct(diff, source_bytes),
-                        })
-            else:
-                total_enhanced += variant["size_bytes"]
-                enhanced_sha_groups[variant["sha256"]].append(vp)
-                if max(vw, vh) > 3840:
-                    issues.append({"type": "enhanced_dimension_over_limit", "path": vp, "width": vw, "height": vh})
-                scale_w, scale_h = vw / sw, vh / sh
-                enhanced_scale_values.extend([scale_w, scale_h])
-                if scale_w > 2.001 or scale_h > 2.001:
-                    issues.append({"type": "enhanced_scale_over_2x", "source": source, "path": vp, "scale": [scale_w, scale_h]})
+        web_size = int(web["size_bytes"])
+        enhanced_size = int(enhanced["size_bytes"])
+        total_web += web_size
+        total_enhanced += enhanced_size
+        if web_size < source_size:
+            web_smaller += 1
+        elif web_size > source_size:
+            web_larger += 1
+            if (web_size - source_size) / source_size > 0.20:
+                web_gt20_larger += 1
+
+        saving_bytes = source_size - web_size
+        saving_percent = (saving_bytes / source_size * 100) if source_size else 0.0
+        if int(item.get("saving_bytes", 10**18)) != saving_bytes:
+            issues.append({"type": "saving_bytes_mismatch", "source": source})
+        if abs(float(item.get("saving_percent", 9999)) - round(saving_percent, 2)) > 0.01:
+            issues.append({"type": "saving_percent_mismatch", "source": source})
+
+        selected_quality = int(item.get("selected_quality", -1))
+        quality_counts[selected_quality] += 1
+        if selected_quality not in ALLOWED_QUALITIES:
+            issues.append({"type": "invalid_selected_quality", "source": source, "quality": selected_quality})
+
+        recommendation = item.get("recommended_variant")
+        recommended_path = item.get("recommended_path")
+        if recommendation == "web":
+            web_recommended += 1
+            if saving_percent + 1e-9 < MIN_SAVING_PERCENT:
+                issues.append({"type": "web_recommended_below_10_percent", "source": source, "saving_percent": round(saving_percent, 2)})
+            if recommended_path != web["path"]:
+                issues.append({"type": "web_recommended_path_mismatch", "source": source})
+            if not (ROOT / recommended_path).is_file():
+                issues.append({"type": "recommended_file_missing", "source": source, "path": recommended_path})
+        elif recommendation == "original":
+            original_recommended += 1
+            if saving_percent >= MIN_SAVING_PERCENT:
+                issues.append({"type": "original_recommended_despite_10_percent_web_saving", "source": source, "saving_percent": round(saving_percent, 2)})
+            if recommended_path != source:
+                issues.append({"type": "original_recommended_path_mismatch", "source": source})
+        else:
+            issues.append({"type": "invalid_recommended_variant", "source": source, "value": recommendation})
+
+        canonical = item.get("canonical_source")
+        if not canonical:
+            issues.append({"type": "missing_canonical_source", "source": source})
+
+        for candidate in item.get("responsive_candidates", []):
+            verify_file(candidate, "responsive", issues)
+            cw, ch = int(candidate["width"]), int(candidate["height"])
+            if cw > sw or ch > sh or max(cw, ch) > WEB_MAX_LONG_EDGE:
+                issues.append({"type": "responsive_dimension_invalid", "source": source, "dims": [cw, ch]})
+            if int(candidate.get("quality", -1)) not in ALLOWED_QUALITIES:
+                issues.append({"type": "responsive_quality_invalid", "source": source, "quality": candidate.get("quality")})
 
     duplicate_sources = [
-        {"sha256": sha, "paths": paths}
-        for sha, paths in source_sha_groups.items()
-        if len(paths) > 1
+        {"sha256": sha, "canonical_source": sorted(paths)[0], "paths": sorted(paths)}
+        for sha, paths in source_sha_groups.items() if len(paths) > 1
     ]
-    duplicate_web = [
-        {"sha256": sha, "paths": paths}
-        for sha, paths in web_sha_groups.items()
-        if len(paths) > 1
-    ]
-    duplicate_enhanced = [
-        {"sha256": sha, "paths": paths}
-        for sha, paths in enhanced_sha_groups.items()
-        if len(paths) > 1
-    ]
+    if len(duplicate_sources) != 2:
+        issues.append({"type": "duplicate_group_count_mismatch", "expected": 2, "actual": len(duplicate_sources)})
+    for group in duplicate_sources:
+        canonical = group["canonical_source"]
+        for source in group["paths"]:
+            row = next((x for x in items if x.get("source_path") == source), None)
+            if row and row.get("canonical_source") != canonical:
+                issues.append({"type": "canonical_source_mismatch", "source": source, "expected": canonical, "actual": row.get("canonical_source")})
+
+    # Shared WEB paths are legal only for byte-identical source groups.
+    for path, owners in web_path_owners.items():
+        if len(owners) > 1:
+            hashes = {next(x for x in items if x["source_path"] == owner)["source_sha256"] for owner in owners}
+            if len(hashes) != 1:
+                issues.append({"type": "web_path_shared_across_different_sources", "path": path, "owners": owners})
 
     frontend_path = Path(args.frontend_media)
     if not frontend_path.is_absolute():
         frontend_path = ROOT / frontend_path
-    frontend_categories = parse_frontend_media(frontend_path)
+    categories = parse_frontend_media(frontend_path)
+    frontend_uses = sum(len(v) for v in categories.values())
+    if frontend_uses != EXPECTED_FRONTEND_USES:
+        issues.append({"type": "frontend_usage_count_mismatch", "expected": EXPECTED_FRONTEND_USES, "actual": frontend_uses})
+
     by_name = {Path(item["source_path"]).name: item for item in items}
     frontend_map: list[dict] = []
-    frontend_missing: list[dict] = []
-
-    for category, names in frontend_categories.items():
+    frontend_web = frontend_original = enhanced_candidates = 0
+    for category, names in categories.items():
         for position, name in enumerate(names, start=1):
             item = by_name.get(name)
             if not item:
-                frontend_missing.append({"category": category, "position": position, "source_name": name})
+                issues.append({"type": "frontend_source_missing_from_manifests", "category": category, "position": position, "source_name": name})
                 continue
-            selected, reason = choose_variant(category, item)
+            recommended = item["recommended_variant"]
+            if recommended == "web":
+                frontend_web += 1
+            else:
+                frontend_original += 1
+            enhanced_candidate = category == "hero" and name in HERO_ENHANCED_NAMES
+            if enhanced_candidate:
+                enhanced_candidates += 1
             frontend_map.append({
                 "category": category,
                 "position": position,
                 "source_name": name,
                 "source_path": item["source_path"],
                 "batch_id": item["batch_id"],
-                "recommended_variant": selected,
-                "recommendation_reason": reason,
+                "recommended_variant": recommended,
+                "recommended_path": item["recommended_path"],
+                "reason": item["reason"],
+                "saving_bytes": item["saving_bytes"],
+                "saving_percent": item["saving_percent"],
+                "selected_quality": item["selected_quality"],
                 "web": item["variants"]["web"],
+                "responsive_candidates": item.get("responsive_candidates", []),
                 "enhanced": item["variants"]["enhanced"],
+                "enhanced_candidate_after_visual_gate": enhanced_candidate,
                 "fallback": f"/media/source/images/{name}",
                 "publication_gate": "manual authorization required if an identifiable person appears",
             })
 
-    if frontend_missing:
-        issues.extend({"type": "frontend_source_missing_from_manifests", **x} for x in frontend_missing)
+    if len(frontend_map) != EXPECTED_FRONTEND_USES:
+        issues.append({"type": "frontend_mapped_count_mismatch", "expected": EXPECTED_FRONTEND_USES, "actual": len(frontend_map)})
+    if enhanced_candidates != 2:
+        issues.append({"type": "hero_enhanced_candidate_count_mismatch", "expected": 2, "actual": enhanced_candidates})
 
+    total_saving_vs_old_web = pct(OLD_WEB_TOTAL_BYTES - total_web, OLD_WEB_TOTAL_BYTES)
     audit = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "media_branch_reference": "media/automated-image-pipeline",
+        "baseline_audit_sha": BASELINE_AUDIT_SHA,
         "frontend_ref": args.frontend_ref,
         "manifest_files": [rel(p) for p in manifest_paths],
         "manifest_count": len(manifests),
         "source_items": len(items),
         "expected_source_items": EXPECTED_IMAGES,
-        "complete_157": len(items) == EXPECTED_IMAGES,
-        "unique_source_paths": len(source_path_seen),
+        "unique_source_paths": len(source_paths),
         "duplicate_source_content_groups": duplicate_sources,
-        "duplicate_web_content_groups": duplicate_web,
-        "duplicate_enhanced_content_groups": duplicate_enhanced,
         "bytes": {
             "source_total": total_source,
-            "web_total": total_web,
+            "old_web_total": OLD_WEB_TOTAL_BYTES,
+            "new_web_total": total_web,
             "enhanced_total": total_enhanced,
-            "web_vs_source_delta_percent": pct(total_web - total_source, total_source),
-            "enhanced_vs_source_delta_percent": pct(total_enhanced - total_source, total_source),
+            "total_saving_percent_vs_old_web": total_saving_vs_old_web,
+            "new_web_vs_source_delta_percent": pct(total_web - total_source, total_source),
         },
-        "web_files_larger_than_source": web_larger_count,
-        "web_files_over_20_percent_larger_than_source": web_larger_20_count,
-        "enhanced_max_scale": round(max(enhanced_scale_values), 4) if enhanced_scale_values else None,
+        "recommendations": {
+            "web": web_recommended,
+            "original": original_recommended,
+        },
+        "web_comparison": {
+            "smaller_count": web_smaller,
+            "larger_count": web_larger,
+            "over_20_percent_larger_count": web_gt20_larger,
+        },
+        "quality_counts": {str(q): quality_counts.get(q, 0) for q in (82, 78, 74, 70)},
         "frontend": {
-            "media_file": str(frontend_path),
-            "uses": sum(len(v) for v in frontend_categories.values()),
+            "uses": frontend_uses,
             "mapped": len(frontend_map),
-            "missing": frontend_missing,
+            "web_recommended": frontend_web,
+            "original_recommended": frontend_original,
+            "enhanced_candidates": enhanced_candidates,
         },
         "issues": issues,
         "warnings": warnings,
-        "status": "PASS" if len(items) == EXPECTED_IMAGES and not issues else "FAIL",
+        "status": "PASS" if not issues else "FAIL",
     }
 
     AUDIT_DIR.mkdir(parents=True, exist_ok=True)
@@ -249,46 +330,49 @@ def main() -> int:
     (AUDIT_DIR / "frontend-media-map.json").write_text(json.dumps(frontend_map, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     md = [
-        "# Media Audit — Vanessa Braz",
+        "# Media Audit — Vanessa Braz — WEB-v2",
         "",
-        f"- Status estrutural: **{audit['status']}**",
-        f"- Manifests: **{len(manifests)}**",
-        f"- Derivados auditados: **{len(items)} / {EXPECTED_IMAGES}**",
-        f"- Usos atuais do frontend mapeados: **{len(frontend_map)} / {audit['frontend']['uses']}**",
-        f"- Grupos de conteúdo original duplicado: **{len(duplicate_sources)}**",
-        f"- Web maiores que o JPEG original: **{web_larger_count}**",
-        f"- Web >20% maiores que o original: **{web_larger_20_count}**",
-        f"- Peso total source: **{total_source / 1024 / 1024:.2f} MiB**",
-        f"- Peso total web: **{total_web / 1024 / 1024:.2f} MiB** ({audit['bytes']['web_vs_source_delta_percent']:+.2f}%)",
-        f"- Peso total enhanced: **{total_enhanced / 1024 / 1024:.2f} MiB** ({audit['bytes']['enhanced_vs_source_delta_percent']:+.2f}%)",
+        f"- Status: **{audit['status']}**",
+        f"- Manifests: **{len(manifests)} / {EXPECTED_MANIFESTS}**",
+        f"- Sources auditados: **{len(items)} / {EXPECTED_IMAGES}**",
+        f"- Frontend mapeado: **{len(frontend_map)} / {EXPECTED_FRONTEND_USES}**",
+        f"- Source total: **{mib(total_source):.2f} MiB**",
+        f"- WEB antigo: **{mib(OLD_WEB_TOTAL_BYTES):.2f} MiB**",
+        f"- WEB novo: **{mib(total_web):.2f} MiB**",
+        f"- Economia vs WEB antigo: **{total_saving_vs_old_web:.2f}%**",
+        f"- Recomendado WEB: **{web_recommended}**",
+        f"- Recomendado ORIGINAL: **{original_recommended}**",
+        f"- WEB menor que source: **{web_smaller}**",
+        f"- WEB maior que source: **{web_larger}**",
+        f"- WEB >20% maior: **{web_gt20_larger}**",
+        f"- Qualidades: **q82={quality_counts.get(82, 0)}, q78={quality_counts.get(78, 0)}, q74={quality_counts.get(74, 0)}, q70={quality_counts.get(70, 0)}**",
+        f"- Frontend: **web={frontend_web}, original={frontend_original}, enhanced candidates={enhanced_candidates}**",
+        f"- Duplicatas exatas: **{len(duplicate_sources)} grupos**",
         "",
-        "## Regra de integração proposta",
+        "## Política",
         "",
-        "- `hero`: usar `enhanced` somente quando o arquivo ficar <= 1.25 MB e trouxer resolução útil; fallback no original.",
-        "- `gallery`, `details`, `environment`: usar `web` por padrão; `enhanced` somente após gate visual explícito.",
-        "- Não publicar imagem com pessoa identificável sem confirmação de autorização; presença no repositório não é consentimento.",
-        "- Não remover nem substituir `media/source`.",
+        "- `recommended_variant=web` somente com economia >=10% contra o source.",
+        "- Caso contrário, `recommended_variant=original`; um derivado maior nunca é chamado de otimizado.",
+        "- WEB nunca faz upscale e respeita long edge máximo de 1280 px.",
+        "- `enhanced` foi preservado; apenas os dois heros definidos permanecem candidatos e ainda exigem gate visual.",
+        "- Imagens com pessoas identificáveis continuam pendentes de autorização de publicação.",
         "",
-        "## Duplicatas exatas por conteúdo",
+        "## Duplicatas e canonical_source",
         "",
     ]
-    if duplicate_sources:
-        for group in duplicate_sources:
-            md.append(f"- `{group['sha256'][:12]}…`: " + "; ".join(f"`{p}`" for p in group["paths"]))
-    else:
-        md.append("- Nenhuma.")
+    for group in duplicate_sources:
+        md.append(f"- `{group['sha256'][:12]}…` → canonical `{group['canonical_source']}`; paths: " + "; ".join(f"`{p}`" for p in group["paths"]))
 
     md.extend(["", "## Mapeamento atual do frontend", ""])
     for row in frontend_map:
-        selected = row[row["recommended_variant"]]
         md.append(
-            f"- **{row['category']} #{row['position']}** `{row['source_name']}` → "
-            f"`/{selected['path'].split('apps/web/public/', 1)[1]}` (**{row['recommended_variant']}**, "
-            f"{selected['width']}×{selected['height']}, {selected['size_bytes'] / 1024:.1f} KiB)"
+            f"- **{row['category']} #{row['position']}** `{row['source_name']}` → **{row['recommended_variant']}** "
+            f"({row['saving_percent']:+.2f}%, q{row['selected_quality']})"
+            + ("; enhanced candidato após gate visual" if row["enhanced_candidate_after_visual_gate"] else "")
         )
 
     if issues:
-        md.extend(["", "## Bloqueios estruturais", ""])
+        md.extend(["", "## Bloqueios", ""])
         for issue in issues:
             md.append(f"- `{issue['type']}` — `{json.dumps(issue, ensure_ascii=False)}`")
 
@@ -296,25 +380,34 @@ def main() -> int:
         "",
         "## Gate visual ainda necessário",
         "",
-        "Este relatório valida estrutura, hash, dimensões, peso e mapeamento. Ele **não** aprova aparência visual. "
-        "Antes da integração, comparar original × web × enhanced para halos, oversharpening, pele artificial, mudança de cor, cabelo/detalhes e artefatos de reamostragem.",
+        "Esta auditoria aprova somente integridade, peso, hashes, dimensões e regras de recomendação. "
+        "Antes de integrar, comparar original × web × enhanced para cor, pele, cabelo, halos, oversharpening e artefatos.",
         "",
     ])
     (AUDIT_DIR / "MEDIA_AUDIT.md").write_text("\n".join(md), encoding="utf-8")
 
     print(json.dumps({
         "status": audit["status"],
-        "manifests": len(manifests),
-        "items": len(items),
-        "frontend_mapped": len(frontend_map),
-        "frontend_total": audit["frontend"]["uses"],
+        "source_total_mib": mib(total_source),
+        "old_web_total_mib": mib(OLD_WEB_TOTAL_BYTES),
+        "new_web_total_mib": mib(total_web),
+        "total_saving_percent": total_saving_vs_old_web,
+        "web_recommended_count": web_recommended,
+        "original_recommended_count": original_recommended,
+        "web_smaller_count": web_smaller,
+        "web_larger_count": web_larger,
+        "web_gt20_larger_count": web_gt20_larger,
+        "quality_82_count": quality_counts.get(82, 0),
+        "quality_78_count": quality_counts.get(78, 0),
+        "quality_74_count": quality_counts.get(74, 0),
+        "quality_70_count": quality_counts.get(70, 0),
+        "frontend_usage_count": frontend_uses,
+        "frontend_web_recommended": frontend_web,
+        "frontend_original_recommended": frontend_original,
+        "frontend_enhanced_candidates": enhanced_candidates,
         "duplicate_groups": len(duplicate_sources),
         "issues": len(issues),
-        "warnings": len(warnings),
-        "web_total_bytes": total_web,
-        "source_total_bytes": total_source,
     }, indent=2))
-
     return 0 if audit["status"] == "PASS" else 2
 
 
