@@ -1,0 +1,94 @@
+name: Visual media gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - media/automated-image-pipeline
+    paths:
+      - scripts/media/visual_audit_gate.py
+      - .github/workflows/visual-media-gate.yml
+      - apps/web/public/media/optimized/audit/visual/manual-decisions.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: visual-media-gate-media-automated-image-pipeline
+  cancel-in-progress: false
+
+jobs:
+  visual-gate:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout isolated media branch
+        uses: actions/checkout@v4
+        with:
+          ref: media/automated-image-pipeline
+          fetch-depth: 0
+
+      - name: Assert branch isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "media/automated-image-pipeline"
+          echo "Visual gate isolated on media/automated-image-pipeline"
+
+      - name: Snapshot immutable media
+        shell: bash
+        run: |
+          set -euo pipefail
+          find apps/web/public/media/source -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/source-before.sha256
+          find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-before.sha256
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install audit-only image tooling
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.12.0.88
+
+      - name: Generate visual evidence or finalize decisions
+        run: python scripts/media/visual_audit_gate.py
+
+      - name: Verify immutable media unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          find apps/web/public/media/source -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/source-after.sha256
+          find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-after.sha256
+          diff -u /tmp/source-before.sha256 /tmp/source-after.sha256
+          diff -u /tmp/enhanced-before.sha256 /tmp/enhanced-after.sha256
+
+      - name: Verify scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          BAD=$(git status --short | grep -Ev 'apps/web/public/media/optimized/audit/visual/|apps/web/public/media/optimized/manifests/' || true)
+          if [ -n "$BAD" ]; then
+            echo 'ERROR: visual gate changed files outside allowed audit/manifests scope:' >&2
+            printf '%s\n' "$BAD" >&2
+            exit 1
+          fi
+          if git status --short | grep -Eq '^.. (src/|apps/web/src/|server/|api/|tests/|apps/web/public/media/source/|apps/web/public/media/optimized/enhanced/)'; then
+            echo 'ERROR: frontend/backend/source/enhanced changed.' >&2
+            exit 1
+          fi
+
+      - name: Commit audit evidence only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/web/public/media/optimized/audit/visual
+          if [ -f apps/web/public/media/optimized/audit/visual/manual-decisions.json ]; then
+            git add apps/web/public/media/optimized/manifests
+          fi
+          if git diff --cached --quiet; then
+            echo 'No visual audit changes to commit.'
+            exit 0
+          fi
+          git commit -m 'docs(media): visual gate evidence and decisions [skip ci]'
+          git push origin HEAD:media/automated-image-pipeline
