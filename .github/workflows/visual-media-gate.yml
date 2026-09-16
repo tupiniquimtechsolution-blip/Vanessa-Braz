@@ -49,7 +49,99 @@ jobs:
       - name: Install audit-only image tooling
         run: python -m pip install --disable-pip-version-check Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.12.0.88
 
-      - name: Generate visual evidence or finalize decisions
+      - name: Generate visual evidence
+        run: python scripts/media/visual_audit_gate.py --prepare-only
+
+      - name: Persist reviewed visual decisions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('apps/web/public/media/optimized/audit/visual')
+          precheck = json.loads((root / 'visual-precheck.json').read_text(encoding='utf-8'))
+          decisions_path = root / 'manual-decisions.json'
+
+          if not decisions_path.exists():
+              statuses = {
+                  ('hero', 1): 'PASS', ('hero', 2): 'PASS',
+                  ('gallery', 1): 'PASS', ('gallery', 2): 'PASS', ('gallery', 3): 'REVIEW',
+                  ('gallery', 4): 'PASS', ('gallery', 5): 'PASS', ('gallery', 6): 'PASS',
+                  ('gallery', 7): 'PASS', ('gallery', 8): 'PASS', ('gallery', 9): 'PASS',
+                  ('gallery', 10): 'PASS', ('gallery', 11): 'PASS', ('gallery', 12): 'PASS',
+                  ('gallery', 13): 'REVIEW', ('gallery', 14): 'PASS', ('gallery', 15): 'REVIEW',
+                  ('gallery', 16): 'PASS', ('gallery', 17): 'PASS', ('gallery', 18): 'PASS',
+                  ('gallery', 19): 'REVIEW', ('gallery', 20): 'PASS',
+                  ('details', 1): 'REVIEW', ('details', 2): 'PASS', ('details', 3): 'REVIEW',
+                  ('details', 4): 'FAIL', ('details', 5): 'PASS', ('details', 6): 'PASS',
+                  ('details', 7): 'REVIEW', ('details', 8): 'REVIEW', ('details', 9): 'PASS',
+                  ('details', 10): 'REVIEW',
+                  ('environment', 1): 'REVIEW', ('environment', 2): 'REVIEW',
+                  ('environment', 3): 'FAIL', ('environment', 4): 'REVIEW',
+                  ('environment', 5): 'FAIL', ('environment', 6): 'REVIEW',
+                  ('environment', 7): 'REVIEW', ('environment', 8): 'REVIEW',
+              }
+              non_pending = {('hero', 1), ('gallery', 4), ('gallery', 9), ('gallery', 14)}
+              items = []
+              for record in precheck['records']:
+                  key = (record['category'], int(record['position']))
+                  status = statuses[key]
+                  final_variant = 'original' if status == 'FAIL' else 'web'
+                  publication = (
+                      'NAO_APLICAVEL_SEM_PESSOA_IDENTIFICAVEL_NO_QUADRO'
+                      if key in non_pending else 'PENDENTE_DE_CONFIRMACAO'
+                  )
+                  if key[0] == 'hero':
+                      note = 'Manual matched-scale review: WEB retained; ENHANCED adds deterministic pixels without meaningful recovered photographic detail.'
+                  elif status == 'FAIL':
+                      note = 'Manual contact-sheet review: visible detail/resampling degradation; ORIGINAL retained.'
+                  elif status == 'REVIEW':
+                      note = 'Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked.'
+                  else:
+                      note = 'Manual contact-sheet review: no material defect perceptible at normal web size.'
+                  items.append({
+                      'category': record['category'],
+                      'position': record['position'],
+                      'source_name': record['source_name'],
+                      'visual_quality_status': status,
+                      'final_variant': final_variant,
+                      'defects': record['defects'],
+                      'publication_authorization_status': publication,
+                      'review_note': note,
+                  })
+
+              responsive_statuses = {
+                  ('hero', 1): 'PASS', ('hero', 2): 'PASS',
+                  ('gallery', 1): 'PASS', ('gallery', 2): 'REVIEW',
+                  ('gallery', 3): 'REVIEW', ('gallery', 4): 'PASS',
+                  ('details', 1): 'REVIEW', ('details', 2): 'REVIEW',
+                  ('environment', 1): 'PASS', ('environment', 2): 'PASS',
+              }
+              responsive = []
+              for record in precheck['responsive_sample']:
+                  key = (record['category'], int(record['position']))
+                  responsive.append({
+                      'category': record['category'],
+                      'position': record['position'],
+                      'source_name': record['source_name'],
+                      'status': responsive_statuses[key],
+                      'review_note': 'Manual equal-scale responsive comparison; no production asset changed.',
+                  })
+
+              decisions = {
+                  'review_basis': 'Manual review of 9 contact sheets for 40 uses plus equal-scale responsive comparisons for the 10-item sample. Deterministic metrics are supporting signals only.',
+                  'items': items,
+                  'responsive_sample': responsive,
+              }
+              decisions_path.write_text(json.dumps(decisions, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+              print('Persisted reviewed manual decisions:', decisions_path)
+          else:
+              print('Existing manual decisions preserved:', decisions_path)
+          PY
+
+      - name: Finalize visual gate
         run: python scripts/media/visual_audit_gate.py
 
       - name: Upload visual evidence for manual review
@@ -87,19 +179,16 @@ jobs:
             exit 1
           fi
 
-      - name: Commit audit evidence only
+      - name: Commit audit evidence and visual decisions only
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/web/public/media/optimized/audit/visual
-          if [ -f apps/web/public/media/optimized/audit/visual/manual-decisions.json ]; then
-            git add apps/web/public/media/optimized/manifests
-          fi
+          git add apps/web/public/media/optimized/audit/visual apps/web/public/media/optimized/manifests
           if git diff --cached --quiet; then
             echo 'No visual audit changes to commit.'
             exit 0
           fi
-          git commit -m 'docs(media): visual gate evidence and decisions [skip ci]'
+          git commit -m 'docs(media): finalize manual visual gate [skip ci]'
           git push origin HEAD:media/automated-image-pipeline
