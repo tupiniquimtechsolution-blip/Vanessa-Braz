@@ -1,13 +1,6 @@
 name: Audit optimized media
 
 on:
-  push:
-    branches:
-      - media/automated-image-pipeline
-    paths:
-      - 'scripts/media/audit_manifests.py'
-      - '.github/workflows/audit-media.yml'
-      - 'apps/web/public/media/optimized/manifests/*.json'
   workflow_dispatch:
 
 permissions:
@@ -27,13 +20,14 @@ jobs:
       - name: Checkout isolated media branch
         uses: actions/checkout@v4
         with:
+          ref: media/automated-image-pipeline
           fetch-depth: 0
 
       - name: Assert media branch isolation
         shell: bash
         run: |
           set -euo pipefail
-          test "$GITHUB_REF_NAME" = "media/automated-image-pipeline"
+          test "$(git branch --show-current)" = "media/automated-image-pipeline"
 
       - name: Fetch current audited frontend branch read-only
         shell: bash
@@ -56,14 +50,13 @@ jobs:
             --frontend-media /tmp/frontend-media.ts \
             --frontend-ref "arena/01a0a695-vanessa-braz@$FRONTEND_SHA"
 
-      - name: Verify backend and source media untouched
+      - name: Verify audit isolation
         shell: bash
         run: |
           set -euo pipefail
-          CHANGED=$(git status --short)
-          printf '%s\n' "$CHANGED"
           if git status --short | grep -Ev '^.. apps/web/public/media/optimized/audit/' | grep -q .; then
             echo 'ERROR: audit changed files outside optimized/audit.' >&2
+            git status --short
             exit 1
           fi
 
@@ -78,5 +71,5 @@ jobs:
             echo 'Audit outputs unchanged.'
             exit 0
           fi
-          git commit -m 'docs(media): refresh manifest audit [skip ci]'
+          git commit -m 'docs(media): refresh WEB-v2 audit [skip ci]'
           git push origin HEAD:media/automated-image-pipeline
