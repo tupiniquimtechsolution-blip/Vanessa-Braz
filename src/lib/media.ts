@@ -19,7 +19,7 @@ function video(name: string): string {
 const heroAssetsInternal: MediaAsset[] = [
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba.webp 1254w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba.webp 1254w",
     "width": 1254,
     "height": 1254,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
@@ -27,7 +27,7 @@ const heroAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
@@ -38,7 +38,7 @@ const heroAssetsInternal: MediaAsset[] = [
 const galleryAssetsInternal: MediaAsset[] = [
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.30.jpeg",
@@ -46,7 +46,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468.webp 1280w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468.webp 1280w",
     "width": 1280,
     "height": 960,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.31.jpeg",
@@ -54,7 +54,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.32.jpeg",
@@ -62,7 +62,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88.webp 1254w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88.webp 1254w",
     "width": 1254,
     "height": 1254,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.34.jpeg",
@@ -70,7 +70,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.35-c4f9f102.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.35-c4f9f102-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.35-c4f9f102.webp 851w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.35-c4f9f102-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.35-c4f9f102-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.35-c4f9f102-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.35-c4f9f102.webp 851w",
     "width": 851,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.35.jpeg",
@@ -78,7 +78,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.38-799dfd8a.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.38-799dfd8a-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.38-799dfd8a.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.38-799dfd8a-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.38-799dfd8a-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.38-799dfd8a-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.38-799dfd8a.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.38.jpeg",
@@ -86,7 +86,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.39-1-11d9d252.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.39-1-11d9d252-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.39-1-11d9d252.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.39-1-11d9d252-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.39-1-11d9d252-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.39-1-11d9d252-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.39-1-11d9d252.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.39 (1).jpeg",
@@ -94,7 +94,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.42-47d7cd6f.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.42-47d7cd6f-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.42-47d7cd6f.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.42-47d7cd6f-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.42-47d7cd6f-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.42-47d7cd6f-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.42-47d7cd6f.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.42.jpeg",
@@ -102,7 +102,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.45-a928af47.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.45-a928af47-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.45-a928af47.webp 853w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.45-a928af47-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.45-a928af47-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.45-a928af47-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.45-a928af47.webp 853w",
     "width": 853,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.45.jpeg",
@@ -110,7 +110,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.47-1-97ffd28d.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.47-1-97ffd28d-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.47-1-97ffd28d.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.47-1-97ffd28d-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.47-1-97ffd28d-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.47-1-97ffd28d-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.47-1-97ffd28d.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.47 (1).jpeg",
@@ -118,7 +118,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.50-60105930.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.50-60105930-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.50-60105930.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.50-60105930-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.50-60105930-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.50-60105930-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.50-60105930.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.50.jpeg",
@@ -126,7 +126,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.52-6435adab.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.52-6435adab-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.52-6435adab.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.52-6435adab-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.52-6435adab-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.52-6435adab-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.52-6435adab.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.52.jpeg",
@@ -134,7 +134,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.04-8e7252c4.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.04-8e7252c4-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.04-8e7252c4.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.04-8e7252c4-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.04-8e7252c4-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.04-8e7252c4-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.04-8e7252c4.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.04.jpeg",
@@ -142,7 +142,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554.webp 1280w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.07-078bc554.webp 1280w",
     "width": 1280,
     "height": 960,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.07.jpeg",
@@ -150,7 +150,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.29-f75a326d.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.29-f75a326d-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.29-f75a326d.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.29-f75a326d-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.29-f75a326d-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.29-f75a326d-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.29-f75a326d.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.29.jpeg",
@@ -158,7 +158,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.34-ba230c0d.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.34-ba230c0d-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.34-ba230c0d.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.34-ba230c0d-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.34-ba230c0d-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.34-ba230c0d-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.34-ba230c0d.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.34.jpeg",
@@ -166,7 +166,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.38-fd056810.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.38-fd056810-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.38-fd056810.webp 722w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.38-fd056810-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.38-fd056810-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.38-fd056810-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.38-fd056810.webp 722w",
     "width": 722,
     "height": 1114,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.38.jpeg",
@@ -174,7 +174,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.44-e7aa07c8.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.44-e7aa07c8-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.44-e7aa07c8.webp 889w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.44-e7aa07c8-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.44-e7aa07c8-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.44-e7aa07c8-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.44-e7aa07c8.webp 889w",
     "width": 889,
     "height": 759,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.44.jpeg",
@@ -182,7 +182,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a.webp 1080w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.45-7207267a.webp 1080w",
     "width": 1080,
     "height": 1275,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.45.jpeg",
@@ -190,7 +190,7 @@ const galleryAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.48-8112dfbb.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.48-8112dfbb-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.48-8112dfbb.webp 774w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.48-8112dfbb-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.48-8112dfbb-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.48-8112dfbb-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.48-8112dfbb.webp 774w",
     "width": 774,
     "height": 1032,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.48.jpeg",
@@ -201,7 +201,7 @@ const galleryAssetsInternal: MediaAsset[] = [
 const detailAssetsInternal: MediaAsset[] = [
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf.webp 1280w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf.webp 1280w",
     "width": 1280,
     "height": 960,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.30 (1).jpeg",
@@ -209,7 +209,7 @@ const detailAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802.webp 1280w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802.webp 1280w",
     "width": 1280,
     "height": 960,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.32 (1).jpeg",
@@ -217,7 +217,7 @@ const detailAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.33-a1b70797.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.33-a1b70797-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.33-a1b70797.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.33-a1b70797-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.33-a1b70797-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.33-a1b70797-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.33-a1b70797.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.33.jpeg",
@@ -225,7 +225,7 @@ const detailAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.36-dc1b7dd0.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.36-dc1b7dd0-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.36-dc1b7dd0.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.36-dc1b7dd0-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.36-dc1b7dd0-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.36-dc1b7dd0-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.36-dc1b7dd0.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.36.jpeg",
@@ -233,7 +233,7 @@ const detailAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.40-47b249e5.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.40-47b249e5-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.40-47b249e5.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.40-47b249e5-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.40-47b249e5-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.40-47b249e5-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.40-47b249e5.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.40.jpeg",
@@ -241,7 +241,7 @@ const detailAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.43-bf400f40.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.43-bf400f40-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.43-bf400f40.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.43-bf400f40-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.43-bf400f40-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.43-bf400f40-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.43-bf400f40.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.43.jpeg",
@@ -249,7 +249,7 @@ const detailAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d.webp 1280w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.46-8227416d.webp 1280w",
     "width": 1280,
     "height": 960,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.46.jpeg",
@@ -257,7 +257,7 @@ const detailAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a.webp 1280w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.49-51c5243a.webp 1280w",
     "width": 1280,
     "height": 960,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.49.jpeg",
@@ -265,7 +265,7 @@ const detailAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.51-73104450.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.51-73104450-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.51-73104450.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.51-73104450-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.51-73104450-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.51-73104450-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.51-73104450.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.51.jpeg",
@@ -273,7 +273,7 @@ const detailAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.54-022828e2.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.54-022828e2-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.54-022828e2.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.54-022828e2-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.54-022828e2-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.54-022828e2-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.26.54-022828e2.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.26.54.jpeg",
@@ -284,7 +284,7 @@ const detailAssetsInternal: MediaAsset[] = [
 const environmentAssetsInternal: MediaAsset[] = [
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.05.jpeg",
@@ -292,7 +292,7 @@ const environmentAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.06.jpeg",
@@ -300,7 +300,7 @@ const environmentAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.08-13804368.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.08-13804368-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.08-13804368-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.08-13804368.webp 1280w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.08-13804368-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.08-13804368-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.08-13804368-640w.webp 640w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.08-13804368-960w.webp 960w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.08-13804368.webp 1280w",
     "width": 1280,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.08.jpeg",
@@ -308,7 +308,7 @@ const environmentAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.09-b128d12e.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.09-b128d12e-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.09-b128d12e.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.09-b128d12e-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.09-b128d12e-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.09-b128d12e-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.09-b128d12e.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.09.jpeg",
@@ -316,7 +316,7 @@ const environmentAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.30-989d7b9a.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.30-989d7b9a-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.30-989d7b9a.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.30-989d7b9a-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.30-989d7b9a-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.30-989d7b9a-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.30-989d7b9a.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.30.jpeg",
@@ -324,7 +324,7 @@ const environmentAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.31-017738a3.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.31-017738a3-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.31-017738a3.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.31-017738a3-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.31-017738a3-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.31-017738a3-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.31-017738a3.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.31.jpeg",
@@ -332,7 +332,7 @@ const environmentAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.32-dfb6b026.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.32-dfb6b026-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.32-dfb6b026.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.32-dfb6b026-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.32-dfb6b026-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.32-dfb6b026-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.32-dfb6b026.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.32.jpeg",
@@ -340,7 +340,7 @@ const environmentAssetsInternal: MediaAsset[] = [
   },
   {
     "src": "/media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.33-c5f8bdd5.webp",
-    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.33-c5f8bdd5-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.33-c5f8bdd5.webp 960w",
+    "srcSet": "/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.33-c5f8bdd5-320w.webp 320w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.33-c5f8bdd5-480w.webp 480w, /media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.33-c5f8bdd5-640w.webp 640w, /media/optimized/web/WhatsApp-Image-2026-09-12-at-10.53.33-c5f8bdd5.webp 960w",
     "width": 960,
     "height": 1280,
     "fallback": "/media/source/images/WhatsApp Image 2026-09-12 at 10.53.33.jpeg",
