@@ -1,0 +1,262 @@
+name: Prepare media integration
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - media/automated-image-pipeline
+    paths:
+      - .github/workflows/prepare-media-integration.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prepare-media-integration
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_DB: vanessa
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d vanessa"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/vanessa
+      TARGET_BRANCH: media/integrate-optimized-assets
+      APP_BASE_SHA: 83d3834cf528e913e0d371b57c2775361cd14d64
+      MEDIA_REF: origin/media/automated-image-pipeline
+    steps:
+      - name: Checkout media source branch
+        uses: actions/checkout@v4
+        with:
+          ref: media/automated-image-pipeline
+          fetch-depth: 0
+
+      - name: Assert source gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '^VISUAL_GATE_STATUS=PASS$' apps/web/public/media/optimized/audit/visual/VISUAL_AUDIT.md
+          grep -q '^PASS_COUNT=40$' apps/web/public/media/optimized/audit/visual/VISUAL_AUDIT.md
+          grep -q '^RESPONSIVE_SAMPLE_PASS=10$' apps/web/public/media/optimized/audit/visual/VISUAL_AUDIT.md
+          grep -q '^PUBLICATION_AUTHORIZATION_PENDING_COUNT=40$' apps/web/public/media/optimized/audit/visual/VISUAL_AUDIT.md
+          cp apps/web/public/media/optimized/audit/frontend-media-map.json /tmp/frontend-media-map.json
+          cp apps/web/public/media/optimized/audit/visual/VISUAL_AUDIT.md /tmp/VISUAL_AUDIT.md
+
+      - name: Create clean stacked integration branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin arena/01a0a695-vanessa-braz media/automated-image-pipeline
+          if git ls-remote --exit-code --heads origin "refs/heads/${TARGET_BRANCH}" >/dev/null 2>&1; then
+            echo "ERROR: ${TARGET_BRANCH} already exists; refusing to overwrite." >&2
+            exit 1
+          fi
+          git switch --detach "${APP_BASE_SHA}"
+          git switch -c "${TARGET_BRANCH}"
+
+      - name: Copy only audited production derivatives
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          rows = json.loads(Path('/tmp/frontend-media-map.json').read_text(encoding='utf-8'))
+          if len(rows) != 40:
+              raise SystemExit(f'expected 40 frontend media rows, got {len(rows)}')
+          paths = set()
+          for row in rows:
+              paths.add(row['web']['path'])
+              for cand in row.get('responsive_candidates', []):
+                  paths.add(cand['path'])
+          for path in sorted(paths):
+              subprocess.run(['git', 'checkout', 'origin/media/automated-image-pipeline', '--', path], check=True)
+          print(f'Copied {len(paths)} audited WEB/responsive files.')
+          PY
+
+      - name: Generate optimized media catalog
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          rows = json.loads(Path('/tmp/frontend-media-map.json').read_text(encoding='utf-8'))
+          by_cat = {k: [] for k in ('hero','gallery','details','environment')}
+
+          def public_url(repo_path: str) -> str:
+              marker = 'apps/web/public'
+              if not repo_path.startswith(marker + '/'):
+                  raise ValueError(repo_path)
+              return repo_path[len(marker):]
+
+          def asset(row):
+              web = row['web']
+              candidates = []
+              for cand in row.get('responsive_candidates', []):
+                  candidates.append((int(cand['width']), public_url(cand['path'])))
+              candidates.append((int(web['width']), public_url(web['path'])))
+              dedup = {}
+              for width, path in candidates:
+                  dedup[(width, path)] = None
+              ordered = sorted(dedup.keys(), key=lambda v: v[0])
+              srcset = ', '.join(f'{path} {width}w' for width, path in ordered)
+              return {
+                  'src': public_url(web['path']),
+                  'srcSet': srcset,
+                  'width': int(web['width']),
+                  'height': int(web['height']),
+                  'fallback': row['fallback'],
+                  'publicationAuthorization': 'PENDENTE_DE_CONFIRMACAO',
+              }
+
+          for row in rows:
+              by_cat[row['category']].append(asset(row))
+
+          def ts_obj(obj, indent='  '):
+              return json.dumps(obj, ensure_ascii=False, indent=2).replace('"srcSet"', '"srcSet"')
+
+          def arr(name, values):
+              payload = json.dumps(values, ensure_ascii=False, indent=2)
+              return f'const {name}: MediaAsset[] = {payload};\n'
+
+          out = '''// Catálogo de mídias auditadas — Vanessa Braz\n// WEB-v2 aprovado no gate visual; autorização de publicação permanece separada e pendente.\n\nexport interface MediaAsset {\n  src: string;\n  srcSet: string;\n  width: number;\n  height: number;\n  fallback: string;\n  publicationAuthorization: 'PENDENTE_DE_CONFIRMACAO';\n}\n\nconst MEDIA_SOURCE_BASE = '/media/source';\n\nfunction video(name: string): string {\n  return `${MEDIA_SOURCE_BASE}/videos/${encodeURIComponent(name)}`;\n}\n\n'''
+          out += arr('heroAssetsInternal', by_cat['hero']) + '\n'
+          out += arr('galleryAssetsInternal', by_cat['gallery']) + '\n'
+          out += arr('detailAssetsInternal', by_cat['details']) + '\n'
+          out += arr('environmentAssetsInternal', by_cat['environment']) + '\n'
+          out += '''export const heroAssets = heroAssetsInternal;\nexport const heroAsset = heroAssets[0];\nexport const detailAssets = detailAssetsInternal;\nexport const environmentAssets = environmentAssetsInternal;\n\nexport const media = {\n  hero: heroAssets.map((item) => item.src),\n  gallery: galleryAssetsInternal.map((item) => item.src),\n  details: detailAssets.map((item) => item.src),\n  environment: environmentAssets.map((item) => item.src),\n  videos: [\n    video('WhatsApp Video 2026-09-12 at 10.24.25.mp4'),\n    video('WhatsApp Video 2026-09-12 at 10.26.29.mp4'),\n    video('WhatsApp Video 2026-09-12 at 10.26.34.mp4'),\n    video('WhatsApp Video 2026-09-12 at 10.53.29.mp4'),\n  ],\n};\n\nexport const heroImage = heroAsset.src;\n\nexport const galleryImages = galleryAssetsInternal.map((asset, index) => ({\n  ...asset,\n  alt: `Imagem do acervo Vanessa Braz — ${index + 1}`,\n  category: 'Acervo',\n}));\n\nexport const detailImages = detailAssets.map((item) => item.src);\nexport const environmentImages = environmentAssets.map((item) => item.src);\n\nexport const mediaStats = {\n  total: 185,\n  images: 157,\n  videos: 28,\n  optimizedFrontendUses: 40,\n  visualGate: 'PASS',\n  publicationGate: 'PENDENTE_DE_CONFIRMACAO',\n  source: 'Google Drive → GitHub',\n  importedAt: '2026-09-12T15:24:22.405828+00:00',\n};\n'''
+          Path('src/lib/media.ts').write_text(out, encoding='utf-8')
+          PY
+
+      - name: Wire responsive attributes without redesign
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          home = Path('src/pages/Home.tsx')
+          text = home.read_text(encoding='utf-8')
+          replacements = [
+              ("import { heroImage, galleryImages, detailImages, environmentImages } from '../lib/media';",
+               "import { heroAsset, galleryImages, detailAssets, environmentAssets } from '../lib/media';"),
+              ('''            src={heroImage}\n            alt="Vanessa Braz — Beleza & Autoestima"''',
+               '''            src={heroAsset.src}\n            srcSet={heroAsset.srcSet}\n            sizes="100vw"\n            width={heroAsset.width}\n            height={heroAsset.height}\n            alt="Vanessa Braz — Beleza & Autoestima"'''),
+              ('''                  src={detailImages[0]}\n                  alt="Detalhe de procedimento"''',
+               '''                  src={detailAssets[0].src}\n                  srcSet={detailAssets[0].srcSet}\n                  sizes="(min-width: 1024px) 42vw, 100vw"\n                  width={detailAssets[0].width}\n                  height={detailAssets[0].height}\n                  alt="Detalhe de procedimento"'''),
+              ('''                src={galleryImages[0]?.src}\n                alt={galleryImages[0]?.alt}''',
+               '''                src={galleryImages[0]?.src}\n                srcSet={galleryImages[0]?.srcSet}\n                sizes="(min-width: 768px) 50vw, 100vw"\n                width={galleryImages[0]?.width}\n                height={galleryImages[0]?.height}\n                alt={galleryImages[0]?.alt}'''),
+              ('''                  src={img.src}\n                  alt={img.alt}''',
+               '''                  src={img.src}\n                  srcSet={img.srcSet}\n                  sizes="(min-width: 768px) 25vw, 50vw"\n                  width={img.width}\n                  height={img.height}\n                  alt={img.alt}'''),
+              ('''          src={environmentImages[0]}\n          alt="Imagem do acervo Vanessa Braz"''',
+               '''          src={environmentAssets[0].src}\n          srcSet={environmentAssets[0].srcSet}\n          sizes="100vw"\n          width={environmentAssets[0].width}\n          height={environmentAssets[0].height}\n          alt="Imagem do acervo Vanessa Braz"'''),
+          ]
+          for old, new in replacements:
+              if old not in text:
+                  raise SystemExit(f'Home.tsx expected pattern missing: {old[:80]!r}')
+              text = text.replace(old, new, 1)
+          home.write_text(text, encoding='utf-8')
+
+          gallery = Path('src/components/Gallery.tsx')
+          text = gallery.read_text(encoding='utf-8')
+          old = '''interface GalleryImage {\n  src: string;\n  alt: string;\n  category?: string;\n}'''
+          new = '''interface GalleryImage {\n  src: string;\n  srcSet?: string;\n  width?: number;\n  height?: number;\n  alt: string;\n  category?: string;\n}'''
+          if old not in text:
+              raise SystemExit('GalleryImage interface pattern missing')
+          text = text.replace(old, new, 1)
+          old = '''              src={image.src}\n              alt={image.alt}\n              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"\n              loading="lazy"'''
+          new = '''              src={image.src}\n              srcSet={image.srcSet}\n              sizes={columns === 2 ? '50vw' : columns === 4 ? '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw' : '(min-width: 768px) 33vw, 50vw'}\n              width={image.width}\n              height={image.height}\n              alt={image.alt}\n              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"\n              loading="lazy"\n              decoding="async"'''
+          if old not in text:
+              raise SystemExit('Gallery grid image pattern missing')
+          text = text.replace(old, new, 1)
+          old = '''            src={images[lightboxIndex].src}\n            alt={images[lightboxIndex].alt}\n            className="max-w-full max-h-[85vh] object-contain rounded-lg"'''
+          new = '''            src={images[lightboxIndex].src}\n            srcSet={images[lightboxIndex].srcSet}\n            sizes="90vw"\n            width={images[lightboxIndex].width}\n            height={images[lightboxIndex].height}\n            alt={images[lightboxIndex].alt}\n            className="max-w-full max-h-[85vh] object-contain rounded-lg"'''
+          if old not in text:
+              raise SystemExit('Gallery lightbox image pattern missing')
+          text = text.replace(old, new, 1)
+          gallery.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Write integration checkpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > docs/MEDIA_INTEGRATION_CHECKPOINT.md <<'EOF'
+          # MEDIA INTEGRATION CHECKPOINT
+
+          - Base application HEAD: `83d3834cf528e913e0d371b57c2775361cd14d64` (PR #2 canonical branch)
+          - Media visual gate: **PASS** — 40/40 principal uses, 10/10 responsive sample
+          - Selected final variant for all 40 current image uses: **WEB-v2**
+          - Hero 1/2: **WEB-v2**; enhanced not promoted
+          - Frontend integration: responsive `srcset`/`sizes`, intrinsic dimensions, lazy decoding where applicable
+          - Design/layout: unchanged
+          - Originals: unchanged and retained as source archive
+          - Publication authorization: **PENDENTE_DE_CONFIRMACAO for all 40 uses**
+          - Production/merge authorization: **BLOCKED** until publication authorization and normal project release gates are satisfied
+
+          This branch is stacked on the audited PR #2 head and must not be merged to `main` independently while PR #2 remains open.
+          EOF
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Quality gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run lint
+          npm run typecheck
+          npm test
+          npm run test:security
+          npm run test:postgres
+          npm run build
+
+      - name: Verify integration scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --name-only "${APP_BASE_SHA}" -- > /tmp/changed.txt
+          cat /tmp/changed.txt
+          BAD=$(grep -Ev '^(src/lib/media\.ts|src/pages/Home\.tsx|src/components/Gallery\.tsx|docs/MEDIA_INTEGRATION_CHECKPOINT\.md|apps/web/public/media/optimized/web/)' /tmp/changed.txt || true)
+          if [ -n "$BAD" ]; then
+            echo 'ERROR: files outside media integration scope:' >&2
+            printf '%s\n' "$BAD" >&2
+            exit 1
+          fi
+          if grep -Eq 'apps/web/public/media/source/|apps/web/public/media/optimized/enhanced/' /tmp/changed.txt; then
+            echo 'ERROR: source/enhanced media must remain untouched.' >&2
+            exit 1
+          fi
+
+      - name: Commit and push stacked integration branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/lib/media.ts src/pages/Home.tsx src/components/Gallery.tsx docs/MEDIA_INTEGRATION_CHECKPOINT.md apps/web/public/media/optimized/web
+          git commit -m 'perf(media): integrate audited WEB-v2 responsive assets'
+          git push -u origin "${TARGET_BRANCH}"
