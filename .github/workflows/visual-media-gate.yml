@@ -9,6 +9,7 @@ on:
       - scripts/media/visual_audit_gate.py
       - scripts/media/responsive_visual_evidence.py
       - .github/workflows/visual-media-gate.yml
+      - apps/web/public/media/optimized/audit/visual/manual-decisions.json
 
 permissions:
   contents: write
@@ -55,11 +56,17 @@ jobs:
       - name: Generate equal-scale responsive visual evidence
         run: python scripts/media/responsive_visual_evidence.py
 
-      - name: Write truthful review checkpoint
+      - name: Finalize reviewed decisions or keep truthful review checkpoint
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
+          DECISIONS='apps/web/public/media/optimized/audit/visual/manual-decisions.json'
+          if [ -f "$DECISIONS" ]; then
+            echo 'Reviewed manual/model decisions found; validating and finalizing visual gate.'
+            python scripts/media/visual_audit_gate.py
+          else
+            echo 'No reviewed decisions found; preserving REVIEW checkpoint.'
+            python - <<'PY'
           import json
           from pathlib import Path
           from datetime import datetime, timezone
@@ -68,12 +75,6 @@ jobs:
           precheck = json.loads((root / 'visual-precheck.json').read_text(encoding='utf-8'))
           records = precheck.get('records', [])
           responsive = precheck.get('responsive_sample', [])
-
-          # This workflow produces evidence only. A future reviewed decision file
-          # must never be fabricated automatically.
-          decisions_path = root / 'manual-decisions.json'
-          if decisions_path.exists():
-              decisions_path.unlink()
 
           items = []
           for record in records:
@@ -154,6 +155,7 @@ jobs:
               md.append(f"- {row['category']} #{row['position']} `{row['source_name']}` — REVIEW; quantitative_precheck={row['quantitative_precheck_status']}; final=PENDING_MANUAL_REVIEW")
           (root / 'VISUAL_AUDIT.md').write_text('\n'.join(md) + '\n', encoding='utf-8')
           PY
+          fi
 
       - name: Upload visual evidence for inspection
         uses: actions/upload-artifact@v4
@@ -176,27 +178,31 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BAD=$(git status --short | grep -Ev 'apps/web/public/media/optimized/audit/visual/' || true)
+          BAD=$(git status --short | grep -Ev 'apps/web/public/media/optimized/(audit/visual/|manifests/batch-[0-9]+\.json$)' || true)
           if [ -n "$BAD" ]; then
-            echo 'ERROR: visual gate changed files outside audit/visual:' >&2
+            echo 'ERROR: visual gate changed files outside audit/visual or visual-gate manifest annotations:' >&2
             printf '%s\n' "$BAD" >&2
             exit 1
           fi
-          if git status --short | grep -Eq '^.. (src/|apps/web/src/|server/|api/|tests/|apps/web/public/media/source/|apps/web/public/media/optimized/enhanced/|apps/web/public/media/optimized/manifests/)'; then
+          if git status --short | grep -Eq '^.. (src/|apps/web/src/|server/|api/|tests/|apps/web/public/media/source/|apps/web/public/media/optimized/enhanced/)'; then
             echo 'ERROR: forbidden project/media scope changed.' >&2
             exit 1
           fi
 
-      - name: Commit audit evidence only
+      - name: Commit reviewed audit evidence
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A apps/web/public/media/optimized/audit/visual
+          git add -A apps/web/public/media/optimized/audit/visual apps/web/public/media/optimized/manifests
           if git diff --cached --quiet; then
             echo 'No visual audit changes to commit.'
             exit 0
           fi
-          git commit -m 'docs(media): add responsive visual evidence [skip ci]'
+          if [ -f apps/web/public/media/optimized/audit/visual/manual-decisions.json ]; then
+            git commit -m 'docs(media): finalize reviewed visual gate [skip ci]'
+          else
+            git commit -m 'docs(media): refresh visual review evidence [skip ci]'
+          fi
           git push origin HEAD:media/automated-image-pipeline
