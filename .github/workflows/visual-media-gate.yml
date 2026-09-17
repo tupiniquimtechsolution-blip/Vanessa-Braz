@@ -7,6 +7,7 @@ on:
       - media/automated-image-pipeline
     paths:
       - scripts/media/visual_audit_gate.py
+      - scripts/media/responsive_visual_evidence.py
       - .github/workflows/visual-media-gate.yml
 
 permissions:
@@ -48,10 +49,13 @@ jobs:
       - name: Install audit-only image tooling
         run: python -m pip install --disable-pip-version-check Pillow==11.3.0 numpy==2.2.6 opencv-python-headless==4.12.0.88
 
-      - name: Generate visual evidence and quantitative precheck
+      - name: Generate main visual evidence and quantitative precheck
         run: python scripts/media/visual_audit_gate.py --prepare-only
 
-      - name: Invalidate synthesized decisions and write truthful review checkpoint
+      - name: Generate equal-scale responsive visual evidence
+        run: python scripts/media/responsive_visual_evidence.py
+
+      - name: Write truthful review checkpoint
         shell: bash
         run: |
           set -euo pipefail
@@ -61,12 +65,12 @@ jobs:
           from datetime import datetime, timezone
 
           root = Path('apps/web/public/media/optimized/audit/visual')
-          precheck_path = root / 'visual-precheck.json'
-          precheck = json.loads(precheck_path.read_text(encoding='utf-8'))
+          precheck = json.loads((root / 'visual-precheck.json').read_text(encoding='utf-8'))
           records = precheck.get('records', [])
           responsive = precheck.get('responsive_sample', [])
 
-          # Any previously synthesized "manual" decisions are invalid evidence.
+          # This workflow produces evidence only. A future reviewed decision file
+          # must never be fabricated automatically.
           decisions_path = root / 'manual-decisions.json'
           if decisions_path.exists():
               decisions_path.unlink()
@@ -83,22 +87,20 @@ jobs:
                   'defects': record.get('defects', {}),
                   'metrics': record.get('metrics', {}),
                   'publication_authorization_status': 'PENDENTE_DE_CONFIRMACAO',
-                  'review_note': 'Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required.',
+                  'review_note': 'Evidence generated. Final visual decision requires inspection of the contact sheets.',
               })
 
-          responsive_items = []
-          for record in responsive:
-              responsive_items.append({
-                  'category': record['category'],
-                  'position': record['position'],
-                  'source_name': record['source_name'],
-                  'status': 'REVIEW',
-                  'review_note': 'Responsive derivative requires visual inspection of the generated equal-scale evidence.',
-              })
+          responsive_items = [{
+              'category': record['category'],
+              'position': record['position'],
+              'source_name': record['source_name'],
+              'status': 'REVIEW',
+              'review_note': 'Equal-scale responsive evidence generated; final decision requires visual inspection.',
+          } for record in responsive]
 
           audit = {
               'generated_at_utc': datetime.now(timezone.utc).isoformat(),
-              'status_basis': 'Evidence generated + quantitative precheck only. No fabricated manual decisions.',
+              'status_basis': 'Evidence generated only. No fabricated manual decisions.',
               'total_uses': len(items),
               'pass_count': 0,
               'review_count': len(items),
@@ -117,55 +119,40 @@ jobs:
               'visual_gate_status': 'BLOCKED_FOR_MANUAL_REVIEW',
               'items': items,
               'responsive_sample': responsive_items,
+              'responsive_evidence_path': 'apps/web/public/media/optimized/audit/visual/responsive/responsive-evidence.json',
           }
           (root / 'visual-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
           md = [
-              '# VISUAL_AUDIT — Vanessa Braz',
-              '',
+              '# VISUAL_AUDIT — Vanessa Braz', '',
               f"TOTAL_USES={audit['total_uses']}",
               f"PASS_COUNT={audit['pass_count']}",
               f"REVIEW_COUNT={audit['review_count']}",
-              f"FAIL_COUNT={audit['fail_count']}",
-              '',
+              f"FAIL_COUNT={audit['fail_count']}", '',
               f"HERO_1_STATUS={audit['hero_1_status']}",
               f"HERO_1_FINAL_VARIANT={audit['hero_1_final_variant']}",
               f"HERO_2_STATUS={audit['hero_2_status']}",
-              f"HERO_2_FINAL_VARIANT={audit['hero_2_final_variant']}",
-              '',
+              f"HERO_2_FINAL_VARIANT={audit['hero_2_final_variant']}", '',
               f"WEB_FINAL_COUNT={audit['web_final_count']}",
               f"ORIGINAL_FINAL_COUNT={audit['original_final_count']}",
-              f"ENHANCED_FINAL_COUNT={audit['enhanced_final_count']}",
-              '',
+              f"ENHANCED_FINAL_COUNT={audit['enhanced_final_count']}", '',
               f"RESPONSIVE_SAMPLE_PASS={audit['responsive_sample_pass']}",
               f"RESPONSIVE_SAMPLE_REVIEW={audit['responsive_sample_review']}",
-              f"RESPONSIVE_SAMPLE_FAIL={audit['responsive_sample_fail']}",
-              '',
+              f"RESPONSIVE_SAMPLE_FAIL={audit['responsive_sample_fail']}", '',
               f"PUBLICATION_AUTHORIZATION_PENDING_COUNT={audit['publication_authorization_pending_count']}",
-              f"VISUAL_GATE_STATUS={audit['visual_gate_status']}",
-              '',
-              '## Audit note',
-              '',
-              '- Contact sheets and 1:1 crops are generated as evidence only.',
-              '- Quantitative metrics are supporting signals and do not substitute visual inspection.',
-              '- No PASS/FAIL has been invented. All 40 uses remain REVIEW until the evidence is actually inspected.',
-              '- Publication authorization remains separate from visual quality and is conservatively pending for all 40 uses.',
-              '- Frontend, backend, media/source, enhanced assets and structural manifests remain unchanged.',
-              '',
-              '## Per-use checkpoint',
-              '',
+              f"VISUAL_GATE_STATUS={audit['visual_gate_status']}", '',
+              '## Audit note', '',
+              '- Main and responsive contact sheets are evidence only.',
+              '- Responsive comparisons normalize ORIGINAL and MAIN-WEB to the candidate viewport before comparison.',
+              '- Quantitative metrics do not substitute visual inspection.',
+              '- No PASS/FAIL is synthesized by this workflow.',
+              '- Publication authorization remains separate from visual quality.',
+              '- Frontend, backend, media/source, enhanced assets and structural manifests remain unchanged.', '',
+              '## Per-use checkpoint', '',
           ]
           for row in items:
               md.append(f"- {row['category']} #{row['position']} `{row['source_name']}` — REVIEW; quantitative_precheck={row['quantitative_precheck_status']}; final=PENDING_MANUAL_REVIEW")
           (root / 'VISUAL_AUDIT.md').write_text('\n'.join(md) + '\n', encoding='utf-8')
-          print(json.dumps({
-              'TOTAL_USES': audit['total_uses'],
-              'PASS_COUNT': audit['pass_count'],
-              'REVIEW_COUNT': audit['review_count'],
-              'FAIL_COUNT': audit['fail_count'],
-              'RESPONSIVE_SAMPLE_REVIEW': audit['responsive_sample_review'],
-              'VISUAL_GATE_STATUS': audit['visual_gate_status'],
-          }, indent=2))
           PY
 
       - name: Upload visual evidence for inspection
@@ -211,5 +198,5 @@ jobs:
             echo 'No visual audit changes to commit.'
             exit 0
           fi
-          git commit -m 'docs(media): correct visual gate to evidence-only review [skip ci]'
+          git commit -m 'docs(media): add responsive visual evidence [skip ci]'
           git push origin HEAD:media/automated-image-pipeline
