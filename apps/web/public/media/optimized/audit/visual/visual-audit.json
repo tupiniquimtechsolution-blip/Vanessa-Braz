@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "2026-09-16T21:54:15.807379+00:00",
-  "status_basis": "Evidence generated + quantitative precheck only. No fabricated manual decisions.",
+  "generated_at_utc": "2026-09-17T14:55:19.348949+00:00",
+  "status_basis": "Evidence generated only. No fabricated manual decisions.",
   "total_uses": 40,
   "pass_count": 0,
   "review_count": 40,
@@ -51,7 +51,7 @@
         "highpass_ratio": 0.9779
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "hero",
@@ -86,7 +86,7 @@
         "highpass_ratio": 0.9869
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -121,7 +121,7 @@
         "highpass_ratio": 0.9856
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -156,7 +156,7 @@
         "highpass_ratio": 0.9888
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -191,7 +191,7 @@
         "highpass_ratio": 0.9752
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -226,7 +226,7 @@
         "highpass_ratio": 0.9902
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -261,7 +261,7 @@
         "highpass_ratio": 0.9911
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -296,7 +296,7 @@
         "highpass_ratio": 0.9817
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -331,7 +331,7 @@
         "highpass_ratio": 0.9908
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -366,7 +366,7 @@
         "highpass_ratio": 0.9795
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -401,7 +401,7 @@
         "highpass_ratio": 0.9889
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -436,7 +436,7 @@
         "highpass_ratio": 0.9906
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -471,7 +471,7 @@
         "highpass_ratio": 0.996
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -506,7 +506,7 @@
         "highpass_ratio": 0.9815
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -541,7 +541,7 @@
         "highpass_ratio": 0.9204
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -576,7 +576,7 @@
         "highpass_ratio": 0.9654
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -611,7 +611,7 @@
         "highpass_ratio": 0.902
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -646,7 +646,7 @@
         "highpass_ratio": 0.9949
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -681,7 +681,7 @@
         "highpass_ratio": 0.9958
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -716,7 +716,7 @@
         "highpass_ratio": 1.0103
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -751,7 +751,7 @@
         "highpass_ratio": 0.9539
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "gallery",
@@ -786,7 +786,7 @@
         "highpass_ratio": 0.9822
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -821,7 +821,7 @@
         "highpass_ratio": 0.9568
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -856,7 +856,7 @@
         "highpass_ratio": 0.9848
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -891,7 +891,7 @@
         "highpass_ratio": 0.9443
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -926,7 +926,7 @@
         "highpass_ratio": 0.7941
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -961,7 +961,7 @@
         "highpass_ratio": 0.9566
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -996,7 +996,7 @@
         "highpass_ratio": 0.9698
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -1031,7 +1031,7 @@
         "highpass_ratio": 0.8843
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -1066,7 +1066,7 @@
         "highpass_ratio": 0.922
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -1101,7 +1101,7 @@
         "highpass_ratio": 0.9902
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "details",
@@ -1136,7 +1136,7 @@
         "highpass_ratio": 0.9601
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "environment",
@@ -1171,7 +1171,7 @@
         "highpass_ratio": 0.9221
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "environment",
@@ -1206,7 +1206,7 @@
         "highpass_ratio": 0.974
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "environment",
@@ -1241,7 +1241,7 @@
         "highpass_ratio": 0.8915
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "environment",
@@ -1276,7 +1276,7 @@
         "highpass_ratio": 0.9344
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "environment",
@@ -1311,7 +1311,7 @@
         "highpass_ratio": 0.8738
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "environment",
@@ -1346,7 +1346,7 @@
         "highpass_ratio": 0.9498
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "environment",
@@ -1381,7 +1381,7 @@
         "highpass_ratio": 0.9325
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     },
     {
       "category": "environment",
@@ -1416,7 +1416,7 @@
         "highpass_ratio": 0.9571
       },
       "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
-      "review_note": "Contact sheet generated; no human/model visual inspection has been claimed. Manual visual review is still required."
+      "review_note": "Evidence generated. Final visual decision requires inspection of the contact sheets."
     }
   ],
   "responsive_sample": [
@@ -1425,70 +1425,71 @@
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     },
     {
       "category": "hero",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     },
     {
       "category": "gallery",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.30.jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     },
     {
       "category": "gallery",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.31.jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     },
     {
       "category": "gallery",
       "position": 3,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.32.jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     },
     {
       "category": "gallery",
       "position": 4,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.34.jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     },
     {
       "category": "details",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.30 (1).jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     },
     {
       "category": "details",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.26.32 (1).jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     },
     {
       "category": "environment",
       "position": 1,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.05.jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     },
     {
       "category": "environment",
       "position": 2,
       "source_name": "WhatsApp Image 2026-09-12 at 10.53.06.jpeg",
       "status": "REVIEW",
-      "review_note": "Responsive derivative requires visual inspection of the generated equal-scale evidence."
+      "review_note": "Equal-scale responsive evidence generated; final decision requires visual inspection."
     }
-  ]
+  ],
+  "responsive_evidence_path": "apps/web/public/media/optimized/audit/visual/responsive/responsive-evidence.json"
 }

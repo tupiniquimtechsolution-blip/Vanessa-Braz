@@ -23,10 +23,11 @@ VISUAL_GATE_STATUS=BLOCKED_FOR_MANUAL_REVIEW
 
 ## Audit note
 
-- Contact sheets and 1:1 crops are generated as evidence only.
-- Quantitative metrics are supporting signals and do not substitute visual inspection.
-- No PASS/FAIL has been invented. All 40 uses remain REVIEW until the evidence is actually inspected.
-- Publication authorization remains separate from visual quality and is conservatively pending for all 40 uses.
+- Main and responsive contact sheets are evidence only.
+- Responsive comparisons normalize ORIGINAL and MAIN-WEB to the candidate viewport before comparison.
+- Quantitative metrics do not substitute visual inspection.
+- No PASS/FAIL is synthesized by this workflow.
+- Publication authorization remains separate from visual quality.
 - Frontend, backend, media/source, enhanced assets and structural manifests remain unchanged.
 
 ## Per-use checkpoint

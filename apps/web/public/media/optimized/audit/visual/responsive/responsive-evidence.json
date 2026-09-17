@@ -1,0 +1,207 @@
+{
+  "status": "EVIDENCE_READY",
+  "selected_uses": 10,
+  "comparison_rows": 15,
+  "contact_sheets": [
+    "apps/web/public/media/optimized/audit/visual/responsive/responsive-contact-01.jpg",
+    "apps/web/public/media/optimized/audit/visual/responsive/responsive-contact-02.jpg",
+    "apps/web/public/media/optimized/audit/visual/responsive/responsive-contact-03.jpg"
+  ],
+  "items": [
+    {
+      "category": "hero",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.23.51.jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-640w.webp",
+          "width": 640,
+          "height": 640,
+          "size_bytes": 81012,
+          "quality": 82
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.23.51-121a8bba-960w.webp",
+          "width": 960,
+          "height": 960,
+          "size_bytes": 142064,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    },
+    {
+      "category": "hero",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.24.30.jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.24.30-df8e25a1-640w.webp",
+          "width": 640,
+          "height": 853,
+          "size_bytes": 88434,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    },
+    {
+      "category": "gallery",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.30.jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-606cc281-640w.webp",
+          "width": 640,
+          "height": 853,
+          "size_bytes": 67670,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    },
+    {
+      "category": "gallery",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.31.jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-640w.webp",
+          "width": 640,
+          "height": 480,
+          "size_bytes": 37568,
+          "quality": 82
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.31-d476f468-960w.webp",
+          "width": 960,
+          "height": 720,
+          "size_bytes": 62546,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    },
+    {
+      "category": "gallery",
+      "position": 3,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.32.jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-bde00ee6-640w.webp",
+          "width": 640,
+          "height": 853,
+          "size_bytes": 51188,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    },
+    {
+      "category": "gallery",
+      "position": 4,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.34.jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-640w.webp",
+          "width": 640,
+          "height": 640,
+          "size_bytes": 47612,
+          "quality": 82
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.34-a54adf88-960w.webp",
+          "width": 960,
+          "height": 960,
+          "size_bytes": 87096,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    },
+    {
+      "category": "details",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.30 (1).jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-640w.webp",
+          "width": 640,
+          "height": 480,
+          "size_bytes": 35024,
+          "quality": 82
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.30-1-fc3283cf-960w.webp",
+          "width": 960,
+          "height": 720,
+          "size_bytes": 58814,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    },
+    {
+      "category": "details",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.26.32 (1).jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-640w.webp",
+          "width": 640,
+          "height": 480,
+          "size_bytes": 30532,
+          "quality": 82
+        },
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.26.32-1-8e7b7802-960w.webp",
+          "width": 960,
+          "height": 720,
+          "size_bytes": 52914,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    },
+    {
+      "category": "environment",
+      "position": 1,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.05.jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.05-c6b7d30e-640w.webp",
+          "width": 640,
+          "height": 853,
+          "size_bytes": 29362,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    },
+    {
+      "category": "environment",
+      "position": 2,
+      "source_name": "WhatsApp Image 2026-09-12 at 10.53.06.jpeg",
+      "candidates": [
+        {
+          "path": "apps/web/public/media/optimized/web/responsive/WhatsApp-Image-2026-09-12-at-10.53.06-3d66cfa0-640w.webp",
+          "width": 640,
+          "height": 853,
+          "size_bytes": 37380,
+          "quality": 82
+        }
+      ],
+      "visual_status": "REVIEW",
+      "review_note": "Evidence only; compare equal-size ORIGINAL@VIEWPORT vs MAIN-WEB@VIEWPORT vs responsive derivative."
+    }
+  ]
+}
