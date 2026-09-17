@@ -1,0 +1,104 @@
+name: Audit media integration performance
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - media/automated-image-pipeline
+    paths:
+      - .github/workflows/audit-media-integration-performance.yml
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout stacked media integration
+        uses: actions/checkout@v4
+        with:
+          ref: media/integrate-optimized-assets
+          fetch-depth: 1
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start local preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          nohup npx vite preview --host 127.0.0.1 --port 4173 > /tmp/vite-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then
+              echo 'Preview ready.'
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/vite-preview.log
+          exit 1
+
+      - name: Run Lighthouse mobile
+        run: >-
+          npx --yes lighthouse@12.8.2 http://127.0.0.1:4173/
+          --only-categories=performance
+          --output=json
+          --output-path=/tmp/lighthouse-mobile.json
+          --chrome-flags="--headless --no-sandbox"
+          --quiet
+
+      - name: Run Lighthouse desktop
+        run: >-
+          npx --yes lighthouse@12.8.2 http://127.0.0.1:4173/
+          --preset=desktop
+          --only-categories=performance
+          --output=json
+          --output-path=/tmp/lighthouse-desktop.json
+          --chrome-flags="--headless --no-sandbox"
+          --quiet
+
+      - name: Summarize metrics
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+          const modes = ['mobile','desktop'];
+          const out = {};
+          for (const mode of modes) {
+            const r = JSON.parse(fs.readFileSync(`/tmp/lighthouse-${mode}.json`, 'utf8'));
+            const a = r.audits;
+            out[mode] = {
+              performance_score: Math.round((r.categories.performance.score || 0) * 100),
+              fcp_ms: Math.round(a['first-contentful-paint'].numericValue || 0),
+              lcp_ms: Math.round(a['largest-contentful-paint'].numericValue || 0),
+              cls: Number((a['cumulative-layout-shift'].numericValue || 0).toFixed(4)),
+              tbt_ms: Math.round(a['total-blocking-time'].numericValue || 0),
+              speed_index_ms: Math.round(a['speed-index'].numericValue || 0),
+              total_byte_weight_kib: Number(((a['total-byte-weight'].numericValue || 0) / 1024).toFixed(1)),
+            };
+          }
+          fs.writeFileSync('/tmp/media-performance-summary.json', JSON.stringify(out, null, 2));
+          console.log('MEDIA_PERFORMANCE_SUMMARY');
+          console.log(JSON.stringify(out, null, 2));
+          NODE
+
+      - name: Upload Lighthouse evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: media-integration-lighthouse
+          path: |
+            /tmp/lighthouse-mobile.json
+            /tmp/lighthouse-desktop.json
+            /tmp/media-performance-summary.json
+          retention-days: 7
