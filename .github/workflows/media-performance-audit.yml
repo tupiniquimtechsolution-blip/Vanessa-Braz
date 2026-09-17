@@ -11,6 +11,7 @@ on:
       - src/pages/Home.tsx
       - src/components/Gallery.tsx
       - apps/web/public/media/optimized/web/**
+      - docs/MEDIA_RESPONSIVE_REFINEMENT.md
       - .github/workflows/media-performance-audit.yml
 
 permissions:
