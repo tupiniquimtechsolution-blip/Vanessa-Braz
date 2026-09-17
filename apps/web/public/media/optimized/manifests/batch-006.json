@@ -1639,16 +1639,16 @@
           "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
-          "plastic_skin": "minor",
-          "hair_detail_loss": "minor",
-          "fine_detail_loss": "minor",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "minor"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {

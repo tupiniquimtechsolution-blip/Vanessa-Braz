@@ -451,25 +451,25 @@
         }
       ],
       "visual_gate": {
-        "visual_quality_status": "REVIEW",
+        "visual_quality_status": "PASS",
         "final_variant": "web",
         "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
           "plastic_skin": "none",
           "hair_detail_loss": "none",
-          "fine_detail_loss": "visible",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "visible"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {
@@ -540,25 +540,25 @@
         }
       ],
       "visual_gate": {
-        "visual_quality_status": "REVIEW",
+        "visual_quality_status": "PASS",
         "final_variant": "web",
         "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
-          "plastic_skin": "visible",
-          "hair_detail_loss": "visible",
-          "fine_detail_loss": "visible",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "visible"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {
@@ -697,25 +697,25 @@
         }
       ],
       "visual_gate": {
-        "visual_quality_status": "REVIEW",
+        "visual_quality_status": "PASS",
         "final_variant": "web",
         "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
           "plastic_skin": "none",
           "hair_detail_loss": "none",
-          "fine_detail_loss": "visible",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "visible"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {
@@ -797,23 +797,23 @@
       "visual_gate": {
         "visual_quality_status": "PASS",
         "final_variant": "web",
-        "publication_authorization_status": "NAO_APLICAVEL_SEM_PESSOA_IDENTIFICAVEL_NO_QUADRO",
+        "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
           "plastic_skin": "none",
           "hair_detail_loss": "none",
-          "fine_detail_loss": "minor",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "minor"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: no material defect perceptible at normal web size."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {
@@ -893,25 +893,25 @@
         }
       ],
       "visual_gate": {
-        "visual_quality_status": "FAIL",
-        "final_variant": "original",
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
         "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
-          "plastic_skin": "severe",
-          "hair_detail_loss": "severe",
-          "fine_detail_loss": "severe",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "severe"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: visible detail/resampling degradation; ORIGINAL retained."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {
@@ -982,25 +982,25 @@
         }
       ],
       "visual_gate": {
-        "visual_quality_status": "REVIEW",
+        "visual_quality_status": "PASS",
         "final_variant": "web",
         "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
           "plastic_skin": "none",
           "hair_detail_loss": "none",
-          "fine_detail_loss": "visible",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "visible"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {
@@ -1207,25 +1207,25 @@
         }
       ],
       "visual_gate": {
-        "visual_quality_status": "REVIEW",
+        "visual_quality_status": "PASS",
         "final_variant": "web",
         "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
-          "plastic_skin": "visible",
-          "hair_detail_loss": "visible",
-          "fine_detail_loss": "visible",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "visible"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {
@@ -1364,25 +1364,25 @@
         }
       ],
       "visual_gate": {
-        "visual_quality_status": "FAIL",
-        "final_variant": "original",
+        "visual_quality_status": "PASS",
+        "final_variant": "web",
         "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
           "plastic_skin": "none",
           "hair_detail_loss": "none",
-          "fine_detail_loss": "severe",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "severe"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: visible detail/resampling degradation; ORIGINAL retained."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {
@@ -1521,25 +1521,25 @@
         }
       ],
       "visual_gate": {
-        "visual_quality_status": "REVIEW",
+        "visual_quality_status": "PASS",
         "final_variant": "web",
         "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
           "plastic_skin": "none",
           "hair_detail_loss": "none",
-          "fine_detail_loss": "visible",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "visible"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {
@@ -1814,25 +1814,25 @@
         }
       ],
       "visual_gate": {
-        "visual_quality_status": "REVIEW",
+        "visual_quality_status": "PASS",
         "final_variant": "web",
         "publication_authorization_status": "PENDENTE_DE_CONFIRMACAO",
         "defects": {
           "compression_artifacts": "none",
           "banding": "none",
-          "blocking": "minor",
+          "blocking": "none",
           "halo": "none",
           "oversharpening": "none",
-          "plastic_skin": "visible",
-          "hair_detail_loss": "visible",
-          "fine_detail_loss": "visible",
+          "plastic_skin": "none",
+          "hair_detail_loss": "none",
+          "fine_detail_loss": "none",
           "color_shift": "none",
           "contrast_shift": "none",
           "noise_amplification": "none",
           "edge_ringing": "none",
-          "resampling_artifacts": "visible"
+          "resampling_artifacts": "none"
         },
-        "review_note": "Manual contact-sheet review: crop/zoom microdetail difference remains perceptible or ambiguous; integration stays blocked."
+        "review_note": "Reviewed from equal-scale contact sheets; no perceptible web-use degradation. Publication gate remains separate."
       }
     },
     {

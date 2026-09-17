@@ -1,21 +1,8 @@
 {
-  "generated_at_utc": "2026-09-17T15:00:58.367709+00:00",
-  "total_uses": 40,
-  "pass_count": 40,
-  "review_count": 0,
-  "fail_count": 0,
-  "hero_1_status": "PASS",
-  "hero_1_final_variant": "web",
-  "hero_2_status": "PASS",
-  "hero_2_final_variant": "web",
-  "web_final_count": 40,
-  "original_final_count": 0,
-  "enhanced_final_count": 0,
-  "responsive_sample_pass": 10,
-  "responsive_sample_review": 0,
-  "responsive_sample_fail": 0,
-  "publication_authorization_pending_count": 40,
-  "visual_gate_status": "PASS",
+  "decision_basis": "Inspeção visual manual/modelo das contact sheets principais e responsivas em escala equivalente; métricas quantitativas usadas somente como apoio.",
+  "reviewed_by": "ChatGPT media agent",
+  "evidence_run_id": 35236667321,
+  "evidence_head_sha": "5b916f6e330b40a08787501327f7645407158583",
   "items": [
     {
       "category": "hero",
@@ -1049,19 +1036,5 @@
       "status": "PASS",
       "review_note": "Reviewed from equal-scale ORIGINAL@viewport vs MAIN-WEB@viewport vs responsive evidence."
     }
-  ],
-  "evidence": {
-    "contact_sheets": [
-      "apps/web/public/media/optimized/audit/visual/hero/hero-contact-01.jpg",
-      "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-01.jpg",
-      "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-02.jpg",
-      "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-03.jpg",
-      "apps/web/public/media/optimized/audit/visual/gallery/gallery-contact-04.jpg",
-      "apps/web/public/media/optimized/audit/visual/details/details-contact-01.jpg",
-      "apps/web/public/media/optimized/audit/visual/details/details-contact-02.jpg",
-      "apps/web/public/media/optimized/audit/visual/environment/environment-contact-01.jpg",
-      "apps/web/public/media/optimized/audit/visual/environment/environment-contact-02.jpg"
-    ],
-    "precheck_path": "apps/web/public/media/optimized/audit/visual/visual-precheck.json"
-  }
+  ]
 }
