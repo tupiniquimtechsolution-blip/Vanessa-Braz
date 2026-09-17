@@ -10,12 +10,31 @@ import {
 } from '../../../src/lib/payments/mp-signature.ts';
 
 const MP_API = 'https://api.mercadopago.com';
+const MAX_WEBHOOK_BYTES = 256 * 1024;
+const MP_LOOKUP_TIMEOUT_MS = 10_000;
 
-const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
+function json(body: unknown, status = 200, requestId?: string) {
+  const headers = new Headers({
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-store',
+    'X-Content-Type-Options': 'nosniff',
   });
+  if (requestId) headers.set('X-Request-Id', requestId);
+  return new Response(JSON.stringify(body), { status, headers });
+}
+
+function logWebhook(level: 'info' | 'warn' | 'error', event: string, requestId: string, extra: Record<string, unknown> = {}) {
+  const record = JSON.stringify({
+    scope: 'payments-webhook',
+    level,
+    event,
+    requestId,
+    ...extra,
+  });
+  if (level === 'error') console.error(record);
+  else if (level === 'warn') console.warn(record);
+  else console.info(record);
+}
 
 const STATUS_MAP: Record<string, string> = {
   pending: 'pending',
@@ -29,13 +48,35 @@ const STATUS_MAP: Record<string, string> = {
 };
 
 Deno.serve(async (req) => {
-  if (req.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
+  const requestId = crypto.randomUUID();
+
+  if (req.method !== 'POST') return json({ error: 'method_not_allowed' }, 405, requestId);
+
+  const contentType = (req.headers.get('content-type') ?? '').toLowerCase();
+  if (!contentType.includes('application/json')) {
+    logWebhook('warn', 'unsupported_media_type', requestId);
+    return json({ error: 'unsupported_media_type' }, 415, requestId);
+  }
+
+  const declaredLength = Number(req.headers.get('content-length') ?? '0');
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_WEBHOOK_BYTES) {
+    logWebhook('warn', 'payload_too_large', requestId, { declaredLength });
+    return json({ error: 'payload_too_large' }, 413, requestId);
+  }
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
   const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
-  if (!serviceKey) return json({ error: 'misconfigured' }, 500);
+  if (!supabaseUrl || !serviceKey) {
+    logWebhook('error', 'server_misconfigured', requestId);
+    return json({ error: 'misconfigured' }, 500, requestId);
+  }
 
   const raw = await req.text();
+  if (new TextEncoder().encode(raw).byteLength > MAX_WEBHOOK_BYTES) {
+    logWebhook('warn', 'payload_too_large', requestId);
+    return json({ error: 'payload_too_large' }, 413, requestId);
+  }
+
   const providerName = (Deno.env.get('PAYMENT_PROVIDER') ?? 'demo').toLowerCase();
 
   let event: {
@@ -53,7 +94,10 @@ Deno.serve(async (req) => {
     if (providerName === 'mercadopago') {
       const secret = Deno.env.get('MERCADOPAGO_WEBHOOK_SECRET') ?? '';
       const accessToken = Deno.env.get('MERCADOPAGO_ACCESS_TOKEN') ?? '';
-      if (!secret || !accessToken) return json({ error: 'misconfigured' }, 500);
+      if (!secret || !accessToken) {
+        logWebhook('error', 'provider_misconfigured', requestId, { provider: 'mercadopago' });
+        return json({ error: 'misconfigured' }, 500, requestId);
+      }
 
       const payload = JSON.parse(raw) as MercadoPagoNotificationPayload & {
         id?: string | number;
@@ -70,14 +114,32 @@ Deno.serve(async (req) => {
         requestId: req.headers.get('x-request-id'),
         dataId: paymentId,
       });
-      if (!valid) return json({ error: 'invalid_signature' }, 401);
+      if (!valid) {
+        logWebhook('warn', 'invalid_signature', requestId, { provider: 'mercadopago' });
+        return json({ error: 'invalid_signature' }, 401, requestId);
+      }
 
       // The signed notification identifies a payment only. Mercado Pago's GET
       // response remains authoritative for its status, amount, and reference.
-      const paymentRes = await fetch(`${MP_API}/v1/payments/${encodeURIComponent(paymentId)}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      if (!paymentRes.ok) return json({ error: 'webhook_payment_lookup_failed' }, 502);
+      let paymentRes: Response;
+      try {
+        paymentRes = await fetch(`${MP_API}/v1/payments/${encodeURIComponent(paymentId)}`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+          signal: AbortSignal.timeout(MP_LOOKUP_TIMEOUT_MS),
+        });
+      } catch {
+        logWebhook('error', 'payment_lookup_network_error', requestId, { provider: 'mercadopago' });
+        return json({ error: 'webhook_payment_lookup_failed' }, 502, requestId);
+      }
+
+      if (!paymentRes.ok) {
+        logWebhook('error', 'payment_lookup_http_error', requestId, {
+          provider: 'mercadopago',
+          status: paymentRes.status,
+        });
+        return json({ error: 'webhook_payment_lookup_failed' }, 502, requestId);
+      }
+
       const payment = await paymentRes.json() as {
         id: string | number;
         status: string;
@@ -85,9 +147,10 @@ Deno.serve(async (req) => {
         external_reference?: string;
       };
       if (String(payment.id) !== paymentId) {
-        return json({ error: 'webhook_payment_lookup_mismatch' }, 502);
+        logWebhook('error', 'payment_lookup_mismatch', requestId, { provider: 'mercadopago' });
+        return json({ error: 'webhook_payment_lookup_mismatch' }, 502, requestId);
       }
-      if (!payment.external_reference) return json({ error: 'missing_appointment' }, 400);
+      if (!payment.external_reference) return json({ error: 'missing_appointment' }, 400, requestId);
 
       event = {
         eventId: String(payload.id ?? `mp:${payment.id}:${payload.action ?? payload.type ?? 'payment'}`),
@@ -107,7 +170,7 @@ Deno.serve(async (req) => {
         appointmentId?: string;
       };
       const appointmentId = payload.appointmentId ?? payload.data?.appointment_id ?? '';
-      if (!appointmentId) return json({ error: 'missing_appointment' }, 400);
+      if (!appointmentId) return json({ error: 'missing_appointment' }, 400, requestId);
       event = {
         eventId: String(payload.id ?? payload.data?.id ?? crypto.randomUUID()),
         provider: 'demo',
@@ -121,12 +184,13 @@ Deno.serve(async (req) => {
     }
   } catch (error) {
     if (error instanceof Error && error.message === 'webhook_payment_id_mismatch') {
-      return json({ error: 'webhook_payment_id_mismatch' }, 400);
+      return json({ error: 'webhook_payment_id_mismatch' }, 400, requestId);
     }
     if (error instanceof Error && error.message === 'webhook_missing_payment_id') {
-      return json({ error: 'webhook_missing_payment_id' }, 400);
+      return json({ error: 'webhook_missing_payment_id' }, 400, requestId);
     }
-    return json({ error: 'invalid_payload' }, 400);
+    logWebhook('warn', 'invalid_payload', requestId);
+    return json({ error: 'invalid_payload' }, 400, requestId);
   }
 
   const supabase = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
@@ -143,10 +207,19 @@ Deno.serve(async (req) => {
 
   if (error) {
     const message = error.message || '';
-    if (message.includes('price_mismatch')) return json({ error: 'price_mismatch' }, 409);
-    if (message.includes('appointment_not_found')) return json({ error: 'appointment_not_found' }, 404);
-    return json({ error: 'apply_failed', detail: message }, 500);
+    if (message.includes('price_mismatch')) return json({ error: 'price_mismatch' }, 409, requestId);
+    if (message.includes('appointment_not_found')) return json({ error: 'appointment_not_found' }, 404, requestId);
+
+    logWebhook('error', 'apply_failed', requestId, {
+      provider: event.provider,
+      code: error.code ?? 'unknown',
+    });
+    return json({ error: 'apply_failed', request_id: requestId }, 500, requestId);
   }
 
-  return json(data ?? { ok: true });
+  logWebhook('info', 'applied', requestId, {
+    provider: event.provider,
+    type: event.type,
+  });
+  return json(data ?? { ok: true }, 200, requestId);
 });
