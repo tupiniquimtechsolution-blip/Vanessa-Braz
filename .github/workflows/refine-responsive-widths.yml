@@ -54,7 +54,11 @@ jobs:
         run: |
           set -euo pipefail
           find apps/web/public/media/source -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/source-before.sha256
-          find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-before.sha256
+          if [ -d apps/web/public/media/optimized/enhanced ]; then
+            find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-before.sha256
+          else
+            echo '__ABSENT__' > /tmp/enhanced-before.sha256
+          fi
           find apps/web/public/media/optimized/web -maxdepth 1 -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/main-web-before.sha256
 
       - name: Set up Python
@@ -74,7 +78,11 @@ jobs:
         run: |
           set -euo pipefail
           find apps/web/public/media/source -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/source-after.sha256
-          find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-after.sha256
+          if [ -d apps/web/public/media/optimized/enhanced ]; then
+            find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-after.sha256
+          else
+            echo '__ABSENT__' > /tmp/enhanced-after.sha256
+          fi
           find apps/web/public/media/optimized/web -maxdepth 1 -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/main-web-after.sha256
           diff -u /tmp/source-before.sha256 /tmp/source-after.sha256
           diff -u /tmp/enhanced-before.sha256 /tmp/enhanced-after.sha256
