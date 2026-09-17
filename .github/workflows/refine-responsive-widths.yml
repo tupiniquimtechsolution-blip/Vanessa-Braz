@@ -1,0 +1,158 @@
+name: Refine responsive image widths
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - media/integrate-optimized-assets
+    paths:
+      - scripts/media/refine_responsive_widths.py
+      - .github/workflows/refine-responsive-widths.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refine-responsive-widths-media-integration
+  cancel-in-progress: false
+
+jobs:
+  refine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: vanessa
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/vanessa
+    steps:
+      - name: Checkout isolated integration branch
+        uses: actions/checkout@v4
+        with:
+          ref: media/integrate-optimized-assets
+          fetch-depth: 0
+
+      - name: Assert branch and stacked base
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "media/integrate-optimized-assets"
+          git merge-base --is-ancestor 83d3834cf528e913e0d371b57c2775361cd14d64 HEAD
+
+      - name: Snapshot immutable media
+        shell: bash
+        run: |
+          set -euo pipefail
+          find apps/web/public/media/source -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/source-before.sha256
+          if [ -d apps/web/public/media/optimized/enhanced ]; then
+            find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-before.sha256
+          else
+            echo '__ABSENT__' > /tmp/enhanced-before.sha256
+          fi
+          find apps/web/public/media/optimized/web -maxdepth 1 -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/main-web-before.sha256
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate fine-grained responsive candidates and evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check Pillow==11.3.0
+          python scripts/media/refine_responsive_widths.py --evidence-dir /tmp/responsive-fine-evidence
+
+      - name: Verify immutable media unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          find apps/web/public/media/source -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/source-after.sha256
+          if [ -d apps/web/public/media/optimized/enhanced ]; then
+            find apps/web/public/media/optimized/enhanced -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/enhanced-after.sha256
+          else
+            echo '__ABSENT__' > /tmp/enhanced-after.sha256
+          fi
+          find apps/web/public/media/optimized/web -maxdepth 1 -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/main-web-after.sha256
+          diff -u /tmp/source-before.sha256 /tmp/source-after.sha256
+          diff -u /tmp/enhanced-before.sha256 /tmp/enhanced-after.sha256
+          diff -u /tmp/main-web-before.sha256 /tmp/main-web-after.sha256
+
+      - name: Verify refinement scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import subprocess
+          import sys
+
+          changed = []
+          raw = subprocess.check_output(['git', 'status', '--porcelain'], text=True)
+          for line in raw.splitlines():
+              path = line[3:]
+              changed.append(path)
+              allowed = (
+                  path == 'src/lib/media.ts'
+                  or path == 'docs/MEDIA_RESPONSIVE_REFINEMENT.md'
+                  or (
+                      path.startswith('apps/web/public/media/optimized/web/responsive/')
+                      and (path.endswith('-320w.webp') or path.endswith('-480w.webp'))
+                  )
+              )
+              if not allowed:
+                  print(f'forbidden refinement change: {path}', file=sys.stderr)
+                  raise SystemExit(1)
+          if not changed:
+              raise SystemExit('refinement produced no changes')
+          print(f'allowed changed paths: {len(changed)}')
+          PY
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Full quality gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run lint
+          npm run typecheck
+          npm test
+          npm run test:security
+          npm run test:postgres
+          npm run build
+
+      - name: Upload responsive visual evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: responsive-fine-evidence
+          path: /tmp/responsive-fine-evidence/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Commit refinement only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/lib/media.ts docs/MEDIA_RESPONSIVE_REFINEMENT.md apps/web/public/media/optimized/web/responsive/
+          if git diff --cached --quiet; then
+            echo 'No refinement changes to commit.'
+            exit 0
+          fi
+          git commit -m 'perf(media): add 320w 480w responsive candidates [skip ci]'
+          git push origin HEAD:media/integrate-optimized-assets

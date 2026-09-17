@@ -3,6 +3,9 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface GalleryImage {
   src: string;
+  srcSet?: string;
+  width?: number;
+  height?: number;
   alt: string;
   category?: string;
 }
@@ -48,9 +51,14 @@ export default function Gallery({ images, columns = 3 }: GalleryProps) {
           >
             <img
               src={image.src}
+              srcSet={image.srcSet}
+              sizes={columns === 2 ? '50vw' : columns === 4 ? '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw' : '(min-width: 768px) 33vw, 50vw'}
+              width={image.width}
+              height={image.height}
               alt={image.alt}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-brand-primary/0 group-hover:bg-brand-primary/20 transition-colors duration-300" />
             {image.category && (
@@ -89,6 +97,10 @@ export default function Gallery({ images, columns = 3 }: GalleryProps) {
           
           <img
             src={images[lightboxIndex].src}
+            srcSet={images[lightboxIndex].srcSet}
+            sizes="90vw"
+            width={images[lightboxIndex].width}
+            height={images[lightboxIndex].height}
             alt={images[lightboxIndex].alt}
             className="max-w-full max-h-[85vh] object-contain rounded-lg"
             onClick={(e) => e.stopPropagation()}

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Calendar, ChevronDown, ChevronUp, MapPin, Clock, Phone, Instagram, ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { faqItems, businessInfo, isPendingValue, isPublicHandleConfigured, isWhatsAppConfigured } from '../lib/data';
-import { heroImage, galleryImages, detailImages, environmentImages } from '../lib/media';
+import { heroAsset, galleryImages, detailAssets, environmentAssets } from '../lib/media';
 import { loadCatalog, type CatalogService } from '../lib/catalog';
 import { formatCurrency } from '../lib/store';
 
@@ -23,7 +23,11 @@ export default function Home() {
         {/* Background image */}
         <div className="absolute inset-0">
           <img
-            src={heroImage}
+            src={heroAsset.src}
+            srcSet={heroAsset.srcSet}
+            sizes="100vw"
+            width={heroAsset.width}
+            height={heroAsset.height}
             alt="Vanessa Braz — Beleza & Autoestima"
             className="w-full h-full object-cover"
             fetchPriority="high"
@@ -84,7 +88,11 @@ export default function Home() {
             <div className="lg:col-span-5">
               <div className="aspect-[3/4] overflow-hidden">
                 <img
-                  src={detailImages[0]}
+                  src={detailAssets[0].src}
+                  srcSet={detailAssets[0].srcSet}
+                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  width={detailAssets[0].width}
+                  height={detailAssets[0].height}
                   alt="Detalhe de procedimento"
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -208,6 +216,10 @@ export default function Home() {
             <div className="col-span-2 row-span-2 overflow-hidden">
               <img
                 src={galleryImages[0]?.src}
+                srcSet={galleryImages[0]?.srcSet}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                width={galleryImages[0]?.width}
+                height={galleryImages[0]?.height}
                 alt={galleryImages[0]?.alt}
                 className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-700"
                 loading="lazy"
@@ -218,6 +230,10 @@ export default function Home() {
               <div key={idx} className="overflow-hidden">
                 <img
                   src={img.src}
+                  srcSet={img.srcSet}
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  width={img.width}
+                  height={img.height}
                   alt={img.alt}
                   className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-700"
                   loading="lazy"
@@ -243,7 +259,11 @@ export default function Home() {
          ═══════════════════════════════════════════ */}
       <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
         <img
-          src={environmentImages[0]}
+          src={environmentAssets[0].src}
+          srcSet={environmentAssets[0].srcSet}
+          sizes="100vw"
+          width={environmentAssets[0].width}
+          height={environmentAssets[0].height}
           alt="Imagem do acervo Vanessa Braz"
           className="w-full h-full object-cover"
           loading="lazy"

@@ -1,0 +1,187 @@
+name: Media performance audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - media/integrate-optimized-assets
+    paths:
+      - index.html
+      - src/lib/media.ts
+      - src/pages/Home.tsx
+      - src/components/Gallery.tsx
+      - apps/web/public/media/optimized/web/**
+      - docs/MEDIA_RESPONSIVE_REFINEMENT.md
+      - .github/workflows/media-performance-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse-compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout integration branch
+        uses: actions/checkout@v4
+        with:
+          ref: media/integrate-optimized-assets
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Verify Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          google-chrome --version || google-chrome-stable --version
+
+      - name: Prepare audited base worktree
+        shell: bash
+        run: |
+          set -euo pipefail
+          git worktree add /tmp/vanessa-base 83d3834cf528e913e0d371b57c2775361cd14d64
+
+      - name: Build base and integration
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run build
+          (
+            cd /tmp/vanessa-base
+            npm ci
+            npm run build
+          )
+
+      - name: Audit base three times
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/vanessa-base
+          npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/base-preview.log 2>&1 &
+          BASE_PID=$!
+          trap 'kill $BASE_PID 2>/dev/null || true' EXIT
+          npx --yes wait-on@8.0.3 http://127.0.0.1:4173
+          for i in 1 2 3; do
+            npx --yes lighthouse@12.8.2 http://127.0.0.1:4173 \
+              --output=json \
+              --output-path="/tmp/lighthouse-base-$i.json" \
+              --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
+              --only-categories=performance \
+              --quiet
+          done
+          kill $BASE_PID 2>/dev/null || true
+          trap - EXIT
+
+      - name: Audit optimized integration three times
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 --port 4174 >/tmp/integration-preview.log 2>&1 &
+          APP_PID=$!
+          trap 'kill $APP_PID 2>/dev/null || true' EXIT
+          npx --yes wait-on@8.0.3 http://127.0.0.1:4174
+          for i in 1 2 3; do
+            npx --yes lighthouse@12.8.2 http://127.0.0.1:4174 \
+              --output=json \
+              --output-path="/tmp/lighthouse-integration-$i.json" \
+              --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
+              --only-categories=performance \
+              --quiet
+          done
+          kill $APP_PID 2>/dev/null || true
+          trap - EXIT
+
+      - name: Summarize median before-after metrics
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import statistics
+          from pathlib import Path
+
+          def extract(report):
+              audits = report['audits']
+              return {
+                  'performance_score': report['categories']['performance']['score'] * 100,
+                  'lcp_ms': audits['largest-contentful-paint']['numericValue'],
+                  'cls': audits['cumulative-layout-shift']['numericValue'],
+                  'fcp_ms': audits['first-contentful-paint']['numericValue'],
+                  'speed_index_ms': audits['speed-index']['numericValue'],
+                  'total_byte_weight': audits['total-byte-weight']['numericValue'],
+              }
+
+          def load(prefix):
+              return [extract(json.loads(Path(f'/tmp/lighthouse-{prefix}-{i}.json').read_text())) for i in (1, 2, 3)]
+
+          def median_metrics(runs):
+              keys = runs[0].keys()
+              result = {}
+              for key in keys:
+                  value = statistics.median(run[key] for run in runs)
+                  result[key] = round(value, 4) if key == 'cls' else round(value, 1)
+              result['total_byte_weight'] = int(round(result['total_byte_weight']))
+              return result
+
+          base_runs = load('base')
+          integration_runs = load('integration')
+          b = median_metrics(base_runs)
+          o = median_metrics(integration_runs)
+
+          def pct(before, after):
+              return round((before - after) / before * 100, 2) if before else 0.0
+
+          summary = {
+              'method': 'median_of_3_lighthouse_mobile_runs',
+              'base_head': '83d3834cf528e913e0d371b57c2775361cd14d64',
+              'integration_head': '${{ github.sha }}',
+              'base_runs': base_runs,
+              'integration_runs': integration_runs,
+              'base_median': b,
+              'integration_median': o,
+              'delta': {
+                  'lcp_improvement_percent': pct(b['lcp_ms'], o['lcp_ms']),
+                  'fcp_improvement_percent': pct(b['fcp_ms'], o['fcp_ms']),
+                  'speed_index_improvement_percent': pct(b['speed_index_ms'], o['speed_index_ms']),
+                  'byte_reduction_percent': pct(b['total_byte_weight'], o['total_byte_weight']),
+                  'cls_change': round(o['cls'] - b['cls'], 4),
+                  'performance_score_change': round(o['performance_score'] - b['performance_score'], 1),
+              },
+          }
+
+          Path('media-performance-summary.json').write_text(json.dumps(summary, indent=2) + '\n')
+          md = [
+              '# Media performance audit — median of 3 runs', '',
+              f"Base: `{summary['base_head']}`", f"Integration: `{summary['integration_head']}`", '',
+              '| Metric | Base median | Integration median | Delta |',
+              '|---|---:|---:|---:|',
+              f"| Performance score | {b['performance_score']:.1f} | {o['performance_score']:.1f} | {summary['delta']['performance_score_change']:+.1f} |",
+              f"| LCP | {b['lcp_ms']:.1f} ms | {o['lcp_ms']:.1f} ms | {summary['delta']['lcp_improvement_percent']:+.2f}% improvement |",
+              f"| FCP | {b['fcp_ms']:.1f} ms | {o['fcp_ms']:.1f} ms | {summary['delta']['fcp_improvement_percent']:+.2f}% improvement |",
+              f"| Speed Index | {b['speed_index_ms']:.1f} ms | {o['speed_index_ms']:.1f} ms | {summary['delta']['speed_index_improvement_percent']:+.2f}% improvement |",
+              f"| Total byte weight | {b['total_byte_weight']} B | {o['total_byte_weight']} B | {summary['delta']['byte_reduction_percent']:+.2f}% reduction |",
+              f"| CLS | {b['cls']:.4f} | {o['cls']:.4f} | {summary['delta']['cls_change']:+.4f} |",
+              '',
+              'Lighthouse values are synthetic CI measurements. Median-of-three reduces single-run noise but does not replace field Core Web Vitals.'
+          ]
+          Path('media-performance-summary.md').write_text('\n'.join(md) + '\n')
+          print('\n'.join(md))
+          PY
+
+      - name: Upload performance evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: media-performance-audit
+          path: |
+            media-performance-summary.json
+            media-performance-summary.md
+            /tmp/lighthouse-base-*.json
+            /tmp/lighthouse-integration-*.json
+          if-no-files-found: error
+          retention-days: 14
