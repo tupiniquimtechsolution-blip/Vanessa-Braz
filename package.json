@@ -2,6 +2,10 @@
   "name": "vanessa-braz",
   "private": true,
   "type": "module",
+  "packageManager": "npm@10.9.2",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,7 +17,9 @@
     "test:integration": "vitest run tests/integration",
     "test:security": "vitest run tests/security tests/postgres",
     "test:postgres": "vitest run tests/postgres",
-    "test:e2e": "vitest run tests/e2e"
+    "test:e2e": "vitest run tests/e2e",
+    "deploy:cloudflare": "npm run build && npx wrangler deploy",
+    "preview:cloudflare": "npm run build && npx wrangler dev"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
