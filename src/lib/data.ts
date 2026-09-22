@@ -61,18 +61,23 @@ export const testimonials: Array<{ id: string; name: string; text: string; ratin
 
 export const businessHours = null;
 
+// Dados confirmados pelo owner em 22/09/2026. Campos não confirmados permanecem PENDING.
 export const businessInfo = {
   name: 'Vanessa Braz',
   tagline: 'Beleza & Autoestima',
   description: PENDING,
-  phone: PENDING,
-  whatsapp: '',
+  phone: '(11) 98814-9152',
+  whatsapp: '5511988149152',
   email: PENDING,
-  instagram: PENDING,
-  address: PENDING,
+  instagram: '@vanessabraz_belezaeautoestima',
+  instagramUrl: 'https://www.instagram.com/vanessabraz_belezaeautoestima/',
+  address: 'Rua Redenção 88',
   city: PENDING,
   state: PENDING,
 };
+
+export const businessMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(businessInfo.address)}`;
+export const businessPhoneUrl = `tel:+${businessInfo.whatsapp}`;
 
 export const faqItems = [
   {
