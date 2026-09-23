@@ -18,7 +18,7 @@
 - [x] `docs/DESIGN_REFERENCE_CLANDESTINE.md` registra provenance, regra do disclaimer e seleção de mídia.
 - [x] Backend, migrations, Auth, pagamentos e RLS não foram alterados pelo redesign.
 
-## CI — manutenção necessária descoberta durante o PR
+## CI — drift corrigido e gate validado
 
 O primeiro CI do redesign, run `35837053203`, falhou em dois testes preexistentes por drift de fixture, não por erro de lint/typecheck do frontend:
 
@@ -30,7 +30,17 @@ Correções de teste aplicadas sem relaxar segurança:
 - fixture de agendamento agora calcula a próxima terça-feira às 14:00 UTC e mantém o cenário de conflito às 14:30;
 - teste de isolamento continua bloqueando placeholders demo, mas aceita somente os contatos reais já confirmados no projeto.
 
-**Gate atual:** aguardar/validar CI do HEAD final desta branch antes de marcar PASS. O GitHub permanece a fonte de verdade.
+GitHub Actions run `35837724596` no checkpoint `f703bed0a6fdbb33256a8676ee8c3364c362d02e`: **PASS**.
+
+- [x] npm ci
+- [x] lint
+- [x] typecheck
+- [x] test
+- [x] test:security
+- [x] test:postgres
+- [x] build
+
+O GitHub permanece a fonte de verdade para cada novo HEAD; o PR continua draft para revisão visual e não há autorização de merge em `main`.
 
 ## Estado técnico herdado da base Arena
 
