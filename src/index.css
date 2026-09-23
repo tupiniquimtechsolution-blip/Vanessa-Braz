@@ -1,26 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  /* Paleta inspirada na identidade real — preto profundo, rosé sofisticado, dourado quente */
-  --color-brand-primary: #1a1a1a;
-  --color-brand-secondary: #c4a882;
-  --color-brand-accent: #b08d6a;
-  --color-brand-background: #faf8f5;
-  --color-brand-surface: #f0ebe4;
-  --color-brand-text: #1a1a1a;
-  --color-brand-muted: #6b6560;
+  /* Vanessa Braz — interpretação rosé/champagne do contraste escuro do layout de referência. */
+  --color-brand-primary: #171114;
+  --color-brand-secondary: #e5c6cc;
+  --color-brand-accent: #c48792;
+  --color-brand-background: #fff9f7;
+  --color-brand-surface: #f3e7e4;
+  --color-brand-text: #21171a;
+  --color-brand-muted: #77666b;
   --color-brand-success: #4a7c59;
   --color-brand-warning: #c49a43;
   --color-brand-danger: #b44536;
-  --color-brand-rose: #d4a8a0;
-  --color-brand-wine: #532b36;
-  --color-brand-gold: #c6a66b;
+  --color-brand-rose: #d7a8b1;
+  --color-brand-wine: #5b2937;
+  --color-brand-gold: #c7a46c;
+  --color-brand-ink: #0c090a;
+  --color-brand-night: #141012;
+  --color-brand-line: #2d2226;
+  --color-brand-cream: #fff5f1;
 
   --font-display: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
 }
 
-/* Base */
 * {
   box-sizing: border-box;
 }
@@ -29,9 +32,11 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--color-brand-ink);
 }
 
 body {
+  margin: 0;
   font-family: var(--font-body);
   color: var(--color-brand-text);
   background-color: var(--color-brand-background);
@@ -41,45 +46,73 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
 }
 
-/* Scrollbar sutil */
+::selection {
+  background-color: var(--color-brand-rose);
+  color: var(--color-brand-ink);
+}
+
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--color-brand-ink);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-brand-surface);
-  border-radius: 3px;
+  background: var(--color-brand-accent);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brand-muted);
+  background: var(--color-brand-secondary);
 }
 
-/* Focus — acessibilidade */
 *:focus-visible {
-  outline: 2px solid var(--color-brand-text);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-brand-accent);
+  outline-offset: 3px;
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+.salon-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-/* Animações discretas */
+.salon-panel {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+}
+
+.salon-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.salon-glow::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle at 55% 45%, rgba(196, 135, 146, 0.16), transparent 58%);
+}
+
+.hair-card img {
+  transition: transform 500ms cubic-bezier(.2,.7,.2,1), filter 500ms cubic-bezier(.2,.7,.2,1);
+}
+
+.hair-card:hover img {
+  transform: scale(1.025);
+  filter: saturate(1.03) contrast(1.01);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -104,22 +137,24 @@ h1, h2, h3, h4, h5, h6 {
   animation: fadeInUp 0.5s ease-out forwards;
 }
 
-/* Selection */
-::selection {
-  background-color: var(--color-brand-secondary);
-  color: white;
-}
-
-/* Images — performance */
 img {
-  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
 }
 
-/* Hide scrollbar utility */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
