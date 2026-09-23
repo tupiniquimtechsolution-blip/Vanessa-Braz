@@ -1,15 +1,28 @@
-import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { services, testimonials, businessInfo, isWhatsAppConfigured } from '../../src/lib/data';
+import { describe, expect, it } from 'vitest';
+import {
+  businessInfo,
+  isPublicHandleConfigured,
+  isWhatsAppConfigured,
+  services,
+  testimonials,
+} from '../../src/lib/data';
 
 describe('production catalog isolation', () => {
-  it('does not expose invented services, prices, testimonials or demo whatsapp', () => {
+  it('does not expose invented services, prices, testimonials or demo contacts', () => {
     expect(services).toEqual([]);
     expect(testimonials).toEqual([]);
-    expect(isWhatsAppConfigured(businessInfo.whatsapp)).toBe(false);
+
+    // Owner-confirmed contact fields are allowed in production; reject only the
+    // known demo placeholders that this guard was created to keep out.
+    expect(isWhatsAppConfigured(businessInfo.whatsapp)).toBe(true);
+    expect(businessInfo.whatsapp).not.toBe('5511999999999');
+    expect(isPublicHandleConfigured(businessInfo.instagram)).toBe(true);
+    expect(businessInfo.instagram).not.toMatch(/^@?vanessabraz\.beleza$/i);
+
+    // Still-unconfirmed fields must remain explicitly pending.
     expect(businessInfo.email).toMatch(/PENDENTE/);
-    expect(businessInfo.instagram).toMatch(/PENDENTE/);
   });
 
   it('keeps invented commercial seed out of versioned migrations', () => {
