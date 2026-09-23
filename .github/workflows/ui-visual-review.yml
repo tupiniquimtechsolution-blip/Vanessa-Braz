@@ -1,0 +1,76 @@
+name: UI visual review
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - chatgpt/clandestine-layout-refresh
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'apps/web/public/media/**'
+      - '.github/workflows/ui-visual-review.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ui-visual-review-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install app dependencies
+        run: npm ci
+
+      - name: Build app
+        run: npm run build
+
+      - name: Install Playwright Chromium
+        run: |
+          npx --yes playwright@1.55.0 install --with-deps chromium
+
+      - name: Start preview server
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/vanessa-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/vanessa-preview.log
+          exit 1
+
+      - name: Capture desktop and mobile pages
+        run: |
+          mkdir -p visual-review/desktop visual-review/mobile
+          for route in home servicos galeria agendar contato; do
+            case "$route" in
+              home) path="/" ;;
+              *) path="/$route" ;;
+            esac
+            npx --yes playwright@1.55.0 screenshot --browser=chromium --device="Desktop Chrome HiDPI" --full-page "http://127.0.0.1:4173${path}" "visual-review/desktop/${route}.png"
+            npx --yes playwright@1.55.0 screenshot --browser=chromium --device="iPhone 13" --full-page "http://127.0.0.1:4173${path}" "visual-review/mobile/${route}.png"
+          done
+          cp /tmp/vanessa-preview.log visual-review/preview-server.log
+
+      - name: Upload visual review evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-visual-review-${{ github.sha }}
+          path: visual-review/
+          if-no-files-found: error
+          retention-days: 7
