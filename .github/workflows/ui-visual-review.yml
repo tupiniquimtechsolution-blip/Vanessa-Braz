@@ -9,6 +9,7 @@ on:
       - 'src/**'
       - 'public/**'
       - 'apps/web/public/media/**'
+      - 'scripts/ui-visual-review.cjs'
       - '.github/workflows/ui-visual-review.yml'
 
 permissions:
@@ -38,8 +39,10 @@ jobs:
       - name: Build app
         run: npm run build
 
-      - name: Install Playwright Chromium
-        run: npx --yes playwright@1.55.0 install --with-deps chromium
+      - name: Install Playwright runtime
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright@1.55.0 install --with-deps chromium
 
       - name: Start preview server
         run: |
@@ -53,32 +56,10 @@ jobs:
           cat /tmp/vanessa-preview.log
           exit 1
 
-      - name: Capture desktop and mobile pages
+      - name: Capture scroll-aware desktop and mobile pages
         run: |
           set -euo pipefail
-          mkdir -p visual-review/desktop visual-review/mobile
-
-          for route in home servicos galeria agendar contato; do
-            case "$route" in
-              home) path="/" ;;
-              *) path="/$route" ;;
-            esac
-
-            npx --yes playwright@1.55.0 screenshot \
-              --browser=chromium \
-              --viewport-size="1440,1100" \
-              --full-page \
-              "http://127.0.0.1:4173${path}" \
-              "visual-review/desktop/${route}.png"
-
-            npx --yes playwright@1.55.0 screenshot \
-              --browser=chromium \
-              --viewport-size="390,844" \
-              --full-page \
-              "http://127.0.0.1:4173${path}" \
-              "visual-review/mobile/${route}.png"
-          done
-
+          node scripts/ui-visual-review.cjs
           cp /tmp/vanessa-preview.log visual-review/preview-server.log
 
       - name: Upload visual review evidence
