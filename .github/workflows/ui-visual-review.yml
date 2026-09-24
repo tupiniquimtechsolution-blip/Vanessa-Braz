@@ -39,8 +39,7 @@ jobs:
         run: npm run build
 
       - name: Install Playwright Chromium
-        run: |
-          npx --yes playwright@1.55.0 install --with-deps chromium
+        run: npx --yes playwright@1.55.0 install --with-deps chromium
 
       - name: Start preview server
         run: |
@@ -58,6 +57,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p visual-review/desktop visual-review/mobile
+
           for route in home servicos galeria agendar contato; do
             case "$route" in
               home) path="/" ;;
@@ -78,12 +78,14 @@ jobs:
               "http://127.0.0.1:4173${path}" \
               "visual-review/mobile/${route}.png"
           done
+
           cp /tmp/vanessa-preview.log visual-review/preview-server.log
 
       - name: Upload visual review evidence
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: ui-visual-review-${{ github.sha }}
           path: visual-review/
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 7
