@@ -1,10 +1,27 @@
 # STATUS — Vanessa Braz
 
-**Atualizado:** 2026-09-23  
+**Atualizado:** 2026-09-24  
 **Branch da sessão:** `chatgpt/clandestine-layout-refresh`  
 **Base da branch:** `arena/01a0a695-vanessa-braz` @ `74dd4b81964b92dd8e5730f55c04bbbc0d2314ea`  
 **PR:** #8 — draft, empilhado sobre a branch Arena; sem merge em `main`.  
 **Regra de entrega:** sem merge em `main`; sem force push.
+
+## Decisão arquitetural vigente — identidade, Auth e backend
+
+Vanessa Braz **não terá Supabase/Auth isolado nem sistema próprio de usuário e senha**.
+
+A autenticação, identidade, perfis, memberships, tenancy, RLS e dados transacionais serão integrados ao **Sistema-SaaS-Geral**, onde Vanessa será um tenant/configuração do vertical `salon`.
+
+Consequências:
+
+- não criar projeto Supabase dedicado para Vanessa;
+- não duplicar cadastro/login/senha dentro deste repositório;
+- não aplicar as migrations Vanessa diretamente em um banco isolado;
+- fluxos autenticados de booking/admin devem consumir a camada compartilhada do SaaS Geral;
+- o frontend Vanessa pode continuar evoluindo e operando em preview sem backend próprio enquanto a integração do vertical `salon` é concluída;
+- qualquer código legado de Auth/Supabase neste repo passa a ser referência de domínio/teste e deve ser reconciliado com o SaaS Core antes de reutilização.
+
+Fonte de integração: `tupiniquimtechsolution-blip/Sistema-SaaS-Geral`, branch `chatgpt/integrate-salon-vanessa`, handoff `docs/handoffs/VANESSA_SALON_INTEGRATION_HANDOFF.md`.
 
 ## Escopo desta sessão — UI e mídia
 
@@ -17,20 +34,11 @@
 - [x] Fotos de cabelo em estágio de processo/desalinhado foram removidas da seleção padrão, sem apagar o acervo original.
 - [x] `docs/DESIGN_REFERENCE_CLANDESTINE.md` registra provenance, regra do disclaimer e seleção de mídia.
 - [x] Backend, migrations, Auth, pagamentos e RLS não foram alterados pelo redesign.
+- [x] Preview Cloudflare da branch foi estabilizado.
 
-## CI — drift corrigido e gate validado
+## CI — gate atual
 
-O primeiro CI do redesign, run `35837053203`, falhou em dois testes preexistentes por drift de fixture, não por erro de lint/typecheck do frontend:
-
-1. `tests/postgres/rls.real.test.ts` usava `2026-09-22 14:00:00+00`; em 23/09/2026 a fixture passou a ser rejeitada corretamente como `starts_in_past`.
-2. `tests/security/demo-isolation.test.ts` ainda exigia WhatsApp/Instagram pendentes, embora esses contatos já tenham sido confirmados no código da base.
-
-Correções de teste aplicadas sem relaxar segurança:
-
-- fixture de agendamento agora calcula a próxima terça-feira às 14:00 UTC e mantém o cenário de conflito às 14:30;
-- teste de isolamento continua bloqueando placeholders demo, mas aceita somente os contatos reais já confirmados no projeto.
-
-GitHub Actions run `35837724596` no checkpoint `f703bed0a6fdbb33256a8676ee8c3364c362d02e`: **PASS**.
+GitHub Actions no checkpoint `73e3034d8f5ef646ad21c7774677d4747b661ff9`, run `36001048369`: **PASS**.
 
 - [x] npm ci
 - [x] lint
@@ -47,19 +55,21 @@ O GitHub permanece a fonte de verdade para cada novo HEAD; o PR continua draft p
 - RLS real no PostgreSQL com cenários isolados para `anon`, customer A, customer B e admin.
 - `public.apply_payment_event()` adquire atomamente o evento antes de mutações de pagamento/agendamento.
 - Webhook Mercado Pago valida assinatura e consulta o pagamento autoritativamente no provedor.
-- Auth, booking e backend permanecem condicionados às integrações hospedadas pendentes registradas no projeto.
+- Esses contratos continuam úteis como evidência/referência, mas a implementação de produção deve ser generalizada/reutilizada no SaaS Geral.
 
 ## Integrações pendentes
 
-- Aplicar migrations em um projeto Supabase hospedado e validar o ambiente real.
-- Configurar credenciais sandbox/produção e webhook Mercado Pago server-side.
+- Concluir a reconciliação Vanessa → vertical `salon` no Sistema-SaaS-Geral.
+- Integrar o frontend Vanessa à autenticação/tenant resolution compartilhada do SaaS Geral quando o contrato do vertical estiver estável.
+- Generalizar Mercado Pago, booking e consentimentos no SaaS Core sem duplicar schema específico de Vanessa.
 - Confirmar catálogo, preços, cidade/estado, horários, regras comerciais e textos jurídicos antes de produção.
-- Configurar rate limiting, CSP, observabilidade e proteção de `main`.
+- Concluir rate limiting, observabilidade e proteção de `main` no fluxo de produção.
 - Confirmar autorização de publicação das pessoas presentes nas mídias antes de exposição pública em produção.
 
 ## Riscos operacionais conhecidos
 
 1. Aprovação visual da foto não equivale a consentimento/autorização de publicação.
-2. Testes PostgreSQL redefinem schemas em uma base descartável; `DATABASE_URL` de testes nunca deve apontar para produção.
+2. Testes PostgreSQL deste repo não devem ser apontados para banco compartilhado/produção; a integração real deve usar o pipeline do SaaS Geral.
 3. O template visual de referência contém conteúdo fictício; somente sua linguagem visual é usada como referência.
 4. PR #8 é uma camada visual empilhada sobre a branch Arena e não deve ser mergeado diretamente em `main` nesta etapa.
+5. Criar Auth/Supabase paralelo em Vanessa geraria duplicidade de identidade e inconsistência de tenancy; essa alternativa está oficialmente descartada.
