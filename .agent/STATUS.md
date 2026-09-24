@@ -36,6 +36,15 @@ Fonte de integração: `tupiniquimtechsolution-blip/Sistema-SaaS-Geral`, branch 
 - [x] Backend, migrations, Auth, pagamentos e RLS não foram alterados pelo redesign.
 - [x] Preview Cloudflare da branch foi estabilizado.
 
+## Deploy Cloudflare — layout atualizado
+
+Em 24/09/2026 foi solicitado deploy do layout atual da branch `chatgpt/clandestine-layout-refresh` para o Worker `vanessa-braz`.
+
+- trigger Cloudflare: `chatgpt/clandestine-layout-refresh`;
+- objetivo: publicar o layout atualizado sem merge em `main`;
+- o deploy de produção deve usar `npx wrangler deploy` apenas durante a execução controlada;
+- após o deploy, o trigger deve retornar ao modo de preview para evitar publicação automática acidental a cada commit da branch.
+
 ## CI — gate atual
 
 GitHub Actions no checkpoint `73e3034d8f5ef646ad21c7774677d4747b661ff9`, run `36001048369`: **PASS**.
