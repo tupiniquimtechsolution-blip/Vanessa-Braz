@@ -61,7 +61,7 @@ export const testimonials: Array<{ id: string; name: string; text: string; ratin
 
 export const businessHours = null;
 
-// Dados confirmados pelo owner em 22/09/2026. Campos não confirmados permanecem PENDING.
+// Dados confirmados pelo owner em 22/09/2026. Campos não confirmados permanecem PENDING internamente.
 export const businessInfo = {
   name: 'Vanessa Braz',
   tagline: 'Beleza & Autoestima',
@@ -82,14 +82,14 @@ export const businessPhoneUrl = `tel:+${businessInfo.whatsapp}`;
 export const faqItems = [
   {
     question: 'Como faço para agendar um horário?',
-    answer: 'Use a página Agendar. O horário só é reservado depois do login e da confirmação no servidor.',
+    answer: 'Acesse a página Agendar e escolha um dos canais oficiais. Informe o serviço de interesse e os melhores dias ou períodos para receber a confirmação.',
   },
   {
-    question: 'Preciso criar uma conta?',
-    answer: 'Sim. A confirmação do agendamento usa autenticação real e não grava senha neste aplicativo.',
+    question: 'Preciso criar uma conta neste site?',
+    answer: 'Não. Este site não cria um cadastro separado. Quando a área digital integrada estiver disponível, o acesso será feito pela plataforma central do negócio.',
   },
   {
-    question: 'Como meus dados são tratados?',
-    answer: 'Consentimentos operacional, de marketing e de uso de imagem são registrados em separado, com versão da política e data. Veja a Política de Privacidade.',
+    question: 'Como confirmo valores e disponibilidade?',
+    answer: 'Consulte diretamente pelo WhatsApp ou Instagram. Serviços, valores e horários são confirmados antes do atendimento para evitar informações desatualizadas.',
   },
 ];
