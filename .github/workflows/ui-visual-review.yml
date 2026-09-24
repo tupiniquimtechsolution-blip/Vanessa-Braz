@@ -56,19 +56,32 @@ jobs:
 
       - name: Capture desktop and mobile pages
         run: |
+          set -euo pipefail
           mkdir -p visual-review/desktop visual-review/mobile
           for route in home servicos galeria agendar contato; do
             case "$route" in
               home) path="/" ;;
               *) path="/$route" ;;
             esac
-            npx --yes playwright@1.55.0 screenshot --browser=chromium --device="Desktop Chrome HiDPI" --full-page "http://127.0.0.1:4173${path}" "visual-review/desktop/${route}.png"
-            npx --yes playwright@1.55.0 screenshot --browser=chromium --device="iPhone 13" --full-page "http://127.0.0.1:4173${path}" "visual-review/mobile/${route}.png"
+
+            npx --yes playwright@1.55.0 screenshot \
+              --browser=chromium \
+              --viewport-size="1440,1100" \
+              --full-page \
+              "http://127.0.0.1:4173${path}" \
+              "visual-review/desktop/${route}.png"
+
+            npx --yes playwright@1.55.0 screenshot \
+              --browser=chromium \
+              --viewport-size="390,844" \
+              --full-page \
+              "http://127.0.0.1:4173${path}" \
+              "visual-review/mobile/${route}.png"
           done
           cp /tmp/vanessa-preview.log visual-review/preview-server.log
 
       - name: Upload visual review evidence
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: ui-visual-review-${{ github.sha }}
           path: visual-review/
