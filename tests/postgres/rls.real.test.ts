@@ -15,6 +15,15 @@ if (process.env.CI && !enabled) {
   throw new Error('DATABASE_URL is required in CI for real RLS tests.');
 }
 
+function nextUtcWeekdayAt(weekday: number, hour: number): Date {
+  const result = new Date();
+  let daysAhead = (weekday - result.getUTCDay() + 7) % 7;
+  if (daysAhead === 0) daysAhead = 7;
+  result.setUTCDate(result.getUTCDate() + daysAhead);
+  result.setUTCHours(hour, 0, 0, 0);
+  return result;
+}
+
 describe.skipIf(!enabled)('real postgres migrations + RLS', () => {
   it('enforces RLS, booking constraints, and atomic payment-event idempotency', async () => {
     const sql = connect();
@@ -66,10 +75,14 @@ describe.skipIf(!enabled)('real postgres migrations + RLS', () => {
       await sql`insert into public.professional_services (professional_id, service_id) values (${professionalId}::uuid, ${serviceId}::uuid)`;
       await sql`insert into public.business_hours (professional_id, weekday, open_time, close_time) values (null, 2, '09:00', '19:00')`;
 
+      // Avoid date-rot: preserve the Tuesday 14:00 scenario while always using a future date.
+      const appointmentStart = nextUtcWeekdayAt(2, 14);
+      const overlappingStart = new Date(appointmentStart.getTime() + 30 * 60 * 1000);
+
       const created = await withRlsIdentity(
         sql,
         customerA,
-        async (tx) => tx`select * from public.create_appointment(${serviceId}::uuid, ${professionalId}::uuid, '2026-09-22 14:00:00+00'::timestamptz, '', true, false, false)`,
+        async (tx) => tx`select * from public.create_appointment(${serviceId}::uuid, ${professionalId}::uuid, ${appointmentStart.toISOString()}::timestamptz, '', true, false, false)`,
         { commit: true },
       );
       expect(created[0].price_cents).toBe(1000);
@@ -128,7 +141,7 @@ describe.skipIf(!enabled)('real postgres migrations + RLS', () => {
 
       await withRlsIdentity(sql, customerA, async (tx) => {
         await expect(
-          tx`select * from public.create_appointment(${serviceId}::uuid, ${professionalId}::uuid, '2026-09-22 14:30:00+00'::timestamptz, '', true, false, false)`,
+          tx`select * from public.create_appointment(${serviceId}::uuid, ${professionalId}::uuid, ${overlappingStart.toISOString()}::timestamptz, '', true, false, false)`,
         ).rejects.toThrow(/double_booking|23P01|exclusion/i);
       });
 

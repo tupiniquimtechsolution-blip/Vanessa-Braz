@@ -1,51 +1,84 @@
 # STATUS — Vanessa Braz
 
-**Atualizado:** 2026-09-16  
-**Branch da sessão:** `arena/01a0aada-vanessa-braz`  
-**Base validada:** `9067422296f98d195e97d5daf175b43628fa2381`  
+**Atualizado:** 2026-09-24  
+**Branch da sessão:** `chatgpt/clandestine-layout-refresh`  
+**Base da branch:** `arena/01a0a695-vanessa-braz` @ `74dd4b81964b92dd8e5730f55c04bbbc0d2314ea`  
+**PR:** #8 — draft, empilhado sobre a branch Arena; sem merge em `main`.  
 **Regra de entrega:** sem merge em `main`; sem force push.
 
-## Entregas desta revisão
+## Decisão arquitetural vigente — identidade, Auth e backend
 
-- [x] RLS real preservado no PostgreSQL, com cenários isolados para `anon`, customer A, customer B e admin.
-- [x] `public.apply_payment_event()` agora adquire atomamente o evento em `payment_events(provider, provider_event_id)` antes de alterar pagamento ou agendamento.
-- [x] Teste real de concorrência usa duas conexões PostgreSQL e força contenção no `INSERT`; há exatamente uma aplicação, um pagamento e um evento, e a outra chamada retorna `duplicate=true`.
-- [x] Webhook Mercado Pago mantém HMAC `ts`/`v1` e `x-request-id`; a assinatura usa `data.id` da URL da notificação como valor canônico e recusa divergência com `data.id` do body.
-- [x] `GET /v1/payments/{id}` permanece a fonte autoritativa para ID, status, valor e referência do agendamento.
-- [x] Claims públicas não confirmadas foram neutralizadas sem alterar layout editorial ou remover o acervo de mídias fornecido.
+Vanessa Braz **não terá Supabase/Auth isolado nem sistema próprio de usuário e senha**.
 
-## Evidências locais
+A autenticação, identidade, perfis, memberships, tenancy, RLS e dados transacionais serão integrados ao **Sistema-SaaS-Geral**, onde Vanessa será um tenant/configuração do vertical `salon`.
 
-Executado contra PostgreSQL real 15.18 via `DATABASE_URL`:
+Consequências:
 
-```text
-npm ci                 PASS
-npm run lint           PASS
-npm run typecheck      PASS
-npm test               PASS — 36 testes / 12 arquivos
-npm run test:security  PASS — 13 testes / 4 arquivos
-npm run test:postgres  PASS — 1 teste real / 1 arquivo
-npm run build          PASS
-```
+- não criar projeto Supabase dedicado para Vanessa;
+- não duplicar cadastro/login/senha dentro deste repositório;
+- não aplicar as migrations Vanessa diretamente em um banco isolado;
+- fluxos autenticados de booking/admin devem consumir a camada compartilhada do SaaS Geral;
+- o frontend Vanessa pode continuar evoluindo e operando em preview sem backend próprio enquanto a integração do vertical `salon` é concluída;
+- qualquer código legado de Auth/Supabase neste repo passa a ser referência de domínio/teste e deve ser reconciliado com o SaaS Core antes de reutilização.
 
-## GitHub Actions
+Fonte de integração: `tupiniquimtechsolution-blip/Sistema-SaaS-Geral`, branch `chatgpt/integrate-salon-vanessa`, handoff `docs/handoffs/VANESSA_SALON_INTEGRATION_HANDOFF.md`.
 
-Os checks reais dos commits de código desta revisão foram concluídos no GitHub, no PR [#3](https://github.com/tupiniquimtechsolution-blip/Vanessa-Braz/pull/3):
+## Escopo desta sessão — UI e mídia
 
-- CI `quality`: [run 35138494872](https://github.com/tupiniquimtechsolution-blip/Vanessa-Braz/actions/runs/35138494872) — **PASS**.
-- CodeQL `Analyze (javascript-typescript)`: [run 35138495005](https://github.com/tupiniquimtechsolution-blip/Vanessa-Braz/actions/runs/35138495005) — **PASS**.
+- [x] Referência `Northstrix/clandestine-beauty-salon-landing-page-template` auditada como inspiração de composição/interação; licença de origem registrada como MIT.
+- [x] Paleta roxa da referência não foi copiada; aplicada direção própria em preto/vinho profundo, rosé, champagne e creme.
+- [x] Navegação, hero, home, footer e galeria adaptados para linguagem de salão premium com maior presença fotográfica.
+- [x] Conteúdo fictício do template de referência não foi transplantado para Vanessa Braz.
+- [x] Serviços/preços ausentes continuam `PENDENTE_DE_CONFIRMACAO` ou dependem da fonte real do app.
+- [x] Curadoria pública prioriza cabelos tratados/finalizados.
+- [x] Fotos de cabelo em estágio de processo/desalinhado foram removidas da seleção padrão, sem apagar o acervo original.
+- [x] `docs/DESIGN_REFERENCE_CLANDESTINE.md` registra provenance, regra do disclaimer e seleção de mídia.
+- [x] Backend, migrations, Auth, pagamentos e RLS não foram alterados pelo redesign.
+- [x] Preview Cloudflare da branch foi estabilizado.
 
-O GitHub permanece a fonte de verdade para o status do HEAD de cada novo commit; não há declaração de aprovação baseada apenas no ambiente local.
+## Deploy Cloudflare — layout atualizado
+
+Em 24/09/2026 foi solicitado deploy do layout atual da branch `chatgpt/clandestine-layout-refresh` para o Worker `vanessa-braz`.
+
+- trigger Cloudflare: `chatgpt/clandestine-layout-refresh`;
+- objetivo: publicar o layout atualizado sem merge em `main`;
+- o deploy de produção deve usar `npx wrangler deploy` apenas durante a execução controlada;
+- após o deploy, o trigger deve retornar ao modo de preview para evitar publicação automática acidental a cada commit da branch.
+
+## CI — gate atual
+
+GitHub Actions no checkpoint `73e3034d8f5ef646ad21c7774677d4747b661ff9`, run `36001048369`: **PASS**.
+
+- [x] npm ci
+- [x] lint
+- [x] typecheck
+- [x] test
+- [x] test:security
+- [x] test:postgres
+- [x] build
+
+O GitHub permanece a fonte de verdade para cada novo HEAD; o PR continua draft para revisão visual e não há autorização de merge em `main`.
+
+## Estado técnico herdado da base Arena
+
+- RLS real no PostgreSQL com cenários isolados para `anon`, customer A, customer B e admin.
+- `public.apply_payment_event()` adquire atomamente o evento antes de mutações de pagamento/agendamento.
+- Webhook Mercado Pago valida assinatura e consulta o pagamento autoritativamente no provedor.
+- Esses contratos continuam úteis como evidência/referência, mas a implementação de produção deve ser generalizada/reutilizada no SaaS Geral.
 
 ## Integrações pendentes
 
-- Aplicar migrations em um projeto Supabase hospedado (`supabase db push`).
-- Configurar credenciais reais/sandbox, URL de webhook e segredo do Mercado Pago no ambiente server-side.
-- Confirmar catálogo, preços, endereço, canais de contato, regras comerciais e textos jurídicos antes de publicação.
-- Configurar rate limiting, CSP e controles de deploy.
+- Concluir a reconciliação Vanessa → vertical `salon` no Sistema-SaaS-Geral.
+- Integrar o frontend Vanessa à autenticação/tenant resolution compartilhada do SaaS Geral quando o contrato do vertical estiver estável.
+- Generalizar Mercado Pago, booking e consentimentos no SaaS Core sem duplicar schema específico de Vanessa.
+- Confirmar catálogo, preços, cidade/estado, horários, regras comerciais e textos jurídicos antes de produção.
+- Concluir rate limiting, observabilidade e proteção de `main` no fluxo de produção.
+- Confirmar autorização de publicação das pessoas presentes nas mídias antes de exposição pública em produção.
 
 ## Riscos operacionais conhecidos
 
-1. Os testes PostgreSQL redefinem schemas em uma base descartável; `DATABASE_URL` de testes nunca deve apontar para produção.
-2. O webhook Mercado Pago só se torna operacional depois de deploy e configuração dos secrets server-side.
-3. Conteúdo jurídico, comercial e de contato permanece deliberadamente pendente de confirmação.
+1. Aprovação visual da foto não equivale a consentimento/autorização de publicação.
+2. Testes PostgreSQL deste repo não devem ser apontados para banco compartilhado/produção; a integração real deve usar o pipeline do SaaS Geral.
+3. O template visual de referência contém conteúdo fictício; somente sua linguagem visual é usada como referência.
+4. PR #8 é uma camada visual empilhada sobre a branch Arena e não deve ser mergeado diretamente em `main` nesta etapa.
+5. Criar Auth/Supabase paralelo em Vanessa geraria duplicidade de identidade e inconsistência de tenancy; essa alternativa está oficialmente descartada.

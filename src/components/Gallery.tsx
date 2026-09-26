@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 interface GalleryImage {
   src: string;
@@ -23,38 +23,34 @@ export default function Gallery({ images, columns = 3 }: GalleryProps) {
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
-  
+
   const goNext = () => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex + 1) % images.length);
-    }
+    if (lightboxIndex !== null) setLightboxIndex((lightboxIndex + 1) % images.length);
   };
-  
+
   const goPrev = () => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex - 1 + images.length) % images.length);
-    }
+    if (lightboxIndex !== null) setLightboxIndex((lightboxIndex - 1 + images.length) % images.length);
   };
 
   return (
     <>
-      <div className={`grid ${colClass} gap-3 md:gap-4`}>
+      <div className={`grid ${colClass} gap-2 md:gap-3`}>
         {images.map((image, index) => (
           <button
-            key={index}
+            key={image.src}
             onClick={() => openLightbox(index)}
-            className="relative aspect-square overflow-hidden rounded-2xl group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
+            className="hair-card group relative aspect-square cursor-pointer overflow-hidden border border-brand-text/5 bg-brand-surface text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
             aria-label={`Ver imagem: ${image.alt}`}
           >
             <img
               src={image.src}
               alt={image.alt}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="h-full w-full object-cover"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-brand-primary/0 group-hover:bg-brand-primary/20 transition-colors duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-35 transition-opacity duration-300 group-hover:opacity-80" />
             {image.category && (
-              <span className="absolute bottom-2 left-2 px-2 py-1 bg-white/90 text-brand-primary text-xs font-medium rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="absolute bottom-3 left-3 text-[9px] uppercase tracking-[0.18em] text-white/70 opacity-0 transition-opacity group-hover:opacity-100">
                 {image.category}
               </span>
             )}
@@ -62,47 +58,42 @@ export default function Gallery({ images, columns = 3 }: GalleryProps) {
         ))}
       </div>
 
-      {/* Lightbox */}
       {lightboxIndex !== null && (
         <div
-          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 animate-fade-in"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-ink/95 p-4 animate-fade-in"
           onClick={closeLightbox}
           role="dialog"
           aria-modal="true"
           aria-label="Visualização de imagem"
         >
-          <button
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 p-2 text-white/80 hover:text-white transition-colors z-10"
-            aria-label="Fechar"
-          >
+          <button onClick={closeLightbox} className="absolute right-4 top-4 z-10 p-3 text-white/70 transition hover:text-white" aria-label="Fechar">
             <X size={28} />
           </button>
-          
+
           <button
-            onClick={(e) => { e.stopPropagation(); goPrev(); }}
-            className="absolute left-4 p-2 text-white/80 hover:text-white transition-colors z-10"
+            onClick={(event) => { event.stopPropagation(); goPrev(); }}
+            className="absolute left-3 z-10 border border-white/10 bg-black/20 p-3 text-white/70 transition hover:text-white"
             aria-label="Imagem anterior"
           >
-            <ChevronLeft size={32} />
+            <ChevronLeft size={30} />
           </button>
-          
+
           <img
             src={images[lightboxIndex].src}
             alt={images[lightboxIndex].alt}
-            className="max-w-full max-h-[85vh] object-contain rounded-lg"
-            onClick={(e) => e.stopPropagation()}
+            className="max-h-[85vh] max-w-full object-contain"
+            onClick={(event) => event.stopPropagation()}
           />
-          
+
           <button
-            onClick={(e) => { e.stopPropagation(); goNext(); }}
-            className="absolute right-4 p-2 text-white/80 hover:text-white transition-colors z-10"
+            onClick={(event) => { event.stopPropagation(); goNext(); }}
+            className="absolute right-3 z-10 border border-white/10 bg-black/20 p-3 text-white/70 transition hover:text-white"
             aria-label="Próxima imagem"
           >
-            <ChevronRight size={32} />
+            <ChevronRight size={30} />
           </button>
 
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.16em] text-white/45">
             {lightboxIndex + 1} / {images.length}
           </div>
         </div>

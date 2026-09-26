@@ -1,121 +1,93 @@
-import { Phone, Mail, MapPin, Clock, Instagram, MessageCircle, ExternalLink } from 'lucide-react';
+import { ExternalLink, Instagram, MapPin, MessageCircle, Phone } from 'lucide-react';
 import {
   businessInfo,
   businessMapsUrl,
   businessPhoneUrl,
-  isPendingValue,
   isPublicHandleConfigured,
   isWhatsAppConfigured,
 } from '../lib/data';
 
 export default function Contact() {
+  const whatsappUrl = isWhatsAppConfigured(businessInfo.whatsapp)
+    ? `https://wa.me/${businessInfo.whatsapp}?text=${encodeURIComponent('Olá! Gostaria de informações e de agendar um horário.')}`
+    : null;
+
   return (
-    <div className="py-12 md:py-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="font-display text-3xl md:text-5xl font-bold text-brand-primary mb-4">
-            Entre em Contato
-          </h1>
-          <p className="text-brand-muted max-w-2xl mx-auto">
-            Canais confirmados aparecem abaixo. Campos ainda não informados permanecem marcados como pendentes.
+    <div className="bg-brand-background py-12 md:py-20">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 text-center">
+          <p className="text-[10px] uppercase tracking-[0.26em] text-brand-wine">Contato</p>
+          <h1 className="mt-3 font-display text-4xl font-light text-brand-text md:text-5xl">Entre em contato</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-brand-muted">
+            Fale pelos canais oficiais para consultar serviços, valores, disponibilidade e confirmar seu atendimento.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6 mb-12">
-          {isWhatsAppConfigured(businessInfo.whatsapp) ? (
+        <div className="grid gap-6 sm:grid-cols-2">
+          {whatsappUrl && (
             <a
-              href={`https://wa.me/${businessInfo.whatsapp}?text=${encodeURIComponent('Olá! Gostaria de informações e de agendar um horário.')}`}
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white rounded-2xl p-6 border border-brand-surface hover:border-green-300 hover:shadow-md transition-all group"
+              className="group border border-brand-surface bg-white p-6 transition hover:border-green-300 hover:shadow-md"
             >
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center bg-green-50 transition-transform group-hover:scale-105">
                 <MessageCircle size={24} className="text-green-600" />
               </div>
-              <h3 className="font-semibold text-brand-text mb-1">WhatsApp</h3>
-              <p className="text-sm text-brand-muted">{businessInfo.phone}</p>
-              <p className="text-sm font-medium text-green-600 mt-2">Enviar mensagem →</p>
+              <h2 className="font-semibold text-brand-text">WhatsApp</h2>
+              <p className="mt-1 text-sm text-brand-muted">{businessInfo.phone}</p>
+              <p className="mt-3 text-sm font-medium text-green-600">Enviar mensagem →</p>
             </a>
-          ) : (
-            <div className="bg-white rounded-2xl p-6 border border-brand-surface">
-              <h3 className="font-semibold text-brand-text mb-1">WhatsApp</h3>
-              <p className="text-sm text-brand-muted">PENDENTE_DE_CONFIRMACAO</p>
-            </div>
           )}
 
-          {isPublicHandleConfigured(businessInfo.instagram) ? (
+          {isPublicHandleConfigured(businessInfo.instagram) && (
             <a
               href={businessInfo.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white rounded-2xl p-6 border border-brand-surface hover:border-pink-300 hover:shadow-md transition-all group"
+              className="group border border-brand-surface bg-white p-6 transition hover:border-pink-300 hover:shadow-md"
             >
-              <div className="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center bg-pink-50 transition-transform group-hover:scale-105">
                 <Instagram size={24} className="text-pink-600" />
               </div>
-              <h3 className="font-semibold text-brand-text mb-1">Instagram</h3>
-              <p className="text-sm text-brand-muted">{businessInfo.instagram}</p>
-              <p className="text-sm font-medium text-pink-600 mt-2">Abrir perfil →</p>
+              <h2 className="font-semibold text-brand-text">Instagram</h2>
+              <p className="mt-1 text-sm text-brand-muted">{businessInfo.instagram}</p>
+              <p className="mt-3 text-sm font-medium text-pink-600">Abrir perfil →</p>
             </a>
-          ) : (
-            <div className="bg-white rounded-2xl p-6 border border-brand-surface">
-              <h3 className="font-semibold text-brand-text mb-1">Instagram</h3>
-              <p className="text-sm text-brand-muted">PENDENTE_DE_CONFIRMACAO</p>
-            </div>
           )}
 
           <a
             href={businessPhoneUrl}
-            className="bg-white rounded-2xl p-6 border border-brand-surface hover:border-brand-secondary hover:shadow-md transition-all group"
+            className="group border border-brand-surface bg-white p-6 transition hover:border-brand-secondary hover:shadow-md"
           >
-            <div className="w-12 h-12 bg-brand-secondary/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center bg-brand-secondary/20 transition-transform group-hover:scale-105">
               <Phone size={24} className="text-brand-primary" />
             </div>
-            <h3 className="font-semibold text-brand-text mb-1">Telefone</h3>
-            <p className="text-sm text-brand-muted">{businessInfo.phone}</p>
-            <p className="text-sm font-medium text-brand-primary mt-2">Ligar →</p>
+            <h2 className="font-semibold text-brand-text">Telefone</h2>
+            <p className="mt-1 text-sm text-brand-muted">{businessInfo.phone}</p>
+            <p className="mt-3 text-sm font-medium text-brand-primary">Ligar →</p>
           </a>
 
-          <div className="bg-white rounded-2xl p-6 border border-brand-surface">
-            <div className="w-12 h-12 bg-brand-secondary/20 rounded-xl flex items-center justify-center mb-4">
-              <Mail size={24} className="text-brand-primary" />
+          <a
+            href={businessMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group border border-brand-surface bg-white p-6 transition hover:border-brand-wine hover:shadow-md"
+          >
+            <div className="mb-4 flex h-12 w-12 items-center justify-center bg-brand-secondary/20 transition-transform group-hover:scale-105">
+              <MapPin size={24} className="text-brand-primary" />
             </div>
-            <h3 className="font-semibold text-brand-text mb-1">E-mail</h3>
-            <p className="text-sm text-brand-muted">{isPendingValue(businessInfo.email) ? 'PENDENTE_DE_CONFIRMACAO' : businessInfo.email}</p>
-          </div>
+            <h2 className="font-semibold text-brand-text">Localização</h2>
+            <p className="mt-1 text-sm text-brand-muted">{businessInfo.address}</p>
+            <p className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-brand-wine">Abrir no Google Maps <ExternalLink size={14} /></p>
+          </a>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-2xl p-6 border border-brand-surface">
-            <div className="flex items-center gap-2 mb-4">
-              <MapPin size={20} className="text-brand-primary" />
-              <h3 className="font-semibold text-brand-text">Localização</h3>
-            </div>
-            <p className="text-sm text-brand-muted">{businessInfo.address}</p>
-            <p className="text-xs text-brand-muted mt-1">
-              Cidade/UF ainda aguardam confirmação; a busca do Maps usa apenas o endereço informado pelo owner.
-            </p>
-            <a
-              href={businessMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 h-40 bg-brand-surface/50 rounded-xl flex flex-col items-center justify-center gap-3 text-brand-primary hover:bg-brand-surface transition-colors"
-              aria-label={`Abrir ${businessInfo.address} no Google Maps`}
-            >
-              <MapPin size={28} />
-              <span className="text-sm font-medium inline-flex items-center gap-2">
-                Abrir no Google Maps <ExternalLink size={14} />
-              </span>
-            </a>
-          </div>
-
-          <div className="bg-white rounded-2xl p-6 border border-brand-surface">
-            <div className="flex items-center gap-2 mb-4">
-              <Clock size={20} className="text-brand-primary" />
-              <h3 className="font-semibold text-brand-text">Horários de Funcionamento</h3>
-            </div>
-            <p className="text-sm text-brand-muted">PENDENTE_DE_CONFIRMACAO</p>
-          </div>
+        <div className="mt-8 border border-brand-surface bg-brand-cream/70 p-6 text-center md:p-8">
+          <h2 className="font-display text-2xl font-light text-brand-text">Disponibilidade e horários</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-brand-muted">
+            Confirme os dias e horários disponíveis pelo WhatsApp ou Instagram antes de se deslocar. Assim você recebe a informação mais atual para o atendimento.
+          </p>
         </div>
       </div>
     </div>
